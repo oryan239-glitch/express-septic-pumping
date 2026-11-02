@@ -133,6 +133,7 @@ def page(path,title,desc,h1,body,extra=None,hero=None,lead=""):
   top=hero if hero else f'<section class="phead"><div class="wrap"><p class="eyebrow">Express Septic Tank Pumping</p><h1>{h1}</h1>{lead}{CTA}</div></section>'
   if hero: top=top.replace("<h1>",f"<h1{H1A}>",1)
   html=f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ESN48M0VEZ"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-ESN48M0VEZ');</script>
 <title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{BASE}{path}"><meta name="theme-color" content="#0f1b2d">
 <meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}/assets/img/truck-wide-1536.webp">
 {'<link rel="preload" as="image" href="/assets/img/truck-wide-1024.webp" imagesrcset="/assets/img/truck-wide-640.webp 640w, /assets/img/truck-wide-1024.webp 1024w, /assets/img/truck-wide-1536.webp 1536w" imagesizes="(min-width:960px) 52vw, 100vw">' if hero else ''}
