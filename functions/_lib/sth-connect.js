@@ -10,7 +10,7 @@ export const DEFAULTS = {
   businessName: 'Express Septic Tank Pumping',
   headline: 'Septic tank pumping in Southwest Florida',
   description: "Need your tank pumped or dealing with a backup? Call Express to talk through what's happening, confirm service at your address, and get pricing.",
-  phone: '(239) 451-3261', email: '',
+  phone: '(239) 451-3261', email: 'expressseptictankpumping@gmail.com',
   address: '23357 Olde Meadowbrook Circle, Estero, FL 34134',
   hours: '',
   services: 'Residential septic tank pumping, commercial septic pumping, grease trap service and septic inspections.',

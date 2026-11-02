@@ -4,7 +4,7 @@ import json, os, shutil
 BASE="https://expresssepticpumping.com"
 NAME="Express Septic Tank Pumping"; PHONE="(239) 451-3261"; TEL="+12394513261"
 BOOK="https://book.servicem8.com/request_booking?uuid=019fca12-b6bf-721c-8a2b-41d89e1a1b5b"
-EMAIL=""  # TODO: Express contact email (unknown); ServiceTechHub editor can fill it
+EMAIL="expressseptictankpumping@gmail.com"
 REVIEW="https://g.page/r/CYxfVw5rrgwLEBM/review"
 CITIES_ALL=["Estero","Bonita Springs","Naples","North Naples","Fort Myers","Cape Coral","Lehigh Acres","San Carlos Park"]
 SERVICES=[
@@ -69,7 +69,7 @@ EXTRA={
 "septic-inspections":"<h2>Septic Inspection for Home Purchase</h2><p>A real estate septic inspection gives buyers and sellers a clearer picture of the system before closing. We serve Fort Myers, Naples and the surrounding area.</p><h2>Septic Inspection Cost</h2><p>Cost depends on the property and type of inspection. Call (239) 451-3261 for a quote.</p>",
 }
 def schema(extra=None):
-  s={"@context":"https://schema.org","@type":["LocalBusiness","Plumber"],"name":NAME,"url":BASE+"/","telephone":TEL,
+  s={"@context":"https://schema.org","@type":["LocalBusiness","Plumber"],"name":NAME,"url":BASE+"/","telephone":TEL,"email":EMAIL,
    "address":{"@type":"PostalAddress","streetAddress":"23357 Olde Meadowbrook Circle","addressLocality":"Estero","addressRegion":"FL","postalCode":"34134","addressCountry":"US"},
    "areaServed":[{"@type":"City","name":c+", FL"} for c in CITIES_ALL],
    "makesOffer":[{"@type":"Offer","itemOffered":{"@type":"Service","name":s[1]}} for s in SERVICES]}
@@ -219,7 +219,7 @@ page("/service-area/","Septic Pumping Service Area | Lee, Collier & Charlotte Co
 page("/contact/","Contact & Request Septic Service | Express Septic Tank Pumping",
  "Call Express Septic Tank Pumping at (239) 451-3261, book online, or request septic pumping or grease trap service.",
  "Contact Express",
- f"<p>The fastest way to reach us is by phone: <a href='tel:{TEL}'>{PHONE}</a>. {EMERG}</p><p>You can also <a href='{BOOK}' rel='noopener'>book online through ServiceM8</a>.</p>"+REQUEST+
+ f"<p>The fastest way to reach us is by phone: <a href='tel:{TEL}'>{PHONE}</a>. {EMERG}</p><p>You can also <a href='{BOOK}' rel='noopener'>book online through ServiceM8</a> or email <a href='mailto:{EMAIL}'>{EMAIL}</a>.</p>"+REQUEST+
  "<h2>Mailing address</h2><p>Express Septic Tank Pumping LLC<br>23357 Olde Meadowbrook Circle, Estero, FL 34134</p>")
 faqhtml="".join(f"<h2>{q}</h2><p>{a}</p>" for q,a in FAQ)
 page("/faq/","Septic Tank FAQ | How Often to Pump, Cost & Signs | Express Septic","Answers to common septic tank questions: how often to pump, signs your tank is full, cost and what areas Express Septic Tank Pumping serves.","Septic Tank Pumping FAQ",faqhtml,
