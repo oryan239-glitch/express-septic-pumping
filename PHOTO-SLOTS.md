@@ -1,0 +1,15 @@
+# Photo slots (JPG, ~1600x1000)
+- assets/img/commercial-septic-tank-pumping.jpg
+- assets/img/home-hero.jpg
+- assets/img/home-job-1.jpg
+- assets/img/residential-septic-tank-pumping.jpg
+- assets/img/septic-inspections.jpg
+- assets/img/septic-tank-pumping.jpg
+- assets/img/septic-tank-pumping-bonita-springs-fl.jpg
+- assets/img/septic-tank-pumping-cape-coral-fl.jpg
+- assets/img/septic-tank-pumping-estero-fl.jpg
+- assets/img/septic-tank-pumping-fort-myers-fl.jpg
+- assets/img/septic-tank-pumping-lehigh-acres-fl.jpg
+- assets/img/septic-tank-pumping-naples-fl.jpg
+- assets/img/septic-tank-pumping-north-naples-fl.jpg
+- assets/img/septic-tank-pumping-san-carlos-park-fl.jpg
