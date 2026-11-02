@@ -75,7 +75,12 @@ def schema(extra=None):
   out=[s]
   if extra: out.append(extra)
   return "".join(f'<script type="application/ld+json">{json.dumps(o)}</script>' for o in out)
-def photo(sid,alt): return f'<figure class="photo" data-photo-slot="{sid}"><img src="/assets/img/{sid}.jpg" alt="{alt}" loading="lazy" width="800" height="500" onerror="this.parentNode.classList.add(\'empty\')"><figcaption>Photo: {alt}</figcaption></figure>'
+REAL={"home-hero","residential-septic-tank-pumping"}
+TRUCK_ALT="Express Septic Tank Pumping vacuum truck at a home in Southwest Florida"
+def photo(sid,alt):
+  if sid in REAL: return f'<figure class="photo real" data-photo-slot="{sid}"><img src="/assets/img/express-truck-800.webp" srcset="/assets/img/express-truck-800.webp 800w, /assets/img/express-truck-1536.webp 1536w" sizes="(max-width:960px) 100vw, 960px" alt="{TRUCK_ALT}" width="800" height="1067"{" fetchpriority=\'high\'" if sid=="home-hero" else " loading=\'lazy\'"}></figure>'
+  return _photo(sid,alt)
+def _photo(sid,alt): return f'<figure class="photo" data-photo-slot="{sid}"><img src="/assets/img/{sid}.jpg" alt="{alt}" loading="lazy" width="800" height="500" onerror="this.parentNode.classList.add(\'empty\')"><figcaption>Photo: {alt}</figcaption></figure>'
 NAV="".join(f'<a href="/{s[0]}/">{s[1]}</a>' for s in SERVICES)
 VAL="<p class='values'>Honest, reliable and fair — great customer service is our top priority.</p>"
 CTA=f'<div class="cta"><a class="btn call" href="tel:{TEL}">Call {PHONE}</a><a class="btn book" href="{BOOK}" rel="noopener">Book Online</a></div>'
@@ -92,7 +97,7 @@ def page(path,title,desc,h1,body,extra=None):
 <div><strong>Services</strong>{NAV}</div><div><strong>Areas</strong>{foot}</div><div><strong>Info</strong><a href="/">Home</a><a href="/septic-system-maintenance/">Septic Maintenance</a><a href="/about/">About</a><a href="/how-it-works/">How It Works</a><a href="/how-often-to-pump-septic-tank/">How Often to Pump</a><a href="/faq/">FAQ</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></footer>
 <a class="sticky" href="tel:{TEL}">Tap to Call {PHONE}</a></body></html>'''
   pre="../"*(path.count("/")-1) or "./"
-  html=html.replace('href="/','href="'+pre).replace('src="/','src="'+pre).replace("href='/","href='"+pre)
+  html=html.replace('href="/','href="'+pre).replace('src="/','src="'+pre).replace(', /assets',', '+pre+'assets').replace('srcset="/','srcset="'+pre).replace("href='/","href='"+pre)
   d="."+path; os.makedirs(d,exist_ok=True); open(d+"index.html","w").write(html); PAGES.append(path)
 svc_list="<ul class='cards'>"+"".join(f'<li><a href="/{s[0]}/"><strong>{s[1]}</strong></a></li>' for s in SERVICES)+"</ul>"
 city_list="<ul class='cards'>"+"".join(f'<li><a href="/{slug(c)}/">Septic Tank Pumping {c}</a></li>' for c in CITIES_ALL)+"</ul>"

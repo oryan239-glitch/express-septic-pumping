@@ -13,3 +13,4 @@ footer a{display:block;color:#cfd8e2}.sticky{position:fixed;bottom:0;left:0;righ
 @media(min-width:900px){.sticky{display:none}body{padding-bottom:0}}
 table{border-collapse:collapse;width:100%;font-size:.9rem}th,td{border:1px solid #d5dde6;padding:6px;text-align:center}th{background:#0b3d6b;color:#fff}.tw{overflow-x:auto}.emerg{background:#fde8d7;padding:10px;border-radius:8px}
 .values{font-weight:600;color:#0b3d6b}
+.photo.real img{max-height:620px;object-fit:cover}

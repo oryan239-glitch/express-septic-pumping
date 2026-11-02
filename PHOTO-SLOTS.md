@@ -1,10 +1,9 @@
 # Photo slots (JPG, ~1600x1000)
+FILLED: home-hero, residential-septic-tank-pumping -> assets/img/express-truck-{800,1536}.webp
 - assets/img/about-team.jpg
 - assets/img/commercial-septic-tank-pumping.jpg
-- assets/img/home-hero.jpg
 - assets/img/home-job-1.jpg
 - assets/img/how-it-works.jpg
-- assets/img/residential-septic-tank-pumping.jpg
 - assets/img/septic-inspections.jpg
 - assets/img/septic-system-maintenance.jpg
 - assets/img/septic-tank-pumping.jpg
