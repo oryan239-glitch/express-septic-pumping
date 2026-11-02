@@ -77,6 +77,7 @@ def schema(extra=None):
   return "".join(f'<script type="application/ld+json">{json.dumps(o)}</script>' for o in out)
 def photo(sid,alt): return f'<figure class="photo" data-photo-slot="{sid}"><img src="/assets/img/{sid}.jpg" alt="{alt}" loading="lazy" width="800" height="500" onerror="this.parentNode.classList.add(\'empty\')"><figcaption>Photo: {alt}</figcaption></figure>'
 NAV="".join(f'<a href="/{s[0]}/">{s[1]}</a>' for s in SERVICES)
+VAL="<p class='values'>Honest, reliable and fair — great customer service is our top priority.</p>"
 CTA=f'<div class="cta"><a class="btn call" href="tel:{TEL}">Call {PHONE}</a><a class="btn book" href="{BOOK}" rel="noopener">Book Online</a></div>'
 REV=f'<section class="reviews"><h2>Customer Reviews</h2><p>See what our customers say about Express Septic Tank Pumping on Google, or leave us a review.</p><a class="btn" href="{REVIEW}" rel="noopener">Read &amp; Leave a Google Review</a></section>'
 def page(path,title,desc,h1,body,extra=None):
@@ -85,10 +86,10 @@ def page(path,title,desc,h1,body,extra=None):
 <title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{BASE}{path}">
 <meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website">
 <link rel="stylesheet" href="/styles.css">{schema(extra)}</head><body>
-<header><a class="logo" href="/">{NAME}</a><nav>{NAV}<a href="/septic-system-maintenance/">Maintenance</a><a href="/how-it-works/">How It Works</a><a href="/how-often-to-pump-septic-tank/">How Often to Pump</a><a href="/faq/">FAQ</a></nav><a class="hcall" href="tel:{TEL}">{PHONE}</a></header>
+<header><a class="logo" href="/">{NAME}</a><nav>{NAV}<a href="/septic-system-maintenance/">Maintenance</a><a href="/about/">About</a><a href="/how-it-works/">How It Works</a><a href="/how-often-to-pump-septic-tank/">How Often to Pump</a><a href="/faq/">FAQ</a></nav><a class="hcall" href="tel:{TEL}">{PHONE}</a></header>
 <main><h1>{h1}</h1>{CTA}{body}{REV}{CTA}</main>
 <footer><div><strong>{NAME}</strong><br>23357 Olde Meadowbrook Circle, Estero, FL 34134<br><a href="tel:{TEL}">{PHONE}</a><br>Service-area business — we come to you.</div>
-<div><strong>Services</strong>{NAV}</div><div><strong>Areas</strong>{foot}</div><div><strong>Info</strong><a href="/">Home</a><a href="/septic-system-maintenance/">Septic Maintenance</a><a href="/how-it-works/">How It Works</a><a href="/how-often-to-pump-septic-tank/">How Often to Pump</a><a href="/faq/">FAQ</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></footer>
+<div><strong>Services</strong>{NAV}</div><div><strong>Areas</strong>{foot}</div><div><strong>Info</strong><a href="/">Home</a><a href="/septic-system-maintenance/">Septic Maintenance</a><a href="/about/">About</a><a href="/how-it-works/">How It Works</a><a href="/how-often-to-pump-septic-tank/">How Often to Pump</a><a href="/faq/">FAQ</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></footer>
 <a class="sticky" href="tel:{TEL}">Tap to Call {PHONE}</a></body></html>'''
   pre="../"*(path.count("/")-1) or "./"
   html=html.replace('href="/','href="'+pre).replace('src="/','src="'+pre).replace("href='/","href='"+pre)
@@ -101,17 +102,17 @@ page("/","Septic Tank Pumping Southwest Florida | Lee & Collier County | Express
  "Septic Tank Pumping in Southwest Florida — Estero, Bonita Springs, Naples &amp; Fort Myers",
  photo("home-hero","Express Septic pump truck on a job")+
  "<p class='emerg'><strong>Septic emergency or backup?</strong> Call <a href='tel:"+TEL+"'>"+PHONE+"</a> now.</p><p>Looking for septic service near you? Express Septic Tank Pumping provides septic tank pumping, septic tank cleaning and septic inspections for homes and businesses across Southwest Florida. Based in Estero, we serve homes and businesses throughout Lee and Collier County, including Bonita Springs, Naples, Fort Myers, Cape Coral and more.</p>"
- "<h2>Our Septic Services</h2>"+svc_list+
+ "<h2>Why Choose Express Septic Tank Pumping</h2><ul><li><strong>Honest, upfront pricing:</strong> we give you a quote before we start.</li><li><strong>Reliable:</strong> we show up on time and do what we say.</li><li><strong>Fair rates:</strong> straightforward pricing for the work you need.</li><li><strong>Customer service first:</strong> we treat every customer right. <a href='/about/'>About us</a>.</li></ul><h2>Our Septic Services</h2>"+svc_list+
  "<h2>Why Regular Septic Pumping Matters</h2><p>Pumping your septic tank every 3–5 years keeps solids out of your drain field, prevents backups and sewage odors, and helps your system last. Florida's high water table and heavy summer rains make maintenance even more important.</p>"
  +photo("home-job-1","Septic tank being pumped")+
  "<h2>How much does it cost to pump a septic tank in Florida?</h2><p>Every tank and property is different, so cost depends on tank size, access and location. Call <a href='tel:"+TEL+"'>"+PHONE+"</a> for a quote.</p>"
  "<h2>Areas We Serve</h2>"+city_list)
 for s in SERVICES:
-  body=photo(s[0],s[1]+" job photo")+"".join(f"<p>{p}</p>" for p in s[4])+EXTRA.get(s[0],"")+"<h2>Pricing</h2><p>Call for a quote — <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p><h2>Service Areas</h2>"+city_list+"<h2>Other Services</h2>"+svc_list
+  body=photo(s[0],s[1]+" job photo")+VAL+"".join(f"<p>{p}</p>" for p in s[4])+EXTRA.get(s[0],"")+"<h2>Pricing</h2><p>Call for a quote — <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p><h2>Service Areas</h2>"+city_list+"<h2>Other Services</h2>"+svc_list
   page(f"/{s[0]}/",s[2],s[3],s[1]+" in Southwest Florida",body,{"@context":"https://schema.org","@type":"Service","name":s[1],"provider":{"@type":"LocalBusiness","name":NAME},"areaServed":[c+", FL" for c in CITIES_ALL]})
 for c,(county,a,b) in CITY.items():
   near=[x for x in CITIES_ALL if x!=c]
-  body=(photo(slug(c),f"Septic tank pumping job in {c}, FL")+f"<p>Need septic tank pumping in {c}, FL? Express Septic Tank Pumping serves homes and businesses in {c} and across {county}. {a}</p><p>{b}</p>"
+  body=(photo(slug(c),f"Septic tank pumping job in {c}, FL")+VAL+f"<p>Need septic tank pumping in {c}, FL? Express Septic Tank Pumping serves homes and businesses in {c} and across {county}. {a}</p><p>{b}</p>"
    f"<h2>Septic Tank Cleaning {c}</h2><p>Septic tank cleaning in {c} removes the sludge and scum that build up over time and helps protect your drain field.</p><h2>Septic Service in {c}, FL</h2><p>For septic service in {c}, FL, tap to call or book online.</p>"
    f"<h2>Septic Services in {c}</h2><ul class='cards'>"+"".join(f'<li><a href="/{s[0]}/">{s[1]} in {c}</a></li>' for s in SERVICES)+"</ul>"
    f"<h2>Signs Your {c} Septic Tank Needs Pumping</h2><p>Slow drains, gurgling, odors outside, or soggy ground over the drain field. If it's been 3–5 years since your last pump-out, it's time to call.</p>"
@@ -143,6 +144,8 @@ page("/how-often-to-pump-septic-tank/","How Often Should You Pump Your Septic Ta
  "<h2>Factors That Change How Often You Pump</h2><ul><li><strong>Garbage disposal:</strong> adds solids; the EPA notes disposals can significantly increase sludge and scum, so pump more often.</li><li><strong>Water use:</strong> heavy laundry, long showers and leaks push more water through the tank.</li><li><strong>Household size:</strong> more people means faster buildup.</li><li><strong>Seasonal and rental homes in Southwest Florida:</strong> snowbird homes and vacation rentals can see heavy use in season and with guests, so rentals may need pumping more often than household size suggests.</li><li><strong>Florida rainy season:</strong> high water tables stress drain fields, so a pumped tank helps.</li></ul>"
  "<h2>Signs Your Tank Is Due Now</h2><ul><li>Slow drains or gurgling pipes</li><li>Sewage odors inside or outside</li><li>Soggy ground or extra-green grass over the drain field</li><li>Toilets or drains backing up</li><li>More than 3–5 years since the last pump-out, or you don't know</li></ul>"
  "<p>Read our <a href='/septic-system-maintenance/'>septic system maintenance guide</a> or see <a href='/how-it-works/'>how our service works</a>.</p><h2>Our Services</h2>"+svc_list)
+page("/about/","About Express Septic Tank Pumping | Honest, Reliable Septic Service","Express Septic Tank Pumping is an Estero-based septic company built on honesty, reliability, fair rates and great customer service. Call (239) 451-3261.","About Express Septic Tank Pumping",
+ photo("about-team","Express Septic Tank Pumping crew")+"<p>Express Septic Tank Pumping is a local septic service company based in Estero, Florida, serving homes and businesses across Lee and Collier County.</p><h2>What We Stand For</h2><ul><li><strong>Honesty.</strong> Upfront pricing and straight answers about your system — no surprises.</li><li><strong>Reliability.</strong> We show up on time and do the job right.</li><li><strong>Fairness.</strong> Fair rates for the work you actually need.</li><li><strong>Customer service.</strong> Treating customers right is our top priority.</li></ul><h2>Our Services</h2>"+svc_list+"<p>See <a href='/how-it-works/'>how it works</a>.</p>")
 faqhtml="".join(f"<h2>{q}</h2><p>{a}</p>" for q,a in FAQ)
 page("/faq/","Septic Tank FAQ | How Often to Pump, Cost & Signs | Express Septic","Answers to common septic tank questions: how often to pump, signs your tank is full, cost and what areas Express Septic Tank Pumping serves.","Septic Tank Pumping FAQ",faqhtml,
  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in FAQ]})

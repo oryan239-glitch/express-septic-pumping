@@ -1,4 +1,5 @@
 # Photo slots (JPG, ~1600x1000)
+- assets/img/about-team.jpg
 - assets/img/commercial-septic-tank-pumping.jpg
 - assets/img/home-hero.jpg
 - assets/img/home-job-1.jpg
