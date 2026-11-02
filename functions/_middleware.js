@@ -12,6 +12,7 @@ function revealJobs(res, link) {
 }
 
 export async function onRequest(ctx) {
+  { const u = new URL(ctx.request.url); if (u.hostname === 'www.expresssepticpumping.com') { u.hostname = 'expresssepticpumping.com'; u.protocol = 'https:'; return Response.redirect(u.toString(), 301); } }
   const { request, env, next } = ctx;
   const url = new URL(request.url);
   if (!['GET', 'HEAD'].includes(request.method)) return next();
