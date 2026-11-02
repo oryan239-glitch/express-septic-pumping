@@ -8,6 +8,12 @@ const ZIPS = {
   'Fort Myers': ['33901','33905','33907','33908','33912','33913','33916','33919','33966','33967'],
   'Cape Coral': ['33904','33909','33914','33990','33991','33993'],
   'Lehigh Acres': ['33936','33971','33972','33973','33974','33976'],
+  'Golden Gate Estates': ['34117','34120'],
+  'LaBelle': ['33935','33440'],
+  'Charlotte Harbor': ['33980'],
+  'Harbour Heights': ['33983'],
+  'Alva': ['33920'],
+  // Fort Myers Shores/Tice (33905), South Fort Myers (33907/33908/33919) and Corkscrew (33928/33967) fall under ZIPs listed above.
 };
 // Requests go to ServiceM8's booking page (owner-approved). No in-site submission, so never a fake 'sent'.
 const PHONE = '(239) 451-3261';
