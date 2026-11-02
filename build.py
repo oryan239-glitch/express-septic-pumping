@@ -267,7 +267,7 @@ PAGES.remove("/completed-jobs/")
 ROBOTS["/404/"]='<meta name="robots" content="noindex">'
 page("/404/","Page not found | Express Septic Tank Pumping","Page not found.","Page not found","<p>That page doesn't exist. Try the <a href='/'>home page</a>, <a href='/service-area/'>service area</a>, or call <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>")
 PAGES.remove("/404/")
-h=open("404/index.html").read().replace('href="../','href="/').replace('src="../','src="/').replace(', ../',', /').replace('srcset="../','srcset="/').replace("href='../","href='/")
+h=open("404/index.html").read().replace('<link rel="canonical" href="'+BASE+'/404/">','').replace('<meta property="og:url" content="'+BASE+'/404/">','').replace('href="../','href="/').replace('src="../','src="/').replace(', ../',', /').replace('srcset="../','srcset="/').replace("href='../","href='/")
 open("404.html","w").write(h); shutil.rmtree("404")
 shutil.copy("src/styles.css","styles.css"); shutil.copy("src/site.js","site.js")
 open("sitemap.xml","w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+"".join(f"<url><loc>{BASE}{p}</loc></url>" for p in PAGES)+"</urlset>\n")
