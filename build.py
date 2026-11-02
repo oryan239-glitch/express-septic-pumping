@@ -5,7 +5,8 @@ BASE="https://expresssepticpumping.com"
 NAME="Express Septic Tank Pumping"; PHONE="(239) 451-3261"; TEL="+12394513261"
 BOOK="https://book.servicem8.com/request_booking?uuid=019fca12-b6bf-721c-8a2b-41d89e1a1b5b"
 EMAIL="expressseptictankpumping@gmail.com"
-REVIEW="https://g.page/r/CYxfVw5rrgwLEBM/review"
+REVIEW="https://g.page/r/CYxfVw5rrgwLEBM/review"  # write-a-review (Leave a review)
+REVIEWS_READ="https://www.google.com/maps?cid=796203008963075980"  # Google Maps listing, place ChIJ2U4mCDcKRGcRjF9XDmuuDAs
 CITIES_ALL=["Estero","Bonita Springs","Naples","North Naples","Fort Myers","Cape Coral","Lehigh Acres","San Carlos Park"]
 SERVICES=[
  ("septic-tank-pumping","Septic Tank Pumping","Septic Tank Pumping & Septic Tank Cleaning | SW Florida | Express Septic","Septic tank pumping, septic pumping & septic tank cleaning near you in Estero, Naples, Fort Myers & nearby. Ask about septic tank pumping cost: (239) 451-3261.",
@@ -78,7 +79,7 @@ FAQ=[("How often should I pump my septic tank?","Most homes need septic tank pum
 ("Do you do septic inspections for real estate?","Yes. We offer septic inspections for buyers, sellers and homeowners."),
 ("What areas do you serve?","Estero, Bonita Springs, Naples, North Naples, Fort Myers, Cape Coral, Lehigh Acres, San Carlos Park and nearby areas of Lee and Collier County."),
 ("What shouldn't go into a septic system?","Avoid grease, wipes (even 'flushable'), paper towels, feminine products, harsh chemicals and medications. They can clog the system or harm the bacteria that break down waste."),
-("How do I book?","Tap Book Online to request a time, or call (239) 451-3261.")]
+("How do I book?","For routine pumping, use our ServiceM8 booking page to request a time; you enter your details once, there. For a backup, call (239) 451-3261 day or night.")]
 PAGES=[]
 EXTRA={
 "septic-tank-pumping":"<h2>Septic Pumping Near Me</h2><p>We provide septic pumping and septic tank cleaning across Lee and Collier County. Residential septic tank pumping starts at $399.99; call to confirm for your tank. Your final quote depends on tank size, tank access, whether the lid needs locating or digging, and after-hours visits.</p><h2>Emergency Septic Service</h2><p>Sewage backing up or a tank overflowing? Call <a href='tel:+12394513261'>(239) 451-3261</a> right away and avoid running water until we get there. Night or day, we're available for emergencies. For routine service, we can often make it same day when possible.</p>",
@@ -124,8 +125,11 @@ NAVL="".join(f'<a href="{h}">{t}</a>' for h,t in NAVITEMS)
 NAV="".join(f'<a href="/{s[0]}/">{s[1]}</a>' for s in SERVICES)+'<a href="/commercial-grease-trap-service/">Commercial Grease Trap Service</a>'
 VAL="<p class='values'>Honest, reliable and fair — great customer service is our top priority.</p>"
 EMERG="Night or day, we're available for emergencies. Call (239) 451-3261. For routine service, we can often make it same day when possible."
-CTA=f'<div class="cta"><a class="btn primary" href="tel:{TEL}">Call Express <span class="num">{PHONE}</span></a><a class="btn ghost" href="/contact/#request">Request service</a></div>'
-REV=f'<section class="band reviews"><div class="wrap"><p class="eyebrow">Reviews</p><h2>Read what customers say on Google</h2><p>Our reviews live on our Google Business Profile, where you can read them in full or leave your own.</p><a class="btn ghost" href="{REVIEW}" rel="noopener">Open our Google reviews</a></div></section>'
+CTA=f'<div class="cta"><a class="btn primary" href="tel:{TEL}">Call Express · {PHONE}</a><a class="btn ghost" href="/contact/#book">Book routine service</a></div>'
+AVAIL="Call day or night for a backup. For routine pumping, ask about same-day availability."
+PRICE_COND="Your final price depends on tank size, tank access, whether the lid needs locating or digging, and after-hours visits."
+REV=f'<section class="band reviews"><div class="wrap revrow"><div><p class="eyebrow">Reviews</p><h2>See what customers say on Google</h2><p>Our reviews are on our Google Business Profile.</p></div><div class="revlinks"><a class="btn dark" href="{REVIEWS_READ}" rel="noopener">Read our Google reviews</a><a class="txtlink" href="{REVIEW}" rel="noopener">Had a job with us? Leave a review</a></div></div></section>'
+ROBOTS={}
 def page(path,title,desc,h1,body,extra=None,hero=None,lead=""):
   foot="".join(f'<a href="/{slug(c)}/">{c}</a>' for c in CITIES_ALL[:12])+'<a href="/service-area/">All areas</a>'
   H1A=' data-sth-field="headline"' if path=="/" else ""
@@ -134,18 +138,18 @@ def page(path,title,desc,h1,body,extra=None,hero=None,lead=""):
   if hero: top=top.replace("<h1>",f"<h1{H1A}>",1)
   html=f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESN48M0VEZ"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-ESN48M0VEZ');</script>
-<title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{BASE}{path}"><meta name="theme-color" content="#0f1b2d">
+<title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{BASE}{path}">{ROBOTS.get(path,"")}<meta name="theme-color" content="#0f1b2d">
 <meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}/assets/img/truck-wide-1536.webp">
-{'<link rel="preload" as="image" href="/assets/img/truck-wide-1024.webp" imagesrcset="/assets/img/truck-wide-640.webp 640w, /assets/img/truck-wide-1024.webp 1024w, /assets/img/truck-wide-1536.webp 1536w" imagesizes="(min-width:960px) 52vw, 100vw">' if hero else ''}
+{'<link rel="preload" as="image" href="/assets/img/truck-wide-1024.webp" imagesrcset="/assets/img/truck-wide-640.webp 640w, /assets/img/truck-wide-1024.webp 1024w, /assets/img/truck-wide-1536.webp 1536w" imagesizes="100vw">' if hero else ''}
 <link rel="stylesheet" href="/styles.css">{schema(extra)}<script src="/site.js" defer></script></head><body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="top"><div class="wrap bar"><a class="logo" href="/" aria-label="{NAME} home"><span class="mark">EXPRESS</span><span class="sub">Septic Tank Pumping</span></a>
 <nav aria-label="Primary">{NAVL}</nav><a class="hcall" href="tel:{TEL}"><span class="lbl">Call</span> {PHONE}</a>
 <details class="menu"><summary aria-label="Open menu">Menu</summary><nav aria-label="Mobile">{NAVL}<a href="/contact/">Contact</a><a href="tel:{TEL}">Call {PHONE}</a></nav></details></div></header>
-<main id="main">{top}<div class="body">{body}</div>{REV}<section class="band closer"><div class="wrap"><h2>Talk to Express about your tank</h2><p>{EMERG}</p>{CTA}</div></section></main>
+<main id="main">{top}<div class="body">{body}</div>{REV}<section class="band closer"><div class="wrap"><h2>Talk to Express about your tank</h2><p>{AVAIL}</p>{CTA}</div></section></main>
 <footer id="contact" class="foot"><div class="wrap fgrid"><div><p class="mark">EXPRESS</p><p>{NAME} LLC<br>23357 Olde Meadowbrook Circle, Estero, FL 34134<br><a href="tel:{TEL}">{PHONE}</a><br><a data-sth-field="email" href="{"mailto:"+EMAIL if EMAIL else "/contact/"}">{EMAIL or "Send a request"}</a></p><p>Owner-operated. Licensed &amp; insured. We come to you.</p><p class="dot">USDOT 6673233</p></div>
 <div><p class="fh">Services</p>{NAV}</div><div><p class="fh">Areas</p>{foot}</div><div><p class="fh">Info</p><a href="/">Home</a><a href="/how-it-works/">How it works</a><a href="/septic-system-maintenance/">Septic maintenance</a><a href="/how-often-to-pump-septic-tank/">How often to pump</a><a href="/about/">About</a><a href="/faq/">FAQ</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></div></footer>
-<div class="mbar" role="region" aria-label="Quick contact"><a class="btn primary" href="tel:{TEL}">Call Express</a><a class="btn ghost" href="/contact/#request">Request service</a></div></body></html>'''
+<div class="mbar" role="region" aria-label="Quick contact"><a class="btn primary" href="tel:{TEL}">Call · {PHONE}</a><a class="btn ghost" href="/contact/#book">Book</a></div></body></html>'''
   html=html.replace("<div class=\"body\"></div>","")
   pre="../"*(path.count("/")-1) or "./"
   html=html.replace('href="/','href="'+pre).replace('src="/','src="'+pre).replace(', /assets',', '+pre+'assets').replace('srcset="/','srcset="'+pre).replace("href='/","href='"+pre).replace('imagesrcset="'+pre,'imagesrcset="'+pre)
@@ -153,39 +157,32 @@ def page(path,title,desc,h1,body,extra=None,hero=None,lead=""):
 def sec(inner,cls=""): return f'<section class="sec {cls}"><div class="wrap">{inner}</div></section>'
 svc_list="<ul class='rows'>"+"".join(f'<li><a href="/{s[0]}/">{s[1]}</a></li>' for s in SERVICES)+"<li><a href='/commercial-grease-trap-service/'>Commercial Grease Trap Service</a></li></ul>"
 city_list="<ul class='cities'>"+"".join(f'<li><a href="/{slug(c)}/">{c}</a></li>' for c in CITIES_ALL)+"</ul>"
-REQUEST=f'''<div class="req" id="request" data-request>
-<h2>Request service</h2><p class="muted">Pick what you need. We'll carry it through.</p>
-<div class="choices" role="group" aria-label="What do you need?">
-<button type="button" class="choice" data-choice="pump" aria-pressed="false"><b>Pump my septic tank</b><span>Routine pumping for a home</span></button>
-<button type="button" class="choice" data-choice="backup" aria-pressed="false"><b>I'm experiencing a backup</b><span>Call now — fastest way to reach us</span></button>
-<button type="button" class="choice" data-choice="grease" aria-pressed="false"><b>Commercial grease trap service</b><span>One-time or recurring</span></button></div>
-<div class="panel" data-panel="backup" hidden><p class="big">Call Express now at <a href="tel:{TEL}">{PHONE}</a>.</p><p>{EMERG}</p><a class="btn primary" href="tel:{TEL}">Call {PHONE}</a></div>
-<form class="panel" data-panel="form" hidden novalidate><input type="hidden" name="service">
-<p class="picked" aria-live="polite"></p>
-<label>Name<input name="name" autocomplete="name" required></label>
-<label>Phone<input name="phone" type="tel" autocomplete="tel" inputmode="tel" required></label>
-<label>City or ZIP<input name="where" autocomplete="postal-code" required></label>
-<label>Note <span class="muted">(optional)</span><textarea name="note" rows="3"></textarea></label>
-<p class="err" role="alert"></p><button class="btn primary" type="submit">Continue to book with ServiceM8</button><p class="muted">Or call <a href="tel:{TEL}">{PHONE}</a>.</p></form>
-<div class="panel" data-panel="fallback" hidden role="status" tabindex="-1"><p class="big">Almost done: finish your request on our ServiceM8 booking page.</p><p>Your request hasn't been sent yet. ServiceM8 opened in a new tab; enter these details there:</p><p><strong class="sum"></strong></p><div class="cta"><a class="btn primary" data-sm8 href="{BOOK}" target="_blank" rel="noopener">Continue to book with ServiceM8</a><a class="btn ghost" href="tel:{TEL}">Or call {PHONE}</a></div></div>
-<noscript><p>Call <a href="tel:{TEL}">{PHONE}</a> or <a href="{BOOK}">book online</a>.</p></noscript></div>'''
+REQUEST=f'''<div class="book" id="book"><p class="eyebrow">Book or call</p><h2>What do you need?</h2>
+<ol class="paths">
+<li class="path urgent"><p class="pk">I'm experiencing a backup</p><p>Don't book online. Call now and stop running water until we get there. Day or night.</p><a class="btn primary" href="tel:{TEL}">Call now · {PHONE}</a></li>
+<li class="path"><p class="pk">Routine pumping for my home</p><p>Request a time on ServiceM8, the booking system we use. You enter your details there, once. From $399.99.</p><a class="btn dark" href="{BOOK}" rel="noopener" target="_blank">Book routine service on ServiceM8<span class="sr"> (opens in a new tab)</span> ↗</a></li>
+<li class="path"><p class="pk">Grease trap for a restaurant or kitchen</p><p>One-time pump-outs or a recurring schedule. Call to set it up.</p><a class="btn ghost" href="tel:{TEL}">Call {PHONE}</a> <a class="txtlink" href="/commercial-grease-trap-service/">Grease trap service</a></li>
+</ol></div>'''
 ZIPBOX='''<div class="zip" data-zip><h3>Check your ZIP</h3><form data-zipform novalidate><label for="zipin">5-digit ZIP code</label><div class="zrow"><input id="zipin" inputmode="numeric" maxlength="5" autocomplete="postal-code" pattern="[0-9]{5}"><button class="btn primary" type="submit">Check</button></div></form><p class="zres" aria-live="polite"></p></div>'''
 ROUTE='<svg class="route" viewBox="0 0 600 160" aria-hidden="true" focusable="false"><path d="M10 140 C 90 140, 110 40, 200 60 S 330 140, 400 90 S 520 20, 590 30"/><circle cx="10" cy="140" r="5"/><circle cx="590" cy="30" r="5"/></svg>'
-HERO=f'''<section class="hero"><div class="wrap hgrid"><div class="hcopy"><p class="eyebrow">Owner-operated • Southwest Florida</p><h1>Septic tank pumping in Southwest Florida</h1>
-<p class="lede" data-sth-field="description">Need your tank pumped or dealing with a backup? Call Express to talk through what's happening, confirm service at your address, and get pricing.</p>{CTA}<p class="lic">Licensed &amp; insured</p><p class="note">{EMERG}</p></div>
-<figure class="hphoto">{HERO_IMG}<figcaption><span>UNIT 4200</span><span>Split tank · Septic &amp; grease</span></figcaption></figure></div></section>'''
+HERO=f'''<section class="hero"><figure class="hphoto">{HERO_IMG.replace('sizes="(min-width:960px) 52vw, 100vw"','sizes="100vw"')}</figure><div class="wrap hcopy"><p class="eyebrow">Owner-operated in Estero</p><h1>Septic tank pumping in Southwest Florida</h1>
+<p class="avail" data-sth-field="description">{AVAIL}</p>
+<p class="from">Residential pumping from <strong>$399.99</strong> <a href="#pricing">What affects the price</a></p>
+<div class="cta"><a class="btn primary big" href="tel:{TEL}">Call Express · {PHONE}</a><a class="btn ghost" href="#book">Book routine service</a></div></div></section>'''
 page("/","Septic Tank Pumping Southwest Florida | Bonita Springs, Estero, Fort Myers | Express Septic",
  "Owner-operated septic tank pumping in Southwest Florida: Bonita Springs, Estero, Naples, Fort Myers, Cape Coral & Lehigh Acres. Grease trap service too. Call (239) 451-3261.",
  "Septic tank pumping in Southwest Florida",
- sec(f'''<div class="split"><div><p class="eyebrow">What we do</p><h2 id="services">Two jobs, done right</h2></div><div class="two">
-<a class="feat" href="/residential-septic-tank-pumping/"><span class="k">Homes</span><b>Residential septic pumping</b><span>We find the lid, pump the tank and tell you what we saw.</span></a>
-<a class="feat" href="/commercial-grease-trap-service/"><span class="k">Businesses</span><b>Commercial grease trap service</b><span>One-time pump-outs or a recurring schedule for kitchens.</span></a></div></div>
-<div class="price-slot"><p class="pp">Residential septic pumping starting at $399.99</p><p>Your final quote depends on tank size, tank access, whether the lid needs locating or digging, and after-hours visits. Call to confirm for your tank.</p></div><p class="more">Also: <a href="/commercial-septic-tank-pumping/">commercial septic pumping</a> · <a href="/septic-inspections/">septic inspections</a> · <a href="/septic-tank-pumping/">septic tank cleaning</a></p>''')+
- sec(f'''<div class="split"><div><p class="eyebrow">The truck</p><h2>A 4,200-gallon split-tank truck</h2></div><div><p>Our truck carries 4,200 gallons split into separate compartments, so it's set up for both septic and grease trap work. In plain terms: one trip can handle a full household tank, and grease stays separate from septic.</p><dl class="spec"><div><dt>Capacity</dt><dd>4,200 gal</dd></div><div><dt>Tank</dt><dd>Split</dd></div><div><dt>Work</dt><dd>Septic · Grease</dd></div><div><dt>Coverage</dt><dd>Licensed &amp; insured</dd></div><div><dt>USDOT</dt><dd>6673233</dd></div></dl></div></div>'''.replace("<div><p>Our truck","<div>"+SIDE+"<p>Our truck",1),"ink")+
- sec(f'''<div class="split"><div><p class="eyebrow">The owner</p><h2>Meet O'Ryan Atkinson</h2></div><div>'''+CREW.replace('alt="Express Septic Tank Pumping crew with the 4,200-gallon vacuum truck"','alt="ORyan Atkinson, owner of Express Septic Tank Pumping"').replace("</figure>","<figcaption>ORyan Atkinson, owner of Express Septic Tank Pumping</figcaption></figure>")+f'''<p>Express is owner-operated. When you call, you're talking to the person who runs the business. Express is licensed &amp; insured. Honest, reliable and fair — great customer service is our top priority.</p><p><a href="/about/">More about Express</a></p></div></div>''')+
+ sec(f'''<div class="svc"><div class="svch"><p class="eyebrow">What we do</p><h2 id="services">Septic pumping for homes. Grease traps for kitchens.</h2></div>
+<ul class="svcl"><li><a href="/residential-septic-tank-pumping/"><b>Residential septic pumping</b><span>We find the lid, pump the tank and tell you what we saw.</span></a></li>
+<li><a href="/commercial-grease-trap-service/"><b>Commercial grease trap service</b><span>For restaurants and commercial kitchens. One-time or recurring.</span></a></li>
+<li><a href="/commercial-septic-tank-pumping/"><b>Commercial septic pumping</b><span>Offices, rentals, churches and other properties on septic.</span></a></li>
+<li><a href="/septic-inspections/"><b>Septic inspections</b><span>For buyers, sellers and homeowners.</span></a></li></ul>
+<div class="price" id="pricing"><p class="pp">Residential pumping from $399.99</p><p>{PRICE_COND} Call to confirm the price for your tank.</p></div></div>''')+
+ f'''<section class="truck"><figure class="tphoto">{SIDE.replace('sizes="(min-width:960px) 680px, 100vw"','sizes="100vw"').replace('<figure class="shot">','').replace('</figure>','')}</figure><div class="wrap tcopy"><p class="eyebrow">The truck</p><h2>4,200 gallons, split tank</h2><p>The tank is split into separate compartments, so septic and grease never mix, and one trip handles a full household tank. Licensed &amp; insured · USDOT 6673233.</p></div></section>'''+
+ sec(f'''<div class="owner">'''+CREW.replace('alt="Express Septic Tank Pumping crew with the 4,200-gallon vacuum truck"','alt="ORyan Atkinson, owner of Express Septic Tank Pumping, with the Express truck"').replace('sizes="(min-width:960px) 680px, 100vw"','sizes="(min-width:960px) 600px, 100vw"').replace("</figure>","<figcaption>ORyan Atkinson, owner, with the Express truck</figcaption></figure>")+f'''<div><p class="eyebrow">The owner</p><blockquote class="promise">When you call, you're talking to the person who runs the business.</blockquote><p>Express is owned and run by ORyan Atkinson, based in Estero. Licensed &amp; insured. Honest, reliable and fair: great customer service is our top priority.</p><p><a class="btn ghost" href="tel:{TEL}">Call ORyan · {PHONE}</a></p><p><a href="/about/">More about Express</a></p></div></div>''',"warm")+
  f'<section class="sec" data-sth-recent-jobs hidden><div class="wrap"><p class="eyebrow">Recent jobs</p><h2>Completed jobs</h2><p>Photos and notes from recent work around Southwest Florida.</p><a class="btn ghost" data-sth-recent-jobs-link href="/completed-jobs/">See completed jobs</a></div></section>'+
- sec(f'<div class="split"><div><p class="eyebrow">Service area</p><h2>Lee, Collier &amp; Charlotte County</h2><p>Based in Estero, between Bonita Springs and Fort Myers.</p></div><div>{ZIPBOX}</div></div>{ROUTE}<p><a href="/service-area/">See every area we serve</a></p>',"area")+
- sec(REQUEST),hero=HERO)
+ sec(f'<div class="split"><div><p class="eyebrow">Service area</p><h2>Lee, Collier &amp; Charlotte County</h2><p>Based in Estero, between Bonita Springs and Fort Myers. We also cover LaBelle in Hendry County.</p><p><a href="/service-area/">See every area we serve</a></p></div><div>{city_list}</div></div>',"area")+
+ sec(REQUEST,"bookband"),hero=HERO)
 RES_EXTRA=("<h2>What happens during a visit</h2>"+LIDS+"<ol><li><strong>We locate the tank.</strong> We find the tank and its lid or access port. If the lid is buried, we may need to dig to reach it.</li><li><strong>We pump it out.</strong> The truck pumps the liquid, sludge and scum out of the tank.</li><li><strong>We tell you what we saw.</strong> You'll hear about anything that looks like it needs attention.</li></ol>"
  "<h2>How to prepare</h2><ul><li>If you know where the lid is, mark it or tell us when you call.</li><li>Make sure the truck can get close: clear the driveway and keep vehicles off the drain field.</li><li>Keep pets inside and unlock any gates.</li><li>Have your last pumping date handy if you know it.</li></ul>"
  "<h2>What affects the price</h2><ul><li>Tank size and how full it is</li><li>Access: how far the truck has to reach and whether the lid is buried and needs locating or digging</li><li>Location within our service area</li><li>Timing: after-hours or emergency visits can affect the quote</li></ul>"
@@ -200,7 +197,7 @@ for c,(county,a,b) in CITY.items():
   body=(photo(slug(c),f"Septic tank pumping job in {c}, FL")+VAL+f"<p>Need septic tank pumping in {c}, FL? Express Septic Tank Pumping serves homes and businesses in {c} and across {county}. {a}</p><p>{b}</p>"
    f"<p class='emerg'><strong>Septic emergency in {c}?</strong> "+"Night or day, we\'re available for emergencies. For routine service, we can often make it same day when possible. Call <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>"
    +CITY_NOTES.get(c,"")+
-   f"<h2>Septic Tank Cleaning {c}</h2><p>Septic tank cleaning in {c} removes the sludge and scum that build up over time and helps protect your drain field.</p><h2>Septic Service in {c}, FL</h2><p>For septic service in {c}, FL, tap to call or book online.</p>"
+   f"<h2>Septic Tank Cleaning {c}</h2><p>Septic tank cleaning in {c} removes the sludge and scum that build up over time and helps protect your drain field.</p><h2>Septic Service in {c}, FL</h2><p>For septic service in {c}, FL, tap to call, or book routine pumping online.</p>"
    f"<h2>Septic Services in {c}</h2><ul class='cards'>"+"".join(f'<li><a href="/{s[0]}/">{s[1]} in {c}</a></li>' for s in SERVICES)+"</ul>"
    f"<h2>Signs Your {c} Septic Tank Needs Pumping</h2><p>Slow drains, gurgling, odors outside, or soggy ground over the drain field. If it's been 3–5 years since your last pump-out, it's time to call.</p>"
    f"<p><a href='/'>Back to Express Septic Tank Pumping home</a> · Call <a href='tel:{TEL}'>{PHONE}</a> for a quote in {c}.</p>"
@@ -239,7 +236,7 @@ page("/commercial-grease-trap-service/","Commercial Grease Trap Service & Pumpin
  REAR+"<p>Restaurants and commercial kitchens need their grease traps pumped before fats, oils and grease build up and cause backups, odors or problems with the drain line. Express pumps grease traps for businesses across Southwest Florida.</p>"
  +SIDE+"<p>Our 4,200-gallon split-tank truck keeps grease separate from septic loads, so we can handle grease trap work and septic work on the same truck.</p>"
  "<h2>One-time or recurring</h2><p>Some businesses call us when a trap is full. Most are better off on a recurring schedule based on how much cooking they do and the size of the trap. Tell us about your kitchen and we'll talk through how often makes sense.</p>"
- "<p><a class='btn primary' href='/contact/?service=grease#request'>Ask about recurring service</a></p>"
+ "<p><a class='btn primary' href='tel:"+TEL+"'>Call about recurring service · "+PHONE+"</a></p>"
  "<h2>Signs your grease trap needs service</h2><ul><li>Slow sinks or floor drains in the kitchen</li><li>Grease or odors around the trap lid</li><li>It's been longer than your usual schedule since the last pump-out</li></ul>"
  "<h2>What to have ready when you call</h2><ul><li>Business name and address</li><li>Where the trap is and how it's accessed</li><li>Trap size, if you know it</li><li>When it was last pumped</li></ul>"
  "<h2>Other services</h2>"+svc_list,
@@ -254,7 +251,7 @@ page("/service-area/","Septic Pumping Service Area | Lee, Collier, Charlotte & H
 page("/contact/","Contact & Request Septic Service | Express Septic Tank Pumping",
  "Call Express Septic Tank Pumping at (239) 451-3261, book online, or request septic pumping or grease trap service.",
  "Contact Express",
- f"<p>The fastest way to reach us is by phone: <a href='tel:{TEL}'>{PHONE}</a>. {EMERG}</p><p>You can also <a href='{BOOK}' rel='noopener'>book online through ServiceM8</a> or email <a href='mailto:{EMAIL}'>{EMAIL}</a>.</p>"+REQUEST+
+ f"<p>The fastest way to reach us is by phone: <a href='tel:{TEL}'>{PHONE}</a>. {AVAIL}</p><p>Email: <a href='mailto:{EMAIL}'>{EMAIL}</a></p>"+REQUEST+
  "<h2>Mailing address</h2><p>Express Septic Tank Pumping LLC<br>23357 Olde Meadowbrook Circle, Estero, FL 34134</p>")
 faqhtml="".join(f"<h2>{q}</h2><p>{a}</p>" for q,a in FAQ)
 page("/faq/","Septic Tank FAQ | How Often to Pump, Cost & Signs | Express Septic","Answers to common septic tank questions: how often to pump, signs your tank is full, cost and what areas Express Septic Tank Pumping serves.","Septic Tank Pumping FAQ",faqhtml,
@@ -263,9 +260,18 @@ page("/privacy/","Privacy Policy | Express Septic Tank Pumping","Privacy policy 
  f"<p>Express Septic Tank Pumping respects your privacy. Information you give us by phone, through our online booking provider (ServiceM8) or by text is used only to schedule and provide service, send quotes and invoices, and communicate with you about your job.</p><p>We do not sell your personal information. Mobile phone numbers and SMS consent are not shared with third parties for marketing purposes.</p><p>This site does not use advertising trackers. Online booking is handled by ServiceM8 under its own privacy policy.</p><p>Questions? Call {PHONE}.</p>")
 page("/terms/","Terms of Service | Express Septic Tank Pumping","Terms of service for the Express Septic Tank Pumping website and services.","Terms of Service",
  f"<p>By using this website you agree to these terms. Content is general information about septic systems and is not a substitute for an on-site evaluation.</p><p>Quotes are provided after discussing your property and needs. Scheduling is subject to availability.</p><p>If you opt in to text messages, message and data rates may apply. Reply STOP to opt out or HELP for help.</p><p>Contact: {NAME}, 23357 Olde Meadowbrook Circle, Estero, FL 34134, {PHONE}.</p>")
+ROBOTS["/completed-jobs/"]='<meta name="robots" content="noindex,follow">'
+page("/completed-jobs/","Completed Septic Jobs | Express Septic Tank Pumping","Completed septic tank pumping and grease trap jobs by Express Septic Tank Pumping in Southwest Florida.","Completed jobs",
+ "<p>We're putting together write-ups of recent jobs around Southwest Florida, with the city, what the customer needed and what we did. Customer addresses are never shown.</p><p>Until then, here's what a routine visit looks like:</p>"+LIDS+"<p>Lids uncovered and opened for pumping.</p>"+HOSE+"<p>Pumping the tank through the vacuum hose.</p><p>Need your tank pumped? Call <a href='tel:"+TEL+"'>"+PHONE+"</a> or see <a href='/residential-septic-tank-pumping/'>residential septic pumping</a>.</p>")
+PAGES.remove("/completed-jobs/")
+ROBOTS["/404/"]='<meta name="robots" content="noindex">'
+page("/404/","Page not found | Express Septic Tank Pumping","Page not found.","Page not found","<p>That page doesn't exist. Try the <a href='/'>home page</a>, <a href='/service-area/'>service area</a>, or call <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>")
+PAGES.remove("/404/")
+h=open("404/index.html").read().replace('href="../','href="/').replace('src="../','src="/').replace(', ../',', /').replace('srcset="../','srcset="/').replace("href='../","href='/")
+open("404.html","w").write(h); shutil.rmtree("404")
 shutil.copy("src/styles.css","styles.css"); shutil.copy("src/site.js","site.js")
 open("sitemap.xml","w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+"".join(f"<url><loc>{BASE}{p}</loc></url>" for p in PAGES)+"</urlset>\n")
 # Sitemap index: static pages + ServiceTechHub Project Showcase (served by functions/ once configured)
-open("sitemap-index.xml","w").write(f'<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><sitemap><loc>{BASE}/sitemap.xml</loc></sitemap><sitemap><loc>{BASE}/completed-jobs/sitemap.xml</loc></sitemap></sitemapindex>\n')
-open("robots.txt","w").write(f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap-index.xml\nSitemap: {BASE}/sitemap.xml\nSitemap: {BASE}/completed-jobs/sitemap.xml\n")
+open("sitemap-index.xml","w").write(f'<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><sitemap><loc>{BASE}/sitemap.xml</loc></sitemap></sitemapindex>\n')
+open("robots.txt","w").write(f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap-index.xml\nSitemap: {BASE}/sitemap.xml\n")
 print("\n".join(PAGES))

@@ -30,39 +30,6 @@ document.querySelectorAll('[data-zipform]').forEach((f) => f.addEventListener('s
     : `Call ${PHONE} to confirm service at your address.`;
 }));
 
-const LABEL = { pump: 'Pump my septic tank', backup: "I'm experiencing a backup", grease: 'Commercial grease trap service' };
-document.querySelectorAll('[data-request]').forEach((box) => {
-  const panels = (n) => box.querySelectorAll('.panel').forEach((p) => { p.hidden = p.dataset.panel !== n; });
-  const form = box.querySelector('form');
-  const pick = (v, focus) => {
-    box.querySelectorAll('.choice').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.choice === v)));
-    if (v === 'backup') { panels('backup'); if (focus) box.querySelector('[data-panel=backup] a.btn').focus(); return; }
-    form.service.value = v; form.querySelector('.picked').textContent = 'Selected: ' + LABEL[v]; panels('form');
-    if (focus) form.name.focus();
-  };
-  box.querySelectorAll('.choice').forEach((b) => b.addEventListener('click', () => pick(b.dataset.choice, true)));
-  const pre = new URLSearchParams(location.search).get('service'); if (LABEL[pre]) pick(pre, false);
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const err = form.querySelector('.err'); let bad = null;
-    const checks = [['name', (v) => v.trim().length > 1, 'Enter your name.'], ['phone', (v) => v.replace(/\D/g, '').length >= 10, 'Enter a 10-digit phone number.'], ['where', (v) => v.trim().length > 1, 'Enter your city or ZIP.']];
-    for (const [n, ok, msg] of checks) { const el = form[n]; const good = ok(el.value); el.setAttribute('aria-invalid', String(!good)); if (!good && !bad) bad = [el, msg]; }
-    if (bad) { err.textContent = bad[1]; bad[0].focus(); return; }
-    err.textContent = '';
-    const data = Object.fromEntries(new FormData(form));
-    const summary = `${LABEL[data.service]} — ${data.name}, ${data.phone}, ${data.where}${data.note ? ' — ' + data.note : ''}`;
-    // Hand off to ServiceM8 (its booking page doesn't accept prefill parameters), so show what to enter there.
-    box.querySelector('.sum').textContent = summary; panels('fallback');
-    window.open(box.querySelector('[data-sm8]').href, '_blank', 'noopener');
-    box.querySelector('[data-panel=fallback]').focus();
-  });
-});
-
-// Mobile bottom bar steps aside while typing so it never covers form fields.
-const inForm = (el) => el && el.closest && el.closest('form');
-document.addEventListener('focusin', (e) => { if (inForm(e.target)) document.body.classList.add('typing'); });
-document.addEventListener('focusout', () => setTimeout(() => { if (!inForm(document.activeElement)) document.body.classList.remove('typing'); }, 300));
-
 // Signature motion: the route line draws once when the service-area section scrolls in.
 document.querySelectorAll('.route').forEach((svg) => {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;

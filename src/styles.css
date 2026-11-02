@@ -1,5 +1,5 @@
-/* Express Septic — warm white, ink navy, slate, one lime accent (from the truck's hoses). */
-:root{--paper:#faf8f3;--paper2:#f1ede4;--ink:#0f1b2d;--slate:#475569;--line:#d8d2c4;--lime:#8cc63f;--lime-d:#3f6b12;--max:1180px}
+/* Express Septic v2 — deep navy, warm white, one green accent sampled from the truck's hose/branding (#6cb33f). */
+:root{--paper:#faf7f0;--paper2:#f0ebdf;--ink:#0d1a2e;--slate:#46536a;--line:#d9d2c3;--lime:#6cb33f;--lime-d:#356b1c;--max:1200px}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
 img{max-width:100%;height:auto;display:block}
@@ -97,3 +97,57 @@ body.typing .mbar{display:none}
 .crew img{aspect-ratio:4/3}.ink .crew{margin-bottom:22px}.dot{font:600 .74rem ui-monospace,Menlo,monospace;letter-spacing:.12em}
 .shot img[style]{max-height:78vh;object-fit:cover}
 .shot figcaption{font-size:.9rem;color:var(--slate);margin-top:8px}
+
+/* ===== redesign v2 ===== */
+body{font-family:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+h1,h2{font-weight:850;letter-spacing:-.03em}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.btn.dark{background:var(--ink);border-color:var(--ink);color:var(--paper)}.btn.dark:hover{background:#1c2c47}
+.btn.primary:hover{background:#7fc552}
+.txtlink{font-weight:700}
+/* hero: wide truck photo, copy below on phones, overlaid card on desktop */
+.hero{padding:0;border-bottom:0;background:var(--ink);color:var(--paper);position:relative}
+.hero .hphoto{margin:0}.hero .hphoto img{width:100%;height:clamp(190px,46vw,640px);aspect-ratio:auto;object-fit:cover;object-position:50% 62%;border-radius:0}
+.hcopy{padding-top:22px;padding-bottom:28px}
+.hero .eyebrow{color:#cfe8bf}.hero .eyebrow::before{background:var(--lime)}
+.hero h1{font-size:clamp(2rem,5vw,4.1rem);max-width:15ch;margin-bottom:.35em}
+.avail{font-size:1.08rem;color:#dbe2ec;margin:0 0 14px;max-width:36em}
+.from{margin:0 0 4px;font-size:1.05rem;color:#dbe2ec}.from strong{color:#fff;font-size:1.35rem}.from a{color:#cfe8bf;margin-left:8px;font-size:.92rem;white-space:nowrap}
+.hero .cta{margin:14px 0 0}.hero .btn.ghost{color:var(--paper);border-color:#8d9bb0}
+.btn.big{font-size:1.08rem;min-height:54px}
+@media (min-width:960px){
+ .hero{display:grid;grid-template-columns:minmax(0,44fr) minmax(0,56fr);min-height:min(80vh,700px)}
+ .hero .hphoto{grid-column:2;grid-row:1}.hero .hphoto img{height:100%;min-height:560px;object-position:40% 60%}
+ .hero .hcopy{grid-column:1;grid-row:1;margin:0;max-width:none;display:flex;flex-direction:column;justify-content:center;padding:48px 48px 48px max(24px,calc((100vw - var(--max))/2 + 20px))}
+}
+@media (max-width:959px){.hero .wrap{padding-left:20px;padding-right:20px}.hero h1{font-size:2.05rem}.btn .num{display:inline}.hero .cta .btn{width:100%;justify-content:center}}
+/* services: editorial list, not cards */
+.svc{display:grid;grid-template-columns:1fr 1.4fr;gap:20px 64px}.svch h2{max-width:14ch}
+.svcl{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.svcl a{display:grid;grid-template-columns:1fr 1.2fr;gap:6px 24px;padding:20px 0;border-bottom:1px solid var(--line);text-decoration:none}
+.svcl b{font-size:1.25rem;letter-spacing:-.01em}.svcl span{color:var(--slate)}.svcl a:hover b{text-decoration:underline;text-decoration-color:var(--lime-d)}
+.svc .price{grid-column:1/-1;display:grid;grid-template-columns:1fr 1.4fr;gap:8px 64px;align-items:baseline;border-top:6px solid var(--lime);padding-top:20px;margin-top:12px}
+.price .pp{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:850;margin:0;letter-spacing:-.02em}.price p{margin:0}
+/* truck: photo carries it */
+.truck{background:var(--ink);color:var(--paper)}.tphoto{margin:0}.tphoto img{width:100%;height:clamp(240px,52vw,720px);object-fit:cover;object-position:50% 55%}
+.tcopy{padding-top:32px;padding-bottom:56px;display:grid;grid-template-columns:1fr 1.4fr;gap:8px 64px;align-items:start}.tcopy .eyebrow{grid-column:1/-1;color:#cfe8bf}.tcopy h2{color:#fff;margin:0}.tcopy p{margin:0;color:#dbe2ec;font-size:1.1rem}
+/* owner */
+.warm{background:var(--paper2)}
+.owner{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}.owner .shot{margin:0}.owner .crew img{aspect-ratio:4/3;object-position:30% 50%}
+.promise{margin:0 0 18px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.15;font-weight:850;letter-spacing:-.025em;border-left:6px solid var(--lime);padding-left:20px}
+/* reviews */
+.revrow{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px 48px}.revrow h2{margin-bottom:.2em}.revrow p{margin:0}
+.revlinks{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+/* area */
+.area .cities{margin-top:0}
+/* booking paths */
+.bookband{background:#fff}
+.book h2{margin-bottom:24px}
+.paths{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1.2fr 1fr 1fr;border-top:2px solid var(--ink)}
+.path{padding:24px 28px 28px 0;display:flex;flex-direction:column;align-items:flex-start;gap:10px}.path+.path{padding-left:28px;border-left:1px solid var(--line)}
+.path p{margin:0;color:var(--slate)}.path .pk{font-size:1.3rem;font-weight:850;color:var(--ink);letter-spacing:-.01em}
+.path .btn{margin-top:auto}.path.urgent{background:var(--ink);color:var(--paper);padding-left:24px}.path.urgent p{color:#dbe2ec}.path.urgent .pk{color:#fff}
+.prose .book{margin-top:28px}
+@media (max-width:959px){.svc,.svc .price,.tcopy,.owner{grid-template-columns:1fr;gap:18px}.svcl a{grid-template-columns:1fr}
+ .paths{grid-template-columns:1fr}.path,.path+.path{padding:22px 0;border-left:0;border-bottom:1px solid var(--line)}.path.urgent{padding:22px 18px}}
+.mbar .btn{white-space:nowrap;font-size:.98rem}.mbar{grid-template-columns:1.6fr 1fr}
