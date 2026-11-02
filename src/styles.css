@@ -93,3 +93,4 @@ body.typing .mbar{display:none}
  .hgrid,.split{grid-template-columns:1fr;gap:24px}.hero{padding-top:24px}.hcopy{order:0}.btn .num{display:none}
  .choices{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.two{grid-template-columns:1fr}.feat+.feat{padding-left:0;border-left:0}.fgrid{grid-template-columns:1fr}.sec{padding:44px 0}.spec dd{font-size:1.2rem}}
+.price-slot{border:1px solid var(--ink);border-left:6px solid var(--lime);background:#fff;padding:18px 20px;margin:24px 0}.pp{font-size:1.35rem;font-weight:800;margin:0 0 6px}.lic{font:600 .78rem ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;margin:-6px 0 14px}

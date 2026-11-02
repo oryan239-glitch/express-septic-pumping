@@ -9,8 +9,7 @@ const ZIPS = {
   'Cape Coral': ['33904','33909','33914','33990','33991','33993'],
   'Lehigh Acres': ['33936','33971','33972','33973','33974','33976'],
 };
-// --- Request destination: none approved yet. Set to a Pages Function URL (e.g. '/api/request') once approved. ---
-const REQUEST_ENDPOINT = '';
+// Requests go to ServiceM8's booking page (owner-approved). No in-site submission, so never a fake 'sent'.
 const PHONE = '(239) 451-3261';
 const cityFor = (z) => Object.keys(ZIPS).find((c) => ZIPS[c].includes(z));
 
@@ -46,10 +45,10 @@ document.querySelectorAll('[data-request]').forEach((box) => {
     err.textContent = '';
     const data = Object.fromEntries(new FormData(form));
     const summary = `${LABEL[data.service]} — ${data.name}, ${data.phone}, ${data.where}${data.note ? ' — ' + data.note : ''}`;
-    if (REQUEST_ENDPOINT) {
-      try { const r = await fetch(REQUEST_ENDPOINT, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(data) }); if (r.ok) { panels('sent'); return; } } catch {}
-    }
-    box.querySelector('.sum').textContent = summary; panels('fallback'); box.querySelector('[data-panel=fallback]').focus?.();
+    // Hand off to ServiceM8 (its booking page doesn't accept prefill parameters), so show what to enter there.
+    box.querySelector('.sum').textContent = summary; panels('fallback');
+    window.open(box.querySelector('[data-sm8]').href, '_blank', 'noopener');
+    box.querySelector('[data-panel=fallback]').focus();
   });
 });
 
