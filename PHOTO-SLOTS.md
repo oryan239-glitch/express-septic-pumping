@@ -2,8 +2,10 @@
 - assets/img/commercial-septic-tank-pumping.jpg
 - assets/img/home-hero.jpg
 - assets/img/home-job-1.jpg
+- assets/img/how-it-works.jpg
 - assets/img/residential-septic-tank-pumping.jpg
 - assets/img/septic-inspections.jpg
+- assets/img/septic-system-maintenance.jpg
 - assets/img/septic-tank-pumping.jpg
 - assets/img/septic-tank-pumping-alva-fl.jpg
 - assets/img/septic-tank-pumping-ave-maria-fl.jpg

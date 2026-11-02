@@ -79,10 +79,10 @@ def page(path,title,desc,h1,body,extra=None):
 <title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{BASE}{path}">
 <meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website">
 <link rel="stylesheet" href="/styles.css">{schema(extra)}</head><body>
-<header><a class="logo" href="/">{NAME}</a><nav>{NAV}<a href="/faq/">FAQ</a></nav><a class="hcall" href="tel:{TEL}">{PHONE}</a></header>
+<header><a class="logo" href="/">{NAME}</a><nav>{NAV}<a href="/septic-system-maintenance/">Maintenance</a><a href="/how-it-works/">How It Works</a><a href="/faq/">FAQ</a></nav><a class="hcall" href="tel:{TEL}">{PHONE}</a></header>
 <main><h1>{h1}</h1>{CTA}{body}{REV}{CTA}</main>
 <footer><div><strong>{NAME}</strong><br>23357 Olde Meadowbrook Circle, Estero, FL 34134<br><a href="tel:{TEL}">{PHONE}</a><br>Service-area business — we come to you.</div>
-<div><strong>Services</strong>{NAV}</div><div><strong>Areas</strong>{foot}</div><div><strong>Info</strong><a href="/">Home</a><a href="/faq/">FAQ</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></footer>
+<div><strong>Services</strong>{NAV}</div><div><strong>Areas</strong>{foot}</div><div><strong>Info</strong><a href="/">Home</a><a href="/septic-system-maintenance/">Septic Maintenance</a><a href="/how-it-works/">How It Works</a><a href="/faq/">FAQ</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></footer>
 <a class="sticky" href="tel:{TEL}">Tap to Call {PHONE}</a></body></html>'''
   pre="../"*(path.count("/")-1) or "./"
   html=html.replace('href="/','href="'+pre).replace('src="/','src="'+pre).replace("href='/","href='"+pre)
@@ -113,6 +113,20 @@ for c,(county,a,b) in CITY.items():
   page(f"/{slug(c)}/",f"Septic Tank Pumping {c}, FL | Express Septic Tank Pumping",
    f"Septic tank pumping in {c}, FL for homes & businesses. Residential, commercial pumping & septic inspections. Call (239) 451-3261 or book online.",
    f"Septic Tank Pumping in {c}, FL",body)
+
+page("/septic-system-maintenance/","Septic System Maintenance Tips | Southwest Florida | Express Septic","Septic system maintenance guide: how often to pump, what not to flush, water use, drain field care and warning signs. Call (239) 451-3261.","Septic System Maintenance Guide",
+ photo("septic-system-maintenance","Septic system maintenance")+
+ "<h2>How Often to Pump Your Septic Tank</h2><p>Most homes should pump every 3 to 5 years. The right interval depends on household size, tank size and water use. Larger families or smaller tanks need pumping more often. See <a href='/septic-tank-pumping/'>septic tank pumping</a>.</p>"
+ "<h2>What Not to Flush or Pour Down Drains</h2><ul><li>Wipes (including 'flushable' wipes), paper towels, diapers and feminine products</li><li>Cooking grease, fats and oils</li><li>Coffee grounds and large amounts of food scraps</li><li>Paint, solvents, harsh chemicals and medications</li><li>Excessive bleach or antibacterial cleaners that kill helpful bacteria</li></ul>"
+ "<h2>Water Use Tips</h2><ul><li>Fix leaky toilets and faucets quickly</li><li>Spread laundry loads through the week</li><li>Use high-efficiency fixtures and appliances</li><li>Send roof gutters and runoff away from the drain field</li></ul>"
+ "<h2>Drain Field Care</h2><ul><li>Don't park or drive vehicles on the drain field</li><li>Don't plant trees or large shrubs nearby; roots can damage pipes. Grass is best</li><li>Don't build structures or pave over it</li></ul>"
+ "<h2>Warning Signs of Problems</h2><p>Slow drains, gurgling pipes, sewage odors, soggy or extra-green grass over the drain field, and backups in toilets or drains. Call right away if you notice these.</p>"
+ "<h2>Why Regular Inspections Help</h2><p>An inspection can catch problems early, before they turn into costly repairs, and gives you a record of your system's condition. Learn about <a href='/septic-inspections/'>septic inspections</a>.</p>"
+ "<p>See <a href='/how-it-works/'>how our service works</a>.</p><h2>Our Services</h2>"+svc_list)
+page("/how-it-works/","How Septic Pumping Service Works | Express Septic Tank Pumping","How booking septic tank pumping with Express Septic works: call or book online, we schedule, pump your tank and walk you through what we found.","How Our Septic Service Works",
+ photo("how-it-works","Express Septic technician at work")+
+ "<ol><li><strong>Call or book online.</strong> Tap to call (239) 451-3261 or use Book Online.</li><li><strong>Get a quote and schedule.</strong> Tell us about your property and we'll quote and set a time.</li><li><strong>We locate and pump the tank.</strong> Our crew finds the tank lid and pumps the tank.</li><li><strong>We share what we saw.</strong> We let you know about anything that needs attention.</li></ol>"
+ "<p>Keep your system healthy between visits with our <a href='/septic-system-maintenance/'>septic maintenance tips</a>.</p><h2>Our Services</h2>"+svc_list)
 faqhtml="".join(f"<h2>{q}</h2><p>{a}</p>" for q,a in FAQ)
 page("/faq/","Septic Tank FAQ | How Often to Pump, Cost & Signs | Express Septic","Answers to common septic tank questions: how often to pump, signs your tank is full, cost and what areas Express Septic Tank Pumping serves.","Septic Tank Pumping FAQ",faqhtml,
  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in FAQ]})
