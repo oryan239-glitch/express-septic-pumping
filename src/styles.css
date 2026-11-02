@@ -151,3 +151,4 @@ h1,h2{font-weight:850;letter-spacing:-.03em}
 @media (max-width:959px){.svc,.svc .price,.tcopy,.owner{grid-template-columns:1fr;gap:18px}.svcl a{grid-template-columns:1fr}
  .paths{grid-template-columns:1fr}.path,.path+.path{padding:22px 0;border-left:0;border-bottom:1px solid var(--line)}.path.urgent{padding:22px 18px}}
 .mbar .btn{white-space:nowrap;font-size:.98rem}.mbar{grid-template-columns:1.6fr 1fr}
+[id]{scroll-margin-top:84px}
