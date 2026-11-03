@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "description": "Run Pages Functions only for pages and the showcase (the middleware redirects www to the apex, renders /completed-jobs, and adds portal text and the showcase link to HTML). Static files skip the function.",
+  "include": ["/*"],
+  "exclude": [
+    "/assets/*",
+    "/robots.txt", "/sitemap.xml", "/sitemap-index.xml", "/favicon.ico",
+    "/*.css", "/*.js", "/*.mjs", "/*.map", "/*.png", "/*.jpg", "/*.jpeg", "/*.webp", "/*.avif", "/*.svg", "/*.gif", "/*.ico",
+    "/*.woff", "/*.woff2", "/*.ttf", "/*.otf", "/*.mp4", "/*.webm", "/*.pdf", "/*.json", "/*.txt", "/*.xml", "/*.md", "/*.webmanifest"
+  ]
+}
