@@ -1,0 +1,31 @@
+# Legacy URLs from expressseptictankpumping.com (path is preserved by the old-domain 301).
+# Keep /contact and /contact/ untouched — they already resolve to the live contact page.
+
+/booking /#book 301
+/booking/ /#book 301
+/booking.html /#book 301
+
+/septic_tank_pumping /septic-tank-pumping/ 301
+/septic_tank_pumping/ /septic-tank-pumping/ 301
+/septic_tank_pumping.html /septic-tank-pumping/ 301
+
+/locations /service-area/ 301
+/locations/ /service-area/ 301
+/locations.html /service-area/ 301
+
+/about_us /about/ 301
+/about_us/ /about/ 301
+/about_us.html /about/ 301
+
+/septic_tank_cleaning /septic-tank-pumping/ 301
+/septic_tank_cleaning/ /septic-tank-pumping/ 301
+/septic_tank_cleaning.html /septic-tank-pumping/ 301
+
+/about-us /about/ 301
+/about-us/ /about/ 301
+/about-us.html /about/ 301
+
+/accessibility_page /accessibility/ 301
+/accessibility_page/ /accessibility/ 301
+/accessibility_page.html /accessibility/ 301
+/accessibility /accessibility/ 301

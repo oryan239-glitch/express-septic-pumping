@@ -99,11 +99,11 @@ body.typing .mbar{display:none}
 .shot figcaption{font-size:.9rem;color:var(--slate);margin-top:8px}
 
 /* ===== redesign v2 ===== */
-body{font-family:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
 h1,h2{font-weight:850;letter-spacing:-.03em}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .btn.dark{background:var(--ink);border-color:var(--ink);color:var(--paper)}.btn.dark:hover{background:#1c2c47}
-.btn.primary:hover{background:#7fc552}
+.btn.primary:hover{background:#7fc552}.btn.primary:active{background:#5ea132}.btn.dark:active{background:#0a1322}.btn.ghost:hover{background:rgba(13,26,46,.04)}.ink .btn.ghost:hover,.closer .btn.ghost:hover,.hero .btn.ghost:hover{background:rgba(255,255,255,.08)}
 .txtlink{font-weight:700}
 /* hero: wide truck photo, copy below on phones, overlaid card on desktop */
 .hero{padding:0;border-bottom:0;background:var(--ink);color:var(--paper);position:relative}
@@ -167,3 +167,59 @@ h1,h2{font-weight:850;letter-spacing:-.03em}
 .job{border-top:1px solid var(--line);padding-top:18px;margin-top:26px}.job h2{margin-top:0}.jdate{font:600 .82rem ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin:-4px 0 10px}
 .svc .price .more{grid-column:2}@media (max-width:959px){.svc .price .more{grid-column:auto}}
 .top nav[aria-label=Primary] a{white-space:nowrap}@media (min-width:960px) and (max-width:1120px){.top nav[aria-label=Primary]{gap:14px}.top nav[aria-label=Primary] a{font-size:.88rem}}
+
+/* ===== Nov 2026 restrained premium pass ===== */
+.sec{padding:72px 0}
+.phead{padding:48px 0 32px}
+.phead h1{font-size:clamp(1.85rem,4.6vw,3.1rem);max-width:18ch}
+.prose{font-size:1.05rem;line-height:1.65}
+.prose h2{margin-top:1.85em;margin-bottom:.45em}
+.btn{transition:background-color .15s ease,border-color .15s ease,color .15s ease}
+#book,#pricing,.price-panel,[id]{scroll-margin-bottom:calc(88px + env(safe-area-inset-bottom))}
+/* Pricing panel */
+.priceband{background:var(--paper)}
+.price-panel{background:#fff;border:1px solid var(--ink);border-left:6px solid var(--lime);padding:28px 28px 24px;max-width:40rem}
+.price-panel .eyebrow{margin-bottom:10px}
+.price-panel .pp{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:850;letter-spacing:-.03em;margin:0 0 12px;line-height:1.15}
+.price-panel .pcond{margin:0 0 18px;color:var(--slate);max-width:38em}
+.plist{list-style:none;margin:0;padding:18px 0 0;border-top:1px solid var(--line)}
+.plist li{display:flex;justify-content:space-between;gap:16px 24px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line);font-size:1rem}
+.plist span{color:var(--slate)}.plist b{font-weight:800;text-align:right;white-space:nowrap}
+.prose .price-panel{margin:8px 0 28px}
+/* Recent work cards */
+.work{background:#fff}
+.workhead{max-width:38rem;margin-bottom:28px}
+.workhead h2{margin-bottom:.35em}
+.workgrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:2px solid var(--ink)}
+.workcard{padding:24px 28px 28px 0;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.workcard+.workcard{padding-left:28px;border-left:1px solid var(--line)}
+.workcard h3{margin:0;font-size:1.25rem;letter-spacing:-.02em}
+.workcard p{margin:0;color:var(--slate)}
+.workcard .jdate{color:var(--slate)}
+.workcard .txtlink{margin-top:8px}
+.work .more{margin:22px 0 0}
+.crev{margin:16px 0 0}
+/* Hero: copy first on phones, truck still recognizable */
+@media (max-width:959px){
+  .hero .hcopy{padding-top:28px;padding-bottom:32px}
+  .hero h1{font-size:clamp(1.85rem,9vw,2.25rem);max-width:14ch}
+  .hero .hphoto img{height:clamp(200px,48vw,320px);object-position:46% 58%}
+  .phead .cta .btn{width:100%;justify-content:center}
+  .workgrid{grid-template-columns:1fr}
+  .workcard,.workcard+.workcard{padding:22px 0;border-left:0;border-bottom:1px solid var(--line)}
+  .plist li{flex-direction:column;gap:2px;align-items:flex-start}
+  .plist b{text-align:left;white-space:normal}
+  .sec{padding:52px 0}
+}
+@media (max-width:959px){
+  .bookband,.work{padding-bottom:calc(28px + 88px + env(safe-area-inset-bottom))}
+  .book h2{margin-bottom:14px}
+  .paths .path,.paths .path+.path{padding:10px 0}
+  .paths .path.urgent{padding:12px 16px}
+  .path .pk{font-size:1.15rem}
+  .path{gap:8px}
+}
+@media (max-width:359px){
+  .mbar{grid-template-columns:1fr 1fr;gap:6px;padding:8px 8px calc(8px + env(safe-area-inset-bottom))}
+  .mbar .btn{font-size:.9rem;padding:10px 8px}
+}
