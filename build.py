@@ -26,6 +26,10 @@ SERVICES=[
   ["A septic tank riser is an extension installed on top of the tank's access opening. It brings the lid up to ground level, so the tank can be found and opened without digging.",
    "Many Southwest Florida tanks have lids buried under soil or grass. Every pump-out then starts with locating the lid and digging down to it. With a riser in place, the next pump-out starts with lifting the lid.",
    "Riser installation is often done during a pump-out, while the lid is already uncovered. Ask about it when you call or book."]),
+ ("septic-repair","Septic Repair","Septic Repair | Lee & Collier County | Express Septic Tank Pumping","Septic repair in Southwest Florida. We look at your system first, then quote the repair. Work performed under a FL certified plumbing contractor. (239) 451-3261.",
+  ["Express Septic Tank Pumping does septic repairs for homes and businesses across Southwest Florida.",
+   "Every repair starts with a look at your system. Once we see what's wrong, we quote the repair before any work starts. Call (239) 451-3261 to set up a visit.",
+   "Repair work is performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332, licensed since 1981."]),
  ("septic-inspections","Septic Inspections","Septic Inspection for Home Purchase | Fort Myers & Naples | Express Septic","Septic inspection & real estate septic inspection for home purchases in Fort Myers, Naples, Estero & nearby. Septic inspection with pump-out $549.99. Call (239) 451-3261.",
   ["A septic inspection checks the condition of your tank and how the system is working. It's common when buying or selling a home, and a good idea if you're noticing problems.",
    "Buying a home on septic? An inspection helps you understand what you're getting before closing. Selling? Having the system checked ahead of time can help avoid surprises during the sale.",
@@ -82,6 +86,7 @@ FAQ=[("How often should I pump my septic tank?","Most homes need septic tank pum
 ("What are signs my septic tank is full?","Slow drains, gurgling pipes, sewage odors, wet or extra-green spots over the drain field, and backups are common signs."),
 ("Do you pump commercial septic tanks?","Yes. We provide commercial septic tank pumping for businesses and other properties."),
 ("Do you pump grease traps?","Yes. We pump grease traps for restaurants and commercial kitchens, one-time or on a recurring schedule. Call (239) 451-3261."),
+("Do you do septic repairs?","Yes. We look at the system first, then quote the repair. Call (239) 451-3261. Repair work is performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
 ("Do you do septic inspections for real estate?","Yes. We offer septic inspections for buyers, sellers and homeowners. A septic inspection with pump-out is $549.99."),
 ("What areas do you serve?","Estero, Bonita Springs, Naples, North Naples, Fort Myers, Cape Coral, Lehigh Acres, San Carlos Park and nearby areas of Lee and Collier County."),
 ("What shouldn't go into a septic system?","Avoid grease, wipes (even 'flushable'), paper towels, feminine products, harsh chemicals and medications. They can clog the system or harm the bacteria that break down waste."),
@@ -102,7 +107,8 @@ def schema(extra=None):
   s={"@context":"https://schema.org","@type":["LocalBusiness","Plumber"],"@id":BID,"name":NAME,"legalName":NAME+" LLC","url":BASE+"/","telephone":TEL,"email":EMAIL,"priceRange":"$399.99+","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"}],"image":BASE+"/assets/img/truck-wide-1536.webp","hasMap":REVIEWS_READ,"sameAs":[REVIEWS_READ],
    "address":{"@type":"PostalAddress","streetAddress":"23357 Olde Meadowbrook Circle","addressLocality":"Estero","addressRegion":"FL","postalCode":"34134","addressCountry":"US"},
    "areaServed":[{"@type":"City","name":c+", FL"} for c in CITIES_ALL],
-   "makesOffer":[({"@type":"Offer","itemOffered":{"@type":"Service","name":s[1],"url":f"{BASE}/{s[0]}/"},"priceSpecification":{"@type":"PriceSpecification","minPrice":399.99,"priceCurrency":"USD"}} if s[0]=="residential-septic-tank-pumping" else {"@type":"Offer","itemOffered":{"@type":"Service","name":s[1],"url":f"{BASE}/{s[0]}/"}}) for s in SERVICES if s[0] not in ("septic-tank-riser-installation","septic-inspections")]
+   "makesOffer":[({"@type":"Offer","itemOffered":{"@type":"Service","name":s[1],"url":f"{BASE}/{s[0]}/"},"priceSpecification":{"@type":"PriceSpecification","minPrice":399.99,"priceCurrency":"USD"}} if s[0]=="residential-septic-tank-pumping" else {"@type":"Offer","itemOffered":{"@type":"Service","name":s[1],"url":f"{BASE}/{s[0]}/"}}) for s in SERVICES if s[0] not in ("septic-tank-riser-installation","septic-inspections","septic-repair")]
+     +[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Septic Repair","url":BASE+"/septic-repair/","description":"Quoted after we look at the system"}}]
      +[{"@type":"Offer","name":"Septic inspection with pump-out","price":549.99,"priceCurrency":"USD","itemOffered":{"@type":"Service","name":"Septic Inspections","url":BASE+"/septic-inspections/"}}]
      +[{"@type":"Offer","name":"6-inch septic tank riser, installed (each)","price":299.99,"priceCurrency":"USD","itemOffered":{"@type":"Service","name":"Septic Tank Riser Installation","url":BASE+"/septic-tank-riser-installation/"}},
        {"@type":"Offer","name":"Locating and digging up a buried septic tank lid","price":100,"priceCurrency":"USD","description":"$100, plus $50 for each additional hour"},
@@ -138,7 +144,7 @@ def photo(sid,alt):
   if os.path.exists(f"assets/img/{sid}.jpg"):
     return f'<figure class="shot" data-photo-slot="{sid}"><img src="/assets/img/{sid}.jpg" alt="{alt}" loading="lazy" width="1600" height="1000"></figure>'
   return ""
-NAVITEMS=[("/residential-septic-tank-pumping/","Residential"),("/commercial-grease-trap-service/","Grease traps"),("/septic-tank-riser-installation/","Risers"),("/service-area/","Service area"),("/about/","About"),("/faq/","FAQ")]
+NAVITEMS=[("/residential-septic-tank-pumping/","Residential"),("/commercial-grease-trap-service/","Grease traps"),("/septic-tank-riser-installation/","Risers"),("/septic-repair/","Repairs"),("/service-area/","Service area"),("/about/","About"),("/faq/","FAQ")]
 NAVL="".join(f'<a href="{h}">{t}</a>' for h,t in NAVITEMS)
 NAV="".join(f'<a href="/{s[0]}/">{s[1]}</a>' for s in SERVICES)+'<a href="/commercial-grease-trap-service/">Commercial Grease Trap Service</a>'
 VAL="<p class='values'>Honest, reliable and fair — great customer service is our top priority.</p>"
@@ -263,6 +269,7 @@ def city_faq(c,cp):
    ("How often should I pump my septic tank?","The U.S. EPA recommends pumping most household tanks every 3 to 5 years. Tank size, household size and water use change that. Pumping before Florida's summer rainy season gives the drain field more room."),
    ("How much does it cost to find and dig up a buried lid?","Locating and digging up a buried lid is $100, plus $50 for each additional hour. A riser avoids digging on future visits."),
    RISER_QA,
+   ("Do you do septic repairs?","Yes. We look at the system first, then quote the repair. Call (239) 451-3261. Repair work is performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
    (f"Do you pump grease traps in {c}?","Yes. We pump grease traps for restaurants and commercial kitchens, one-time or on a recurring schedule. Call (239) 451-3261 to set it up."),
    ("Can I book online?","Yes, for routine pumping. Send a request through our ServiceM8 booking page and we'll contact you to confirm a time. It isn't a confirmed appointment until we confirm. For a backup, call (239) 451-3261 day or night.")]
 def faq_ld(items): return {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in items]}
@@ -292,7 +299,7 @@ def city_plus_page(c,county,a,b):
   cp=CITY_PLUS[c]; faq=city_faq(c,cp); path=f"/{slug(c)}/"
   quick=(f"<div class='quick'><p class='eyebrow'>Quick answer</p><p><strong>Express Septic Tank Pumping pumps septic tanks in {c}, FL.</strong> Residential pumping starts at $399.99. "
    f"For a backup, call <a href='tel:{TEL}'>{PHONE}</a> day or night. For routine pumping, request a time online and we'll contact you to confirm.</p>"
-   f"<ul class='facts'><li><b>Services:</b> residential and commercial septic pumping, septic tank risers, grease trap pumping, septic inspections</li><li><b>Price:</b> residential pumping from $399.99; septic inspection with pump-out $549.99; 6-inch risers $299.99 each; buried-lid locating/digging $100, plus $50 for each additional hour</li><li><b>Hours:</b> open 24 hours, 7 days a week</li><li><b>Based in:</b> Estero, serving {c} and the rest of {county}</li><li><b>Licensing:</b> work performed under FL Certified Plumbing Contractor Raymond F. Dibble, #CFC020332</li></ul></div>")
+   f"<ul class='facts'><li><b>Services:</b> residential and commercial septic pumping, septic repairs, septic tank risers, grease trap pumping, septic inspections</li><li><b>Price:</b> residential pumping from $399.99; septic inspection with pump-out $549.99; 6-inch risers $299.99 each; buried-lid locating/digging $100, plus $50 for each additional hour</li><li><b>Hours:</b> open 24 hours, 7 days a week</li><li><b>Based in:</b> Estero, serving {c} and the rest of {county}</li><li><b>Licensing:</b> work performed under FL Certified Plumbing Contractor Raymond F. Dibble, #CFC020332</li></ul></div>")
   body=(quick+photo(slug(c),f"Septic tank pumping job in {c}, FL")+cp["local"]+jobs_block(c)+
    f"<h2>What septic pumping costs in {c}</h2><div class='price-slot'><p class='pp'>Residential pumping from $399.99</p><p>{PRICE_COND} Call to confirm the price for your tank.</p></div>"+LID_ASK+
    f"<h2>Septic services in {c}</h2><ul class='cards'>"+"".join(f'<li><a href="/{s[0]}/">{s[1]}</a></li>' for s in SERVICES)+"<li><a href='/commercial-grease-trap-service/'>Commercial Grease Trap Service</a></li></ul>"
@@ -306,6 +313,7 @@ def city_plus_page(c,county,a,b):
 HOME_FAQ=[("How much does septic tank pumping cost?",f"Residential pumping starts at $399.99. {PRICE_COND} Call (239) 451-3261 to confirm for your tank."),RISER_QA,
  ("How often should I pump my septic tank?","The U.S. EPA recommends pumping most household tanks every 3 to 5 years, depending on tank size, household size and water use."),
  ("Do you pump grease traps?","Yes, for restaurants and commercial kitchens, one-time or on a recurring schedule."),
+ ("Do you do septic repairs?","Yes. We look at the system first, then quote the repair. Call (239) 451-3261. Repair work is performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
  ("Can I book online?","Yes, for routine pumping: send a request on ServiceM8 and we'll contact you to confirm a time. For a backup, call (239) 451-3261 day or night.")]
 page("/","Septic Tank Pumping Southwest Florida | Bonita Springs, Estero, Fort Myers | Express Septic",
  "Owner-operated septic tank pumping in Southwest Florida: Bonita Springs, Estero, Naples, Fort Myers, Cape Coral & Lehigh Acres. Grease trap service too. Call (239) 451-3261.",
@@ -315,6 +323,7 @@ page("/","Septic Tank Pumping Southwest Florida | Bonita Springs, Estero, Fort M
 <li><a href="/commercial-grease-trap-service/"><b>Commercial grease trap service</b><span>For restaurants and commercial kitchens. One-time or recurring.</span></a></li>
 <li><a href="/commercial-septic-tank-pumping/"><b>Commercial septic pumping</b><span>Offices, rentals, churches and other properties on septic.</span></a></li>
 <li><a href="/septic-tank-riser-installation/"><b>Septic tank risers</b><span>Bring the lid up to ground level so future pump-outs don't need digging. 6-inch risers $299.99 each.</span></a></li>
+<li><a href="/septic-repair/"><b>Septic repairs</b><span>We look at the system first, then quote the repair.</span></a></li>
 <li><a href="/septic-inspections/"><b>Septic inspections</b><span>For buyers, sellers and homeowners. Inspection with pump-out $549.99.</span></a></li></ul>
 <div class="price" id="pricing"><p class="pp">Residential pumping from $399.99</p><p>{PRICE_COND} Call to confirm the price for your tank.</p><p class='more'>Septic inspection with pump-out: $549.99. 6-inch risers: $299.99 each.</p></div></div>''')+
  f'''<section class="truck"><figure class="tphoto">{SIDE.replace('sizes="(min-width:960px) 680px, 100vw"','sizes="100vw"').replace('<figure class="shot">','').replace('</figure>','')}</figure><div class="wrap tcopy"><p class="eyebrow">The truck</p><h2>4,200 gallons, split tank</h2><p>The tank is split in two: one side for septic, one side for grease, so the two never mix. Licensed &amp; insured · USDOT 6673233.</p></div></section>'''+
@@ -425,6 +434,7 @@ f"- Online requests: {BOOK} (a request; the business contacts the customer to co
 f"- [Septic tank riser installation]({BASE}/septic-tank-riser-installation/): 6-inch risers $299.99 each. A riser brings the tank lid up to ground level so future pump-outs don't need digging.",
 "- Buried lid locating and digging: $100, plus $50 for each additional hour",
 f"- [Commercial grease trap service]({BASE}/commercial-grease-trap-service/): restaurants and commercial kitchens, one-time or recurring. Call for a quote.",
+f"- [Septic repair]({BASE}/septic-repair/): quoted after we look at the system. Repair work performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332.",
 f"- [Commercial septic tank pumping]({BASE}/commercial-septic-tank-pumping/): call for a quote.",f"- [Septic inspections]({BASE}/septic-inspections/): septic inspection with pump-out $549.99.","",
 "## Credentials","- Work performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332, licensed since 1981.","- USDOT 6673233. Truck: 4,200-gallon split tank, one side for septic and one for grease.","",
 "## Main service-area pages"]+[f"- [{c}, FL]({BASE}/{slug(c)}/)" for c in CITY_PLUS]+[f"- [All areas]({BASE}/service-area/)","",
