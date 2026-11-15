@@ -42,7 +42,7 @@ document.querySelectorAll('.route').forEach((svg) => {
 // phone_call_click: any tel: link. book_request_click: ServiceM8 request link (off-site; the request itself
 // can't be seen by GA4). email_click: mailto. book_section_click: on-site "Book" buttons that open the booking choices.
 (function () {
-  const where = (a) => { const z = a.closest('.mbar,.top,.hero,.phead,.book,.closer,.foot,.quick,.svc,.owner,.hfaq,.prose,.work,.price-panel,.priceband,.cred'); return z ? (z.className.split(' ')[0] || z.tagName.toLowerCase()) : 'body'; };
+  const where = (a) => { const z = a.closest('.mbar,.top,.hero,.phead,.book,.closer,.foot,.quick,.svc,.owner,.hfaq,.prose,.work,.price-panel,.priceband,.cred,.quotes'); return z ? (z.className.split(' ')[0] || z.tagName.toLowerCase()) : 'body'; };
   document.addEventListener('click', (e) => {
     const a = e.target.closest && e.target.closest('a[href]'); if (!a || typeof window.gtag !== 'function') return;
     const h = a.getAttribute('href') || '', p = { link_location: where(a), page_path: location.pathname, transport_type: 'beacon' };

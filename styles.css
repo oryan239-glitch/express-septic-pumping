@@ -199,14 +199,27 @@ h1,h2{font-weight:850;letter-spacing:-.03em}
 .workcard .txtlink{margin-top:8px}
 .work .more{margin:22px 0 0}
 .crev{margin:16px 0 0}
+
+/* Homepage Google review quotes (no Review/AggregateRating schema) */
+.quotes{background:#fff}
+.quoteshead{max-width:40rem;margin-bottom:28px}
+.quoteshead h2{margin:0;font-size:clamp(1.45rem,3vw,2rem);letter-spacing:-.02em;line-height:1.2}
+.quoteshead h2 a{color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;overflow-wrap:anywhere}
+.quotegrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border-top:2px solid var(--ink)}
+.quotecard{padding:24px 24px 28px 0;display:flex;flex-direction:column;gap:14px;min-width:0}
+.quotecard+.quotecard{padding-left:24px;border-left:1px solid var(--line)}
+.quotecard blockquote{margin:0}
+.quotecard blockquote p{margin:0;color:var(--ink);font-size:1.02rem;line-height:1.55;overflow-wrap:anywhere}
+.qattr{margin:0;margin-top:auto;color:var(--slate);font-size:.92rem}
+.qattr cite{font-style:normal;font-weight:700;color:var(--ink)}
 /* Hero: copy first on phones, truck still recognizable */
 @media (max-width:959px){
   .hero .hcopy{padding-top:28px;padding-bottom:32px}
   .hero h1{font-size:clamp(1.85rem,9vw,2.25rem);max-width:14ch}
   .hero .hphoto img{height:clamp(200px,48vw,320px);object-position:46% 58%}
   .phead .cta .btn{width:100%;justify-content:center}
-  .workgrid{grid-template-columns:1fr}
-  .workcard,.workcard+.workcard{padding:22px 0;border-left:0;border-bottom:1px solid var(--line)}
+  .workgrid,.quotegrid{grid-template-columns:1fr}
+  .workcard,.workcard+.workcard,.quotecard,.quotecard+.quotecard{padding:22px 0;border-left:0;border-bottom:1px solid var(--line)}
   .plist li{flex-direction:column;gap:2px;align-items:flex-start}
   .plist b{text-align:left;white-space:normal}
   .sec{padding:52px 0}
