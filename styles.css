@@ -158,3 +158,9 @@ h1,h2{font-weight:850;letter-spacing:-.03em}
  .paths{grid-template-columns:1fr}.path,.path+.path{padding:22px 0;border-left:0;border-bottom:1px solid var(--line)}.path.urgent{padding:22px 18px}}
 .mbar .btn{white-space:nowrap;font-size:.98rem}.mbar{grid-template-columns:1.6fr 1fr}
 [id]{scroll-margin-top:84px}
+/* Priority city pages: quick answer + sources */
+.quick{border:1px solid var(--ink);border-left:6px solid var(--lime);background:#fff;padding:18px 20px;margin:0 0 28px}
+.quick p{margin:0 0 10px}.quick .facts{margin:0;padding-left:1.1em}.quick .facts li{margin:4px 0}
+.srcs{font-size:.88rem;color:var(--slate);margin-top:32px}
+.hfaq h3{margin:22px 0 6px;font-size:1.12rem}.hfaq p{margin:0;max-width:44rem}
+.prose .book{margin:36px 0}

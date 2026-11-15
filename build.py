@@ -3,6 +3,7 @@
 import json, os, shutil
 BASE="https://expresssepticpumping.com"
 NAME="Express Septic Tank Pumping"; PHONE="(239) 451-3261"; TEL="+12394513261"
+RISER_PRICE="One riser $349.99 · two risers $649.99"
 BOOK="https://book.servicem8.com/request_booking?uuid=019fca12-b6bf-721c-8a2b-41d89e1a1b5b"
 EMAIL="expressseptictankpumping@gmail.com"
 REVIEW="https://g.page/r/CYxfVw5rrgwLEBM/review"  # write-a-review (Leave a review)
@@ -21,6 +22,10 @@ SERVICES=[
   ["Businesses on septic need a reliable pumping schedule. Commercial systems often see heavier use than homes, so solids build up faster and a backup can shut down your operation.",
    "We pump septic tanks for offices, retail sites, churches, rental properties, farms and other commercial properties. Call us to set up a schedule that fits your usage.",
    "Keeping a steady pumping schedule helps avoid emergency calls, odors near customers and costly drain field damage."]),
+ ("septic-tank-riser-installation","Septic Tank Riser Installation","Septic Tank Riser Installation | Lee & Collier County | Express Septic","Septic tank riser installation in Southwest Florida: bring your tank lid up to ground level so future pump-outs don't need digging. One riser $349.99. (239) 451-3261.",
+  ["A septic tank riser is an extension installed on top of the tank's access opening. It brings the lid up to ground level, so the tank can be found and opened without digging.",
+   "Many Southwest Florida tanks have lids buried under soil or grass. Every pump-out then starts with locating the lid and digging down to it. With a riser in place, the next pump-out starts with lifting the lid.",
+   "Riser installation is often done during a pump-out, while the lid is already uncovered. Ask about it when you call or book."]),
  ("septic-inspections","Septic Inspections","Septic Inspection for Home Purchase | Fort Myers & Naples | Express Septic","Septic inspection & real estate septic inspection for home purchases in Fort Myers, Naples, Estero & nearby. Septic inspection cost: call (239) 451-3261.",
   ["A septic inspection checks the condition of your tank and how the system is working. It's common when buying or selling a home, and a good idea if you're noticing problems.",
    "Buying a home on septic? An inspection helps you understand what you're getting before closing. Selling? Having the system checked ahead of time can help avoid surprises during the sale.",
@@ -76,30 +81,41 @@ FAQ=[("How often should I pump my septic tank?","Most homes need septic tank pum
 ("How much does it cost to pump a septic tank in Florida?","Residential septic pumping starts at $399.99; call (239) 451-3261 to confirm for your tank. Your final quote depends on tank size, tank access, whether the lid needs locating or digging, and after-hours visits."),
 ("What are signs my septic tank is full?","Slow drains, gurgling pipes, sewage odors, wet or extra-green spots over the drain field, and backups are common signs."),
 ("Do you pump commercial septic tanks?","Yes. We provide commercial septic tank pumping for businesses and other properties."),
+("Do you pump grease traps?","Yes. We pump grease traps for restaurants and commercial kitchens, one-time or on a recurring schedule. Call (239) 451-3261."),
 ("Do you do septic inspections for real estate?","Yes. We offer septic inspections for buyers, sellers and homeowners."),
 ("What areas do you serve?","Estero, Bonita Springs, Naples, North Naples, Fort Myers, Cape Coral, Lehigh Acres, San Carlos Park and nearby areas of Lee and Collier County."),
 ("What shouldn't go into a septic system?","Avoid grease, wipes (even 'flushable'), paper towels, feminine products, harsh chemicals and medications. They can clog the system or harm the bacteria that break down waste."),
-("How do I book?","For routine pumping, use our ServiceM8 booking page to request a time; you enter your details once, there. For a backup, call (239) 451-3261 day or night.")]
+("What is a septic tank riser?","A riser is an extension installed on top of the tank's access opening that brings the lid up to ground level, so future pump-outs don't need digging to find and open the tank. Express installs risers: one riser $349.99, two risers $649.99. Call (239) 451-3261 to confirm what your tank needs."),
+("Is finding or digging up the lid included in the price?","It depends on your property. Ask when you call whether locating the lid is included and, if it's buried, whether digging adds to the price. A riser avoids digging on future visits."),
+("How do I book?","For routine pumping, send a request through our ServiceM8 booking page. We'll contact you to confirm a time; it isn't a confirmed appointment until we do. For a backup, call (239) 451-3261 day or night.")]
 PAGES=[]
 EXTRA={
 "septic-tank-pumping":"<h2>Septic Pumping Near Me</h2><p>We provide septic pumping and septic tank cleaning across Lee and Collier County. Residential septic tank pumping starts at $399.99; call to confirm for your tank. Your final quote depends on tank size, tank access, whether the lid needs locating or digging, and after-hours visits.</p><h2>Emergency Septic Service</h2><p>Sewage backing up or a tank overflowing? Call <a href='tel:+12394513261'>(239) 451-3261</a> right away and avoid running water until we get there. Night or day, we're available for emergencies. For routine service, we can often make it same day when possible.</p>",
 "residential-septic-tank-pumping":"<h2>Residential Septic Service Near Me</h2><p>Residential septic tank cleaning removes built-up sludge and scum so your home's system keeps working.</p><h2>Tank Size FAQs</h2><h3>What size is my septic tank?</h3><p>Many homes have tanks around 750 to 1,500 gallons; larger homes generally have larger tanks. Your permit records or our crew can help confirm the size.</p><h3>Does tank size change how often I pump?</h3><p>Yes. Smaller tanks and larger households need pumping more often. See <a href='/how-often-to-pump-septic-tank/'>how often to pump your septic tank</a>.</p>",
 "commercial-septic-tank-pumping":"<h2>Commercial Septic Pumping Near Me</h2><p>Need commercial septic service in Lee or Collier County? Call to discuss your property. Restaurants with grease traps should mention them when you call so we can talk through your needs.</p>",
+"septic-tank-riser-installation":"<div class='price-slot'><p class='pp'>Riser installation: one riser $349.99, two risers $649.99</p><p>How many risers you need depends on how many access openings your tank has. Call to confirm for your tank.</p></div>@@RISER@@<h2>Why add a riser?</h2><ul><li>No digging to reach the lid on future pump-outs</li><li>You can see where the tank is, so it's easier to keep vehicles and heavy equipment off it</li><li>Easier access for inspections</li></ul><h2>Riser questions</h2><h3>Can you install a riser when you pump my tank?</h3><p>Yes, ask when you call or book. The lid is already uncovered during a pump-out.</p><h3>How many risers do I need?</h3><p>It depends on how many access openings your tank has. Many tanks have more than one. We'll tell you what we see.</p>",
 "septic-inspections":"<h2>Septic Inspection for Home Purchase</h2><p>A real estate septic inspection gives buyers and sellers a clearer picture of the system before closing. We serve Fort Myers, Naples and the surrounding area.</p><h2>Septic Inspection Cost</h2><p>Cost depends on the property and type of inspection. Call (239) 451-3261 for a quote.</p>",
 }
+BID=BASE+"/#business"
+PROV={"@id":BID}
 def schema(extra=None):
-  s={"@context":"https://schema.org","@type":["LocalBusiness","Plumber"],"name":NAME,"url":BASE+"/","telephone":TEL,"email":EMAIL,"priceRange":"$399.99+",
+  s={"@context":"https://schema.org","@type":["LocalBusiness","Plumber"],"@id":BID,"name":NAME,"legalName":NAME+" LLC","url":BASE+"/","telephone":TEL,"email":EMAIL,"priceRange":"$399.99+","image":BASE+"/assets/img/truck-wide-1536.webp","hasMap":REVIEWS_READ,"sameAs":[REVIEWS_READ],
    "address":{"@type":"PostalAddress","streetAddress":"23357 Olde Meadowbrook Circle","addressLocality":"Estero","addressRegion":"FL","postalCode":"34134","addressCountry":"US"},
    "areaServed":[{"@type":"City","name":c+", FL"} for c in CITIES_ALL],
-   "makesOffer":[({"@type":"Offer","itemOffered":{"@type":"Service","name":s[1]},"priceSpecification":{"@type":"PriceSpecification","minPrice":399.99,"priceCurrency":"USD"}} if s[0]=="residential-septic-tank-pumping" else {"@type":"Offer","itemOffered":{"@type":"Service","name":s[1]}}) for s in SERVICES]}
+   "makesOffer":[({"@type":"Offer","itemOffered":{"@type":"Service","name":s[1],"url":f"{BASE}/{s[0]}/"},"priceSpecification":{"@type":"PriceSpecification","minPrice":399.99,"priceCurrency":"USD"}} if s[0]=="residential-septic-tank-pumping" else {"@type":"Offer","itemOffered":{"@type":"Service","name":s[1],"url":f"{BASE}/{s[0]}/"}}) for s in SERVICES if s[0]!="septic-tank-riser-installation"]
+     +[{"@type":"Offer","name":"One septic tank riser, installed","price":349.99,"priceCurrency":"USD","itemOffered":{"@type":"Service","name":"Septic Tank Riser Installation","url":BASE+"/septic-tank-riser-installation/"}},
+       {"@type":"Offer","name":"Two septic tank risers, installed","price":649.99,"priceCurrency":"USD","itemOffered":{"@type":"Service","name":"Septic Tank Riser Installation","url":BASE+"/septic-tank-riser-installation/"}},
+       {"@type":"Offer","itemOffered":{"@type":"Service","name":"Commercial Grease Trap Service","serviceType":"Grease trap pumping","url":BASE+"/commercial-grease-trap-service/"}}]}
   out=[s]
-  if extra: out.append(extra)
+  if isinstance(extra,list): out+=extra
+  elif extra: out.append(extra)
   return "".join(f'<script type="application/ld+json">{json.dumps(o)}</script>' for o in out)
 TRUCK_ALT="Express Septic Tank Pumping 4,200-gallon vacuum truck parked at a Southwest Florida home"
 HERO_IMG=f'<img src="/assets/img/truck-wide-1024.webp" srcset="/assets/img/truck-wide-640.webp 640w, /assets/img/truck-wide-1024.webp 1024w, /assets/img/truck-wide-1536.webp 1536w" sizes="(min-width:960px) 52vw, 100vw" alt="{TRUCK_ALT}" width="1536" height="960" fetchpriority="high">'
 CREW='<figure class="shot crew"><img src="/assets/img/crew-1024.webp" srcset="/assets/img/crew-640.webp 640w, /assets/img/crew-1024.webp 1024w, /assets/img/crew-1500.webp 1500w" sizes="(min-width:960px) 680px, 100vw" alt="Express Septic Tank Pumping crew with the 4,200-gallon vacuum truck" width="1500" height="1125" loading="lazy"></figure>'
 LIDS='<figure class="shot"><img src="/assets/img/lids-1024.webp" srcset="/assets/img/lids-640.webp 640w, /assets/img/lids-1024.webp 1024w, /assets/img/lids-1500.webp 1500w" sizes="(min-width:960px) 820px, 100vw" alt="Septic tank lids uncovered and opened for pumping at a Southwest Florida home" width="1500" height="1734" loading="lazy" style="aspect-ratio:auto"></figure>'
 RISER='<figure class="shot"><img src="/assets/img/riser-1024.webp" srcset="/assets/img/riser-640.webp 640w, /assets/img/riser-1024.webp 1024w, /assets/img/riser-1500.webp 1500w" sizes="(min-width:960px) 820px, 100vw" alt="Looking down a septic tank riser at the effluent filter" width="1500" height="837" loading="lazy" style="aspect-ratio:auto"></figure>'
+EXTRA["septic-tank-riser-installation"]=EXTRA["septic-tank-riser-installation"].replace("@@RISER@@",RISER)
 JOB='<figure class="shot"><img src="/assets/img/job-830.webp" srcset="/assets/img/job-640.webp 640w, /assets/img/job-830.webp 830w" sizes="(min-width:960px) 820px, 100vw" alt="Express Septic Tank Pumping truck pumping a residential septic tank in Southwest Florida" width="830" height="960" fetchpriority="high" style="aspect-ratio:auto"></figure>'
 WIDE='<figure class="shot"><img src="/assets/img/wide-job-830.webp" srcset="/assets/img/wide-job-640.webp 640w, /assets/img/wide-job-830.webp 830w" sizes="(min-width:960px) 820px, 100vw" alt="Vacuum hose running from the Express truck to an opened septic tank" width="830" height="960" loading="lazy" style="aspect-ratio:auto"></figure>'
 HOSE='<figure class="shot"><img src="/assets/img/hose-776.webp" srcset="/assets/img/hose-640.webp 640w, /assets/img/hose-776.webp 776w" sizes="(min-width:960px) 820px, 100vw" alt="Septic tank being pumped through the vacuum hose" width="776" height="960" loading="lazy" style="aspect-ratio:auto"></figure>'
@@ -115,12 +131,13 @@ def photo(sid,alt):
   if sid.startswith("septic-tank-pumping-") and sid.endswith("-fl"):
     i=[slug(c) for c in CITIES_ALL].index(sid); return [WIDE,HOSE,OUTLET,LIDS,JOB,RISER][i%6].replace('fetchpriority="high"','loading="lazy"')
   if sid=="residential-septic-tank-pumping": return JOB
+  if sid=="septic-tank-riser-installation": return LIDS
   if False:
     return f'<figure class="shot"><img src="/assets/img/truck-wide-1024.webp" srcset="/assets/img/truck-wide-640.webp 640w, /assets/img/truck-wide-1024.webp 1024w" sizes="(min-width:960px) 860px, 100vw" alt="{TRUCK_ALT}" width="1536" height="960" loading="lazy"></figure>'
   if os.path.exists(f"assets/img/{sid}.jpg"):
     return f'<figure class="shot" data-photo-slot="{sid}"><img src="/assets/img/{sid}.jpg" alt="{alt}" loading="lazy" width="1600" height="1000"></figure>'
   return ""
-NAVITEMS=[("/residential-septic-tank-pumping/","Residential"),("/commercial-grease-trap-service/","Grease traps"),("/service-area/","Service area"),("/about/","About"),("/faq/","FAQ")]
+NAVITEMS=[("/residential-septic-tank-pumping/","Residential"),("/commercial-grease-trap-service/","Grease traps"),("/septic-tank-riser-installation/","Risers"),("/service-area/","Service area"),("/about/","About"),("/faq/","FAQ")]
 NAVL="".join(f'<a href="{h}">{t}</a>' for h,t in NAVITEMS)
 NAV="".join(f'<a href="/{s[0]}/">{s[1]}</a>' for s in SERVICES)+'<a href="/commercial-grease-trap-service/">Commercial Grease Trap Service</a>'
 VAL="<p class='values'>Honest, reliable and fair — great customer service is our top priority.</p>"
@@ -154,6 +171,7 @@ def page(path,title,desc,h1,body,extra=None,hero=None,lead=""):
 <div><p class="fh">Services</p>{NAV}</div><div><p class="fh">Areas</p>{foot}</div><div><p class="fh">Info</p><a href="/">Home</a><a href="/how-it-works/">How it works</a><a href="/septic-system-maintenance/">Septic maintenance</a><a href="/how-often-to-pump-septic-tank/">How often to pump</a><a href="/about/">About</a><a href="/faq/">FAQ</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></div></footer>
 <div class="mbar" role="region" aria-label="Quick contact"><a class="btn primary" href="tel:{TEL}">Call · {PHONE}</a><a class="btn ghost" href="/contact/#book">Book</a></div></body></html>'''
   html=html.replace("<div class=\"body\"></div>","")
+  if 'id="book"' in body: html=html.replace('href="/contact/#book"','href="#book"')
   pre="../"*(path.count("/")-1) or "./"
   html=html.replace('href="/','href="'+pre).replace('src="/','src="'+pre).replace(', /assets',', '+pre+'assets').replace('srcset="/','srcset="'+pre).replace("href='/","href='"+pre).replace('imagesrcset="'+pre,'imagesrcset="'+pre)
   d="."+path; os.makedirs(d,exist_ok=True); open(d+"index.html","w").write(html); PAGES.append(path)
@@ -163,7 +181,7 @@ city_list="<ul class='cities'>"+"".join(f'<li><a href="/{slug(c)}/">{c}</a></li>
 REQUEST=f'''<div class="book" id="book"><p class="eyebrow">Book or call</p><h2>What do you need?</h2>
 <ol class="paths">
 <li class="path urgent"><p class="pk">I'm experiencing a backup</p><p>Don't book online. Call now and stop running water until we get there. Day or night.</p><a class="btn primary" href="tel:{TEL}">Call now · {PHONE}</a></li>
-<li class="path"><p class="pk">Routine pumping for my home</p><p>Request a time on ServiceM8, the booking system we use. You enter your details there, once. From $399.99.</p><a class="btn dark" href="{BOOK}" rel="noopener" target="_blank">Book routine service on ServiceM8<span class="sr"> (opens in a new tab)</span> ↗</a></li>
+<li class="path"><p class="pk">Routine pumping for my home</p><p>Send a request on ServiceM8, the booking system we use. We'll contact you to confirm a time; it isn't booked until we confirm. From $399.99.</p><a class="btn dark" href="{BOOK}" rel="noopener" target="_blank">Book routine service on ServiceM8<span class="sr"> (opens in a new tab)</span> ↗</a></li>
 <li class="path"><p class="pk">Grease trap for a restaurant or kitchen</p><p>One-time pump-outs or a recurring schedule. Call to set it up.</p><a class="btn ghost" href="tel:{TEL}">Call {PHONE}</a> <a class="txtlink" href="/commercial-grease-trap-service/">Grease trap service</a></li>
 </ol></div>'''
 ZIPBOX='''<div class="zip" data-zip><h3>Check your ZIP</h3><form data-zipform novalidate><label for="zipin">5-digit ZIP code</label><div class="zrow"><input id="zipin" inputmode="numeric" maxlength="5" autocomplete="postal-code" pattern="[0-9]{5}"><button class="btn primary" type="submit">Check</button></div></form><p class="zres" aria-live="polite"></p></div>'''
@@ -172,6 +190,107 @@ HERO=f'''<section class="hero"><figure class="hphoto">{HERO_IMG.replace('sizes="
 <p class="avail" data-sth-field="description">{AVAIL}</p>
 <p class="from">Residential pumping from <strong>$399.99</strong> <a href="#pricing">What affects the price</a></p>
 <div class="cta"><a class="btn primary big" href="tel:{TEL}">Call Express · {PHONE}</a><a class="btn ghost" href="#book">Book routine service</a></div></div></section>'''
+# ---- Priority city pages (Lehigh Acres first). Local facts are cited to public sources; nothing invented. ----
+def A(label,url): return f'<a href="{url}" rel="noopener">{label}</a>'
+SRC={
+ "fgua":("FGUA, Lehigh Acres service area description","https://fgua.com/docs/systems/System-Description-Lehigh-Acres-Lee.pdf"),
+ "leelehigh":("Lee County, Lehigh Acres septic-to-sewer planning document","https://www.leegov.com/dhs/Documents/Grant%20Programs/LeeCountyPD_GPS4.pdf"),
+ "estero":("Village of Estero, Septic to Sewer","https://estero-fl.gov/sewer/"),
+ "esterotoday":("EsteroToday, Utilities Expansion Program update (2025)","https://esterotoday.com/uepupdate2025/"),
+ "bsu":("Bonita Springs Utilities, Sun Village septic-to-sewer","https://bsu.us/sunvillage/"),
+ "bsufaq":("Bonita Springs Utilities, Sans Souci FAQ","https://bsu.us/sanssouci-faqs/"),
+ "fmcity":("City of Fort Myers Utilities","https://www.cityftmyers.com/utilities"),
+ "lcu":("Lee County Utilities","https://www.leegov.com/utilities"),
+ "uep":("City of Cape Coral, Utilities Extension Project","https://www.capecoral.gov/departments/public_works/capital_improvements/utilities_extension_project_uep/index.php"),
+ "uepn1":("City of Cape Coral, North 1 UEP","https://www.capecoral.gov/departments/public_works/capital_improvements/utilities_extension_project_uep/north_1_uep.php"),
+ "epa":("U.S. EPA, How to care for your septic system","https://www.epa.gov/septic/how-care-your-septic-system"),
+}
+def S(k): return A(*SRC[k])
+CITY_PLUS={
+"Lehigh Acres":dict(
+ title="Septic Tank Cleaning & Pumping Lehigh Acres FL | Express Septic",
+ desc="Septic tank cleaning and pumping in Lehigh Acres, FL. Residential pumping from $399.99. Call (239) 451-3261 day or night, or request routine service online.",
+ h1="Septic Tank Cleaning &amp; Pumping in Lehigh Acres, FL",
+ near=["Fort Myers","Gateway","Buckingham","Alva","Fort Myers Shores","Tice"],
+ local=f"<h2>Septic in Lehigh Acres: most homes have a tank</h2><p>Central water and sewer in Lehigh Acres is run by the Florida Governmental Utility Authority (FGUA), which reports about 10,420 wastewater customers here ({S('fgua')}). Lee County has counted 32,879 permitted septic tanks in Lehigh Acres ({S('leelehigh')}). So most Lehigh homes use a septic tank, often alongside a private well.</p><p>Not sure which you have? If you don't pay a sewer charge to FGUA, your home most likely has a septic tank.</p><p>Lee County notes that many Lehigh Acres homes were built from the 1960s through the early 1980s ({S('leelehigh')}). If you own an older home and don't know when the tank was last pumped, start with a pump-out so you know where things stand.</p><p>On a well-and-septic lot, the drain field and your well share the same ground. Pumping on schedule keeps solids out of the drain field. Lehigh is flat, and the summer rainy season raises the water table, so pumping before summer gives the system more room.</p>",
+ sewer_q="Is my Lehigh Acres home on septic or sewer?",
+ sewer_a="Most Lehigh Acres homes are on septic. FGUA provides sewer to part of the community, about 10,420 wastewater customers, while Lee County counts 32,879 permitted septic tanks in Lehigh Acres. If you don't pay FGUA a sewer charge, you most likely have a septic tank.",
+ srcs=["fgua","leelehigh","epa"]),
+"Estero":dict(
+ title="Septic Tank Pumping Estero, FL | Local, From $399.99 | Express Septic",
+ desc="Estero-based septic tank pumping for homes and businesses. Residential pumping from $399.99, risers and grease traps too. Call (239) 451-3261.",
+ h1="Septic Tank Pumping in Estero, FL",
+ near=["Bonita Springs","San Carlos Park","Three Oaks","Corkscrew","Fort Myers Beach","South Fort Myers"],
+ local=f"<h2>Septic in Estero</h2><p>Express is based in Estero, at 23357 Olde Meadowbrook Circle, so Estero homes and businesses are close to home for us.</p><p>The Village of Estero is moving properties from septic to Lee County Utilities sewer through its septic-to-sewer program, aimed in part at protecting the Estero River ({S('estero')}). Early phases include package-plant communities and the Broadway Avenue areas, and the Village treats connection as mandatory once sewer reaches a property ({S('esterotoday')}).</p><p>Until sewer reaches your street, your septic system still needs regular pumping. If you get a notice that sewer is available, ask the Village or Lee County Utilities about the connection and septic abandonment steps.</p>",
+ sewer_q="Is Estero switching from septic to sewer?",
+ sewer_a="In parts of Estero, yes, over time. The Village of Estero is converting properties to Lee County Utilities sewer in phases. Until sewer reaches your street and you connect, keep pumping your septic tank on schedule.",
+ srcs=["estero","esterotoday","epa"]),
+"Bonita Springs":dict(
+ title="Septic Tank Pumping Bonita Springs, FL | From $399.99 | Express Septic",
+ desc="Septic tank pumping in Bonita Springs, FL from nearby Estero. Residential pumping from $399.99, risers and grease traps too. Call (239) 451-3261.",
+ h1="Septic Tank Pumping in Bonita Springs, FL",
+ near=["Estero","North Naples","Naples","San Carlos Park","Three Oaks","Corkscrew"],
+ local=f"<h2>Septic in Bonita Springs</h2><p>Express is based in neighboring Estero, just north of Bonita Springs.</p><p>Central sewer in Bonita Springs is provided by Bonita Springs Utilities (BSU). The City and BSU are converting some neighborhoods from septic to sewer, including Sun Village Estates and the Lake of Sans Souci, partly to cut nutrients reaching groundwater and the Imperial River ({S('bsu')}). Once sewer is available, connection is required within one year ({S('bsufaq')}).</p><p>Many other Bonita Springs homes, especially older neighborhoods and larger lots east of I-75, still use septic tanks that need regular pumping.</p>",
+ sewer_q="My Bonita Springs neighborhood is getting sewer. Do I still need pumping?",
+ sewer_a="Until your home is connected, yes. Your septic tank keeps working until the switch, so keep it pumped. Bonita Springs Utilities handles the sewer connection, and connection is required within one year once sewer is available.",
+ srcs=["bsu","bsufaq","epa"]),
+"Fort Myers":dict(
+ title="Septic Tank Pumping Fort Myers, FL | From $399.99 | Express Septic",
+ desc="Septic tank pumping in Fort Myers, FL for homes and businesses. Residential pumping from $399.99, risers and grease traps too. Call (239) 451-3261.",
+ h1="Septic Tank Pumping in Fort Myers, FL",
+ near=["South Fort Myers","North Fort Myers","Tice","Fort Myers Shores","Lehigh Acres","Cape Coral"],
+ local=f"<h2>Septic in Fort Myers</h2><p>A Fort Myers mailing address can mean the city or the unincorporated Lee County areas around it. The City of Fort Myers runs utilities inside city limits ({S('fmcity')}). Outside them, some areas are on Lee County Utilities ({S('lcu')}) and many homes still use septic tanks.</p><p>Sewer service can change from one street to the next, especially in older neighborhoods. If you don't get a sewer bill from the city or Lee County Utilities, you likely have a septic tank.</p><p>For area-specific notes, see our pages for <a href=\"/septic-tank-pumping-south-fort-myers-fl/\">South Fort Myers</a>, <a href=\"/septic-tank-pumping-tice-fl/\">Tice</a> and <a href=\"/septic-tank-pumping-fort-myers-shores-fl/\">Fort Myers Shores</a>.</p>",
+ sewer_q="How do I know if my Fort Myers home has a septic tank?",
+ sewer_a="Check your utility bills. If you don't pay a sewer charge to the City of Fort Myers or Lee County Utilities, your home most likely has a septic tank. Many homes in unincorporated areas with Fort Myers addresses are on septic.",
+ srcs=["fmcity","lcu","epa"]),
+"Cape Coral":dict(
+ title="Septic Tank Pumping Cape Coral, FL | From $399.99 | Express Septic",
+ desc="Septic tank pumping in Cape Coral, FL, including the North Cape. Residential pumping from $399.99, risers too. Call (239) 451-3261.",
+ h1="Septic Tank Pumping in Cape Coral, FL",
+ near=["North Fort Myers","Fort Myers","Pine Island","South Fort Myers","Sanibel","Fort Myers Beach"],
+ local=f"<h2>Septic in Cape Coral</h2><p>Cape Coral began as a low-density community built on septic tanks and shallow wells. Through its Utilities Extension Project (UEP), the City has extended water and sewer to nearly all of Cape Coral south of Pine Island Road and is now working north ({S('uep')}). North 1 East construction is expected to finish around the end of 2027, with later North Cape phases still to come ({S('uepn1')}).</p><p>So many North Cape homes still rely on septic tanks. The City notes that failed septic effluent can flow into groundwater and canals ({S('uep')}), which matters on canal-front lots.</p><p>Questions about connecting to city utilities or septic tank abandonment go to the City's Customer Billing Services at (239) 242-3853 ({S('uepn1')}).</p>",
+ sewer_q="My Cape Coral area is in the UEP. Do I still need septic pumping?",
+ sewer_a="Until your home is connected to city sewer, yes. Your septic system keeps handling your wastewater until then. The City's Customer Billing Services, (239) 242-3853, handles connection and septic abandonment questions.",
+ srcs=["uep","uepn1","epa"]),
+}
+LID_ASK=("<h2>Ask about the lid before we come out</h2><p>Many tanks have lids buried under soil or grass. Whether finding or digging to the lid changes the price depends on your property, so ask when you call:</p>"
+ "<ul><li>Is finding the lid included in my quote?</li><li>If the lid is buried, is digging included, or what does it add?</li><li>Would a riser make sense, so the next pump-out doesn't need digging?</li></ul>")
+RISER_QA=("What is a septic tank riser?","A riser is an extension installed on top of the tank's access opening. It brings the lid up to ground level, so future pump-outs don't need digging. Express installs risers: one riser $349.99, two risers $649.99. Call (239) 451-3261 to confirm what your tank needs.")
+def city_faq(c,cp):
+  return [(f"How much does septic tank pumping cost in {c}?",f"Residential pumping with Express starts at $399.99. {PRICE_COND} Call (239) 451-3261 to confirm the price for your tank."),
+   (cp["sewer_q"],cp["sewer_a"]),
+   ("How often should I pump my septic tank?","The U.S. EPA recommends pumping most household tanks every 3 to 5 years. Tank size, household size and water use change that. Pumping before Florida's summer rainy season gives the drain field more room."),
+   ("Is finding or digging up the lid included?","It depends on the property. Ask when you call whether locating the lid is included and, if it's buried, whether digging adds to the price."),
+   RISER_QA,
+   (f"Do you pump grease traps in {c}?","Yes. We pump grease traps for restaurants and commercial kitchens, one-time or on a recurring schedule. Call (239) 451-3261 to set it up."),
+   ("Can I book online?","Yes, for routine pumping. Send a request through our ServiceM8 booking page and we'll contact you to confirm a time. It isn't a confirmed appointment until we confirm. For a backup, call (239) 451-3261 day or night.")]
+def faq_ld(items): return {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in items]}
+# Completed jobs: add only real, owner-approved jobs (city, service, month, what was done; never a street address).
+# Example: JOBS.append(dict(city="Lehigh Acres", service="Residential septic tank pumping", month="2026-11", summary="..."))
+JOBS=[]
+def jobs_block(c):
+  js=[j for j in JOBS if j["city"]==c]
+  if not js: return ""
+  return f"<h2>Recent jobs in {c}</h2><ul>"+"".join(f"<li><strong>{j['service']}</strong>, {j['month']}: {j['summary']}</li>" for j in js)+"</ul>"
+def city_plus_page(c,county,a,b):
+  cp=CITY_PLUS[c]; faq=city_faq(c,cp); path=f"/{slug(c)}/"
+  quick=(f"<div class='quick'><p class='eyebrow'>Quick answer</p><p><strong>Express Septic Tank Pumping pumps septic tanks in {c}, FL.</strong> Residential pumping starts at $399.99. "
+   f"For a backup, call <a href='tel:{TEL}'>{PHONE}</a> day or night. For routine pumping, request a time online and we'll contact you to confirm.</p>"
+   f"<ul class='facts'><li><b>Services:</b> residential and commercial septic pumping, septic tank risers, grease trap pumping, septic inspections</li><li><b>Price:</b> residential pumping from $399.99; risers $349.99 (one) or $649.99 (two)</li><li><b>Based in:</b> Estero, serving {c} and the rest of {county}</li><li><b>Licensing:</b> work performed under FL Certified Plumbing Contractor Raymond F. Dibble, #CFC020332</li></ul></div>")
+  body=(quick+photo(slug(c),f"Septic tank pumping job in {c}, FL")+cp["local"]+jobs_block(c)+
+   f"<h2>What septic pumping costs in {c}</h2><div class='price-slot'><p class='pp'>Residential pumping from $399.99</p><p>{PRICE_COND} Call to confirm the price for your tank.</p></div>"+LID_ASK+
+   f"<h2>Septic services in {c}</h2><ul class='cards'>"+"".join(f'<li><a href="/{s[0]}/">{s[1]}</a></li>' for s in SERVICES)+"<li><a href='/commercial-grease-trap-service/'>Commercial Grease Trap Service</a></li></ul>"
+   f"<h2>Signs your tank needs pumping</h2><p>Slow drains, gurgling pipes, sewage odors outside, or soggy, extra-green grass over the drain field. If it's been 3 to 5 years since your last pump-out, or you don't know, it's time to call.</p>"
+   +REQUEST+f"<h2>{c} septic questions</h2>"+"".join(f"<h3>{q}</h3><p>{x}</p>" for q,x in faq)+
+   "<h2>Nearby areas we serve</h2><ul class='cards'>"+"".join(f'<li><a href="/{slug(x)}/">{x}</a></li>' for x in cp["near"])+"<li><a href='/service-area/'>All areas</a></li></ul>"
+   "<p class='srcs'>Sources: "+"; ".join(S(k) for k in cp["srcs"])+".</p>")
+  crumbs={"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":BASE+"/"},{"@type":"ListItem","position":2,"name":"Service area","item":BASE+"/service-area/"},{"@type":"ListItem","position":3,"name":c,"item":BASE+path}]}
+  svc={"@context":"https://schema.org","@type":"Service","name":f"Septic tank pumping in {c}, FL","serviceType":"Septic tank pumping","url":BASE+path,"provider":PROV,"areaServed":{"@type":"City","name":f"{c}, FL","containedInPlace":{"@type":"AdministrativeArea","name":f"{county}, FL"}},"offers":{"@type":"Offer","priceSpecification":{"@type":"PriceSpecification","minPrice":399.99,"priceCurrency":"USD"}}}
+  page(path,cp["title"],cp["desc"],cp["h1"],body,[svc,faq_ld(faq),crumbs])
+HOME_FAQ=[("How much does septic tank pumping cost?",f"Residential pumping starts at $399.99. {PRICE_COND} Call (239) 451-3261 to confirm for your tank."),RISER_QA,
+ ("How often should I pump my septic tank?","The U.S. EPA recommends pumping most household tanks every 3 to 5 years, depending on tank size, household size and water use."),
+ ("Do you pump grease traps?","Yes, for restaurants and commercial kitchens, one-time or on a recurring schedule."),
+ ("Can I book online?","Yes, for routine pumping: send a request on ServiceM8 and we'll contact you to confirm a time. For a backup, call (239) 451-3261 day or night.")]
 page("/","Septic Tank Pumping Southwest Florida | Bonita Springs, Estero, Fort Myers | Express Septic",
  "Owner-operated septic tank pumping in Southwest Florida: Bonita Springs, Estero, Naples, Fort Myers, Cape Coral & Lehigh Acres. Grease trap service too. Call (239) 451-3261.",
  "Septic tank pumping in Southwest Florida",
@@ -179,13 +298,14 @@ page("/","Septic Tank Pumping Southwest Florida | Bonita Springs, Estero, Fort M
 <ul class="svcl"><li><a href="/residential-septic-tank-pumping/"><b>Residential septic pumping</b><span>We find the lid, pump the tank and tell you what we saw.</span></a></li>
 <li><a href="/commercial-grease-trap-service/"><b>Commercial grease trap service</b><span>For restaurants and commercial kitchens. One-time or recurring.</span></a></li>
 <li><a href="/commercial-septic-tank-pumping/"><b>Commercial septic pumping</b><span>Offices, rentals, churches and other properties on septic.</span></a></li>
+<li><a href="/septic-tank-riser-installation/"><b>Septic tank risers</b><span>Bring the lid up to ground level so future pump-outs don't need digging. One riser $349.99.</span></a></li>
 <li><a href="/septic-inspections/"><b>Septic inspections</b><span>For buyers, sellers and homeowners.</span></a></li></ul>
 <div class="price" id="pricing"><p class="pp">Residential pumping from $399.99</p><p>{PRICE_COND} Call to confirm the price for your tank.</p></div></div>''')+
  f'''<section class="truck"><figure class="tphoto">{SIDE.replace('sizes="(min-width:960px) 680px, 100vw"','sizes="100vw"').replace('<figure class="shot">','').replace('</figure>','')}</figure><div class="wrap tcopy"><p class="eyebrow">The truck</p><h2>4,200 gallons, split tank</h2><p>The tank is split into separate compartments, so septic and grease never mix, and one trip handles a full household tank. Licensed &amp; insured · USDOT 6673233.</p></div></section>'''+
  sec(f'''<div class="owner">'''+CREW.replace('alt="Express Septic Tank Pumping crew with the 4,200-gallon vacuum truck"','alt="ORyan Atkinson, owner of Express Septic Tank Pumping, with the Express truck"').replace('sizes="(min-width:960px) 680px, 100vw"','sizes="(min-width:960px) 600px, 100vw"').replace("</figure>","<figcaption>ORyan Atkinson, owner, with the Express truck</figcaption></figure>")+f'''<div><p class="eyebrow">The owner</p><blockquote class="promise">When you call, you're talking to the person who runs the business.</blockquote><p>Express is owned and run by ORyan Atkinson, based in Estero. Licensed &amp; insured. Honest, reliable and fair: great customer service is our top priority.</p><p><a class="btn ghost" href="tel:{TEL}">Call ORyan · {PHONE}</a></p><p><a href="/about/">More about Express</a></p></div></div><div class="cred"><p class="eyebrow">Credentials</p><h2>Licensed &amp; Experienced</h2><p>{LICENSE_BODY}</p></div>''',"warm")+
  f'<section class="sec" data-sth-recent-jobs hidden><div class="wrap"><p class="eyebrow">Recent jobs</p><h2>Completed jobs</h2><p>Photos and notes from recent work around Southwest Florida.</p><a class="btn ghost" data-sth-recent-jobs-link href="/completed-jobs/">See completed jobs</a></div></section>'+
  sec(f'<div class="split"><div><p class="eyebrow">Service area</p><h2>Lee, Collier &amp; Charlotte County</h2><p>Based in Estero, between Bonita Springs and Fort Myers. We also cover LaBelle in Hendry County.</p><p><a href="/service-area/">See every area we serve</a></p></div><div>{city_list}</div></div>',"area")+
- sec(REQUEST,"bookband"),hero=HERO)
+ sec(REQUEST,"bookband")+sec("<p class='eyebrow'>FAQ</p><h2>Common questions</h2>"+"".join(f"<h3>{q}</h3><p>{a}</p>" for q,a in HOME_FAQ)+"<p><a href='/faq/'>More septic questions</a></p>","hfaq"),hero=HERO,extra=faq_ld(HOME_FAQ))
 RES_EXTRA=("<h2>What happens during a visit</h2>"+LIDS+"<ol><li><strong>We locate the tank.</strong> We find the tank and its lid or access port. If the lid is buried, we may need to dig to reach it.</li><li><strong>We pump it out.</strong> The truck pumps the liquid, sludge and scum out of the tank.</li><li><strong>We tell you what we saw.</strong> You'll hear about anything that looks like it needs attention.</li></ol>"
  "<h2>How to prepare</h2><ul><li>If you know where the lid is, mark it or tell us when you call.</li><li>Make sure the truck can get close: clear the driveway and keep vehicles off the drain field.</li><li>Keep pets inside and unlock any gates.</li><li>Have your last pumping date handy if you know it.</li></ul>"
  "<h2>What affects the price</h2><ul><li>Tank size and how full it is</li><li>Access: how far the truck has to reach and whether the lid is buried and needs locating or digging</li><li>Location within our service area</li><li>Timing: after-hours or emergency visits can affect the quote</li></ul>"
@@ -193,9 +313,10 @@ RES_EXTRA=("<h2>What happens during a visit</h2>"+LIDS+"<ol><li><strong>We locat
  "<p>Call <a href='tel:"+TEL+"'>"+PHONE+"</a> to confirm pricing for your tank.</p>")
 EXTRA["residential-septic-tank-pumping"]="<div class='price-slot'><p class='pp'>Residential septic pumping starting at $399.99</p><p>Your final quote depends on tank size, tank access, whether the lid needs locating or digging, and after-hours visits. Call to confirm for your tank.</p></div>"+RES_EXTRA+EXTRA.get("residential-septic-tank-pumping","")
 for s in SERVICES:
-  body=photo(s[0],s[1]+" job photo")+VAL+"".join(f"<p>{p}</p>" for p in s[4])+EXTRA.get(s[0],"")+"<h2>Pricing</h2><p>Call for a quote — <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p><h2>Service Areas</h2>"+city_list+"<h2>Other Services</h2>"+svc_list
-  page(f"/{s[0]}/",s[2],s[3],s[1]+" in Southwest Florida",body,{"@context":"https://schema.org","@type":"Service","name":s[1],"provider":{"@type":"LocalBusiness","name":NAME},"areaServed":[c+", FL" for c in CITIES_ALL]})
+  body=photo(s[0],s[1]+" job photo")+VAL+"".join(f"<p>{p}</p>" for p in s[4])+EXTRA.get(s[0],"")+("" if s[0] in ("septic-tank-riser-installation","residential-septic-tank-pumping") else "<h2>Pricing</h2><p>Call for a quote — <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>")+"<h2>Service Areas</h2>"+city_list+"<h2>Other Services</h2>"+svc_list
+  page(f"/{s[0]}/",s[2],s[3],s[1]+" in Southwest Florida",body,{"@context":"https://schema.org","@type":"Service","name":s[1],"serviceType":s[1],"url":f"{BASE}/{s[0]}/","provider":PROV,"areaServed":[{"@type":"City","name":c+", FL"} for c in CITIES_ALL],**({"offers":[{"@type":"Offer","name":"One septic tank riser, installed","price":349.99,"priceCurrency":"USD"},{"@type":"Offer","name":"Two septic tank risers, installed","price":649.99,"priceCurrency":"USD"}]} if s[0]=="septic-tank-riser-installation" else {"offers":{"@type":"Offer","priceSpecification":{"@type":"PriceSpecification","minPrice":399.99,"priceCurrency":"USD"}}} if s[0]=="residential-septic-tank-pumping" else {})})
 for c,(county,a,b) in CITY.items():
+  if c in CITY_PLUS: city_plus_page(c,county,a,b); continue
   near=[x for x in CITIES_ALL if x!=c]
   body=(photo(slug(c),f"Septic tank pumping job in {c}, FL")+VAL+f"<p>Need septic tank pumping in {c}, FL? Express Septic Tank Pumping serves homes and businesses in {c} and across {county}. {a}</p><p>{b}</p>"
    f"<p class='emerg'><strong>Septic emergency in {c}?</strong> "+"Night or day, we\'re available for emergencies. For routine service, we can often make it same day when possible. Call <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>"
@@ -243,7 +364,7 @@ page("/commercial-grease-trap-service/","Commercial Grease Trap Service & Pumpin
  "<h2>Signs your grease trap needs service</h2><ul><li>Slow sinks or floor drains in the kitchen</li><li>Grease or odors around the trap lid</li><li>It's been longer than your usual schedule since the last pump-out</li></ul>"
  "<h2>What to have ready when you call</h2><ul><li>Business name and address</li><li>Where the trap is and how it's accessed</li><li>Trap size, if you know it</li><li>When it was last pumped</li></ul>"
  "<h2>Other services</h2>"+svc_list,
- {"@context":"https://schema.org","@type":"Service","name":"Commercial Grease Trap Service","provider":{"@type":"LocalBusiness","name":NAME},"areaServed":[c+", FL" for c in CITIES_ALL]})
+ {"@context":"https://schema.org","@type":"Service","name":"Commercial Grease Trap Service","serviceType":"Grease trap pumping","description":"Grease trap pumping for restaurants and commercial kitchens, one-time or on a recurring schedule.","url":BASE+"/commercial-grease-trap-service/","audience":{"@type":"BusinessAudience","name":"Restaurants and commercial kitchens"},"provider":PROV,"areaServed":[{"@type":"City","name":c+", FL"} for c in CITIES_ALL]})
 counties={}
 for c,(co,_,_) in CITY.items(): counties.setdefault(co,[]).append(c)
 page("/service-area/","Septic Pumping Service Area | Lee, Collier, Charlotte & Hendry | Express Septic",
@@ -278,3 +399,15 @@ open("sitemap.xml","w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset x
 open("sitemap-index.xml","w").write(f'<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><sitemap><loc>{BASE}/sitemap.xml</loc></sitemap></sitemapindex>\n')
 open("robots.txt","w").write(f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap-index.xml\nSitemap: {BASE}/sitemap.xml\n")
 print("\n".join(PAGES))
+# llms.txt: plain-text facts for AI assistants (same NAP and prices as the pages).
+LL=[f"# {NAME}","",f"> Owner-operated septic tank pumping company based in Estero, Florida, serving Lee, Collier and Charlotte County plus LaBelle (Hendry County). Residential septic pumping starts at $399.99.","",
+"## Contact",f"- Business: {NAME} LLC",f"- Address: 23357 Olde Meadowbrook Circle, Estero, FL 34134",f"- Phone: {PHONE} (backups: call day or night)",f"- Email: {EMAIL}",
+f"- Online requests: {BOOK} (a request; the business contacts the customer to confirm a time)",f"- Google reviews: {REVIEWS_READ}","",
+"## Services and prices",f"- [Residential septic tank pumping]({BASE}/residential-septic-tank-pumping/): from $399.99. {PRICE_COND}",
+f"- [Septic tank riser installation]({BASE}/septic-tank-riser-installation/): one riser $349.99, two risers $649.99. A riser brings the tank lid up to ground level so future pump-outs don't need digging.",
+f"- [Commercial grease trap service]({BASE}/commercial-grease-trap-service/): restaurants and commercial kitchens, one-time or recurring. Call for a quote.",
+f"- [Commercial septic tank pumping]({BASE}/commercial-septic-tank-pumping/): call for a quote.",f"- [Septic inspections]({BASE}/septic-inspections/): call for a quote.","",
+"## Credentials","- Work performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332, licensed since 1981.","- USDOT 6673233.","",
+"## Main service-area pages"]+[f"- [{c}, FL]({BASE}/{slug(c)}/)" for c in CITY_PLUS]+[f"- [All areas]({BASE}/service-area/)","",
+"## More",f"- [FAQ]({BASE}/faq/)",f"- [How often to pump]({BASE}/how-often-to-pump-septic-tank/)",f"- [About]({BASE}/about/)",""]
+open("llms.txt","w").write("\n".join(LL))

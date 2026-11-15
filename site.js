@@ -37,3 +37,18 @@ document.querySelectorAll('.route').forEach((svg) => {
   const io = new IntersectionObserver((es) => es.forEach((x) => { if (x.isIntersecting) { svg.classList.add('on'); io.disconnect(); } }), { threshold: 0.4 });
   io.observe(svg);
 });
+
+// --- GA4 lead events (uses the existing G-ESN48M0VEZ tag; adds no second tag). ---
+// phone_call_click: any tel: link. book_request_click: ServiceM8 request link (off-site; the request itself
+// can't be seen by GA4). email_click: mailto. book_section_click: on-site "Book" buttons that open the booking choices.
+(function () {
+  const where = (a) => { const z = a.closest('.mbar,.top,.hero,.phead,.book,.closer,.foot,.quick,.svc,.owner,.hfaq,.prose'); return z ? (z.className.split(' ')[0] || z.tagName.toLowerCase()) : 'body'; };
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest && e.target.closest('a[href]'); if (!a || typeof window.gtag !== 'function') return;
+    const h = a.getAttribute('href') || '', p = { link_location: where(a), page_path: location.pathname, transport_type: 'beacon' };
+    if (h.startsWith('tel:')) gtag('event', 'phone_call_click', p);
+    else if (h.includes('book.servicem8.com')) gtag('event', 'book_request_click', p);
+    else if (h.startsWith('mailto:')) gtag('event', 'email_click', p);
+    else if (/#book$/.test(h)) gtag('event', 'book_section_click', p);
+  }, { capture: true });
+})();
