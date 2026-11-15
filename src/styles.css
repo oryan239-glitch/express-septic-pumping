@@ -135,6 +135,12 @@ h1,h2{font-weight:850;letter-spacing:-.03em}
 .warm{background:var(--paper2)}
 .owner{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}.owner .shot{margin:0}.owner .crew img{aspect-ratio:4/3;object-position:30% 50%}
 .promise{margin:0 0 18px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.15;font-weight:850;letter-spacing:-.025em;border-left:6px solid var(--lime);padding-left:20px}
+.cred{margin-top:48px;padding-top:36px;border-top:1px solid var(--line);max-width:40rem}
+.cred h2{margin:0 0 12px}
+.cred p{margin:0;font-size:1.05rem;line-height:1.55}
+.license-foot{margin:8px 0 0;max-width:22rem;color:#b7c0cc;font-size:.88rem;line-height:1.45}
+.license-foot a{text-decoration:underline}
+
 /* reviews */
 .revrow{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px 48px}.revrow h2{margin-bottom:.2em}.revrow p{margin:0}
 .revlinks{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
