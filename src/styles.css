@@ -165,3 +165,4 @@ h1,h2{font-weight:850;letter-spacing:-.03em}
 .hfaq h3{margin:22px 0 6px;font-size:1.12rem}.hfaq p{margin:0;max-width:44rem}
 .prose .book{margin:36px 0}
 .job{border-top:1px solid var(--line);padding-top:18px;margin-top:26px}.job h2{margin-top:0}.jdate{font:600 .82rem ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin:-4px 0 10px}
+.svc .price .more{grid-column:2}@media (max-width:959px){.svc .price .more{grid-column:auto}}
