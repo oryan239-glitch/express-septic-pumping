@@ -10,6 +10,8 @@ const ZIPS = {
   'Lehigh Acres': ['33936','33971','33972','33973','33974','33976'],
   'Golden Gate Estates': ['34117','34120'],
   'LaBelle': ['33935','33440'],
+  'Sanibel': ['33957'],
+  'Captiva': ['33924'],
   'Charlotte Harbor': ['33980'],
   'Harbour Heights': ['33983'],
   'Alva': ['33920'],
