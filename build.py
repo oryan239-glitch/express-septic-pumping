@@ -48,8 +48,8 @@ SERVICES=[
    "The work is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332, licensed since 1981."]),
  ("lift-station-pumping","Lift Station Pumping","Lift Station Pumping in Lee & Collier County | Express Septic","Express Septic Tank Pumping pumps lift stations in Estero and across Southwest Florida. Work is quoted after we inspect the system. Call (239) 451-3261.",
   ["Express Septic Tank Pumping pumps lift stations for homes and businesses in Estero and across Lee, Collier, and Charlotte County, plus LaBelle. Lift station work is quoted after we inspect the system. Call (239) 451-3261."]),
- ("grease-trap-pumping","Grease Trap & Interceptor Pumping","Grease Trap & Interceptor Pumping in Lee, Collier & Charlotte County | Express Septic","Grease trap and interceptor pumping for restaurants and food service in Fort Myers, Cape Coral, Bonita Springs, Naples, Estero and across Lee, Collier and Charlotte County. Quoted based on trap size and schedule. Call (239) 451-3261.",
-  ["Express Septic Tank Pumping pumps grease traps and interceptors for restaurants and food service in Fort Myers, Cape Coral, Bonita Springs, Naples, Estero and across Lee, Collier, and Charlotte County, plus LaBelle. We pump in-ground grease interceptors and indoor traps. Service is quoted based on trap size and schedule. We can set up a recurring pump-out schedule. Call (239) 451-3261.",
+ ("grease-trap-pumping","Grease Trap & Interceptor Pumping","Grease Trap & Interceptor Pumping in Lee, Collier & Charlotte County | Express Septic","Grease trap and interceptor pumping for restaurants and food service in Fort Myers, Cape Coral, Bonita Springs, Naples, Estero and across Lee, Collier and Charlotte County. $695 for a 1,000-gallon grease trap or interceptor; other sizes are quoted. Call (239) 451-3261.",
+  ["Express Septic Tank Pumping pumps grease traps and interceptors for restaurants and food service in Fort Myers, Cape Coral, Bonita Springs, Naples, Estero and across Lee, Collier, and Charlotte County, plus LaBelle. We pump in-ground grease interceptors and indoor traps. $695 for a 1,000-gallon grease trap or interceptor; other sizes are quoted. We can set up a recurring pump-out schedule. Call (239) 451-3261.",
    "Our 4,200-gallon truck has a split tank, one side for septic and one side for grease, so grease trap loads and septic loads never mix."]),
  ("septic-inspections","Septic Inspections","Septic Inspection for Home Purchase | Fort Myers & Naples | Express Septic","Septic inspection & real estate septic inspection for home purchases in Fort Myers, Naples, Estero & nearby. Septic inspection with pump-out $549.99. Call (239) 451-3261.",
   ["A septic inspection checks the condition of your tank and how the system is working. It's common when buying or selling a home, and a good idea if you're noticing problems.",
@@ -109,8 +109,9 @@ FAQ=[("How often should I pump my septic tank?","Most homes need septic tank pum
 ("How much does it cost to pump a septic tank in Florida?","Residential septic pumping starts at $399.99. After-hours pumping is $599.99. Call (239) 451-3261 to confirm for your tank. Your final quote depends on tank size, tank access, and whether the lid needs locating or digging."),
 ("What are signs my septic tank is full?","Slow drains, gurgling pipes, sewage odors, wet or extra-green spots over the drain field, and backups are common signs."),
 ("Do you pump commercial septic tanks?","Yes. We provide commercial septic tank pumping for businesses and other properties."),
-("Do you pump grease traps?","Yes. We pump <a href='/grease-trap-pumping/'>grease traps and interceptors</a> for restaurants and food service, including in-ground interceptors and indoor traps, one-time or on a recurring schedule. Quoted based on trap size and schedule. Call (239) 451-3261."),
-("Do you pump grease interceptors?","Yes. We pump in-ground grease interceptors and indoor traps for restaurants and food service. Quoted based on trap size and schedule. Call (239) 451-3261. See <a href='/grease-trap-pumping/'>grease trap and interceptor pumping</a>."),
+("Do you pump grease traps?","Yes. We pump <a href='/grease-trap-pumping/'>grease traps and interceptors</a> for restaurants and food service, including in-ground interceptors and indoor traps, one-time or on a recurring schedule. $695 for a 1,000-gallon grease trap or interceptor; other sizes are quoted. Call (239) 451-3261."),
+("Do you pump grease interceptors?","Yes. We pump in-ground grease interceptors and indoor traps for restaurants and food service. $695 for a 1,000-gallon grease trap or interceptor; other sizes are quoted. Call (239) 451-3261. See <a href='/grease-trap-pumping/'>grease trap and interceptor pumping</a>."),
+("How much does grease trap pumping cost?","$695 for a 1,000-gallon grease trap or interceptor; other sizes are quoted. Call (239) 451-3261."),
 ("How often does a grease interceptor need pumping in Lee County?","<a href='https://www.leegov.com/bocc/Ordinances/14-24.pdf' rel='noopener'>Lee County Ordinance 14-24</a> requires grease interceptors to be fully pumped at least every 90 calendar days. Indoor grease traps must be cleaned at least weekly or whenever grease and solids exceed 20% of the unit volume. We can set up a recurring pump-out schedule. Call (239) 451-3261."),
 ("Do you do septic repairs?","Yes. We look at the system first, then quote the repair. Call (239) 451-3261. Repair work is performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
 ("Do you replace drain fields?","Yes. We quote drain field replacement after inspecting the system. Call (239) 451-3261. The work is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
@@ -123,7 +124,7 @@ FAQ=[("How often should I pump my septic tank?","Most homes need septic tank pum
 ("How often should I clean my septic effluent filter?","If your tank has an effluent filter, it should be checked and cleaned at every pump-out and whenever drains slow. Express can advise on a schedule for your system. See <a href='/septic-filter-care/'>effluent filter care</a>. Call (239) 451-3261."),
 ("Where is the septic effluent filter?","The effluent filter is in the outlet side of the tank, under the lid. A <a href='/septic-tank-riser-installation/'>6-inch riser</a> ($299.99 each) brings the lid up to ground level so the filter is easier to reach. Call (239) 451-3261."),
 ("What happens if the effluent filter is dirty?","A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house. Express cleans your filter at no charge on pump-outs and can show you how to keep it clean. See <a href='/septic-filter-care/'>effluent filter care</a>."),
-("How does soil bacteria protect a drain field?","Healthy bacteria in the soil break down effluent after it leaves the tank. Harsh chemicals, solids and grease overload can hurt that process. See <a href='/septic-filter-care/#drain-field'>why soil bacteria matter</a> and <a href='/drain-field-replacement/'>drain field replacement</a>."),
+("How does soil bacteria protect a drain field?","Healthy bacteria in the soil break down effluent after it leaves the tank. Harsh chemicals, solids and grease overload can hurt that process. See <a href='/septic-bacteria-drain-field/'>why good bacteria protect your septic tank and drain field</a> and <a href='/drain-field-replacement/'>drain field replacement</a>."),
 ("Do you clean the effluent filter when you pump?","Yes. We clean your filter at no charge on pump-outs and show you how to keep it clean."),
 ("How do I book?","For routine pumping, send a request through our ServiceM8 booking page. We'll contact you to confirm a time; it isn't a confirmed appointment until we do. For a backup, call (239) 451-3261 day or night.")]
 PAGES=[]
@@ -144,7 +145,7 @@ def schema(extra=None):
      +[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Septic Repair","url":BASE+"/septic-repair/","description":"Quoted after we look at the system"}},
         {"@type":"Offer","itemOffered":{"@type":"Service","name":"Drain Field Replacement","url":BASE+"/drain-field-replacement/","description":"Quoted after we inspect the system"}},
         {"@type":"Offer","itemOffered":{"@type":"Service","name":"Lift Station Pumping","url":BASE+"/lift-station-pumping/","description":"Quoted after we inspect the system"}},
-        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Grease Trap & Interceptor Pumping","url":BASE+"/grease-trap-pumping/","description":"Quoted based on trap size and schedule"}}]
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Grease Trap & Interceptor Pumping","url":BASE+"/grease-trap-pumping/"},"price":695,"priceCurrency":"USD","description":"1,000 gallons"}]
      +[{"@type":"Offer","name":"Septic inspection with pump-out","price":549.99,"priceCurrency":"USD","itemOffered":{"@type":"Service","name":"Septic Inspections","url":BASE+"/septic-inspections/"}}]
      +[{"@type":"Offer","name":"6-inch septic tank riser, installed (each)","price":299.99,"priceCurrency":"USD","itemOffered":{"@type":"Service","name":"Septic Tank Riser Installation","url":BASE+"/septic-tank-riser-installation/"}},
        {"@type":"Offer","name":"Locating and digging up a buried septic tank lid","price":100,"priceCurrency":"USD","description":"$100, plus $50 for each additional hour"},
@@ -229,7 +230,7 @@ def page(path,title,desc,h1,body,extra=None,hero=None,lead="",trail=None,canonic
 <details class="menu"><summary aria-label="Open menu">Menu</summary><nav aria-label="Mobile">{NAVL}<a href="/contact/">Contact</a><a href="tel:{TEL}">Call {PHONE}</a></nav></details></div></header>
 <main id="main">{top}<div class="body">{body}</div>{REV}<section class="band closer"><div class="wrap"><h2>Talk to Express about your tank</h2><p>{AVAIL}</p>{CTA}</div></section></main>
 <footer id="contact" class="foot"><div class="wrap fgrid"><div><p class="mark">EXPRESS</p><p>{NAME} LLC<br>23357 Olde Meadowbrook Circle, Estero, FL 34134<br><a href="tel:{TEL}">{PHONE}</a><br><a data-sth-field="email" href="{"mailto:"+EMAIL if EMAIL else "/contact/"}">{EMAIL or "Send a request"}</a></p><p>Open 24 hours, 7 days a week.</p><p>Owner-operated. Licensed &amp; insured. We come to you.</p><p class="dot">USDOT 6673233</p><p class="license-foot">{LICENSE_FOOT}</p></div>
-<div><p class="fh">Services</p>{NAV}</div><div><p class="fh">Areas</p>{foot}</div><div><p class="fh">Info</p><a href="/">Home</a><a href="/how-it-works/">How it works</a><a href="/septic-system-maintenance/">Septic maintenance</a><a href="/septic-filter-care/">Filter care</a><a href="/how-often-to-pump-septic-tank/">How often to pump</a><a href="/completed-jobs/">Completed jobs</a><a href="/about/">About</a><a href="/faq/">FAQ</a><a href="/contact/">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></div></footer>
+<div><p class="fh">Services</p>{NAV}</div><div><p class="fh">Areas</p>{foot}</div><div><p class="fh">Info</p><a href="/">Home</a><a href="/how-it-works/">How it works</a><a href="/septic-system-maintenance/">Septic maintenance</a><a href="/septic-filter-care/">Filter care</a><a href="/septic-bacteria-drain-field/">Good bacteria</a><a href="/how-often-to-pump-septic-tank/">How often to pump</a><a href="/completed-jobs/">Completed jobs</a><a href="/about/">About</a><a href="/faq/">FAQ</a><a href="/contact/">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></div></footer>
 <div class="mbar" role="region" aria-label="Quick contact"><a class="btn primary" href="tel:{TEL}">Call · {PHONE}</a><a class="btn ghost" href="/contact/#book">Book</a></div></body></html>'''
   doc=doc.replace("<div class=\"body\"></div>","")
   if 'id="book"' in body: doc=doc.replace('href="/contact/#book"','href="#book"')
@@ -440,15 +441,16 @@ def city_plus_page(c,county,a,b):
   page(path,cp["title"],cp["desc"],cp["h1"],body,[svc,faq_ld(faq),crumbs],trail=cp.get("trail"))
 HOME_FAQ=[("How much does septic tank pumping cost?",f"Residential pumping starts at $399.99. {PRICE_COND} Call (239) 451-3261 to confirm for your tank."),RISER_QA,
  ("How often should I pump my septic tank?","The U.S. EPA recommends pumping most household tanks every 3 to 5 years, depending on tank size, household size and water use."),
- ("Do you pump grease traps?","Yes. We pump <a href='/grease-trap-pumping/'>grease traps and interceptors</a> for restaurants and food service, including in-ground interceptors and indoor traps, one-time or on a recurring schedule. Quoted based on trap size and schedule. Call (239) 451-3261."),
- ("Do you pump grease interceptors?","Yes. We pump in-ground grease interceptors and indoor traps for restaurants and food service. Quoted based on trap size and schedule. Call (239) 451-3261."),
+ ("Do you pump grease traps?","Yes. We pump <a href='/grease-trap-pumping/'>grease traps and interceptors</a> for restaurants and food service, including in-ground interceptors and indoor traps, one-time or on a recurring schedule. $695 for a 1,000-gallon grease trap or interceptor; other sizes are quoted. Call (239) 451-3261."),
+ ("Do you pump grease interceptors?","Yes. We pump in-ground grease interceptors and indoor traps for restaurants and food service. $695 for a 1,000-gallon grease trap or interceptor; other sizes are quoted. Call (239) 451-3261."),
+("How much does grease trap pumping cost?","$695 for a 1,000-gallon grease trap or interceptor; other sizes are quoted. Call (239) 451-3261."),
  ("How often does a grease interceptor need pumping in Lee County?","<a href='https://www.leegov.com/bocc/Ordinances/14-24.pdf' rel='noopener'>Lee County Ordinance 14-24</a> requires grease interceptors to be fully pumped at least every 90 calendar days. Indoor grease traps must be cleaned at least weekly or whenever grease and solids exceed 20% of the unit volume. We can set up a recurring pump-out schedule. Call (239) 451-3261."),
  ("Do you do septic repairs?","Yes. We look at the system first, then quote the repair. Call (239) 451-3261. Repair work is performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
  ("Do you replace drain fields?","Yes. We quote drain field replacement after inspecting the system. Call (239) 451-3261. The work is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
  ("Do you pump lift stations?","Yes. <a href='/lift-station-pumping/'>Lift station work</a> is quoted after we inspect the system. Call (239) 451-3261."),
  ("How often should I clean my septic effluent filter?","If your tank has an effluent filter, it should be checked and cleaned at every pump-out and whenever drains slow. Express can advise on a schedule for your system. See <a href='/septic-filter-care/'>effluent filter care</a>. Call (239) 451-3261."),
  ("What happens if the effluent filter is dirty?","A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house. Express cleans your filter at no charge on pump-outs and can show you how to keep it clean."),
- ("How does soil bacteria protect a drain field?","Healthy bacteria in the soil break down effluent after it leaves the tank. Harsh chemicals, solids and grease overload can hurt that process. See <a href='/septic-filter-care/#drain-field'>why soil bacteria matter</a>."),
+ ("How does soil bacteria protect a drain field?","Healthy bacteria in the soil break down effluent after it leaves the tank. Harsh chemicals, solids and grease overload can hurt that process. See <a href='/septic-bacteria-drain-field/'>why good bacteria protect your septic tank and drain field</a>."),
  ("Can I book online?","Yes, for routine pumping: send a request on ServiceM8 and we'll contact you to confirm a time. For a backup, call (239) 451-3261 day or night.")]
 
 STANDAPART=("""<div class="aparthead"><p class="eyebrow">How we stand apart</p>
@@ -462,7 +464,7 @@ EDU=("""<div class="eduhead"><p class="eyebrow">Septic care</p>
 <h2>Protect your system between pump-outs</h2></div>
 <ul class="edugrid">
 <li><h3>Effluent filter care</h3><p>If your tank has an effluent filter, it should be checked and cleaned at every pump-out and whenever drains slow. A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house. We clean your filter at no charge on pump-outs and can show you how to keep it clean.</p><a class="txtlink" href="/septic-filter-care/">How to care for your filter</a></li>
-<li><h3>Healthy soil bacteria protect the drain field</h3><p>Bacteria in the soil break down effluent after it leaves the tank, which helps protect the drain field. Harsh chemicals, solids and grease overload can hurt that process.</p><p><a class="txtlink" href="/septic-filter-care/#drain-field">Why soil bacteria matter</a> <a class="txtlink" href="/drain-field-replacement/">Drain field replacement</a></p></li>
+<li><h3>Healthy bacteria protect the tank and drain field</h3><p>Anaerobic bacteria in the tank break down solids. Aerobic bacteria and the biomat in drain-field soil treat effluent before it reaches groundwater. Harsh chemicals, grease and solids overload can hurt that process.</p><p><a class="txtlink" href="/septic-bacteria-drain-field/">Why good bacteria matter</a> <a class="txtlink" href="/drain-field-replacement/">Drain field replacement</a></p></li>
 </ul>""")
 def work_card(jid, blurb):
   j=next(x for x in JOBS if x["id"]==jid)
@@ -483,7 +485,7 @@ page("/","Septic Tank Pumping Southwest Florida | Bonita Springs, Estero, Fort M
 <li><a href="/septic-repair/"><b>Septic repairs</b><span>We look at the system first, then quote the repair.</span></a></li>
 <li><a href="/drain-field-replacement/"><b>Drain field replacement</b><span>Quoted after we inspect the system. The work is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332.</span></a></li>
 <li><a href="/lift-station-pumping/"><b>Lift station pumping</b><span>Quoted after we inspect the system.</span></a></li>
-<li><a href="/grease-trap-pumping/"><b>Grease trap &amp; interceptor pumping</b><span>For restaurants and food service, including in-ground interceptors and indoor traps. Quoted based on trap size and schedule.</span></a></li>
+<li><a href="/grease-trap-pumping/"><b>Grease trap &amp; interceptor pumping</b><span>For restaurants and food service, including in-ground interceptors and indoor traps. $695 for a 1,000-gallon grease trap or interceptor; other sizes are quoted.</span></a></li>
 <li><a href="/septic-inspections/"><b>Septic inspections</b><span>For buyers, sellers and homeowners. Inspection with pump-out $549.99.</span></a></li></ul><p class='more'>We also have dedicated septic tank pumping pages for <a href='/septic-tank-pumping-fort-myers-fl/'>Fort Myers</a>, <a href='/septic-tank-pumping-cape-coral-fl/'>Cape Coral</a> and <a href='/septic-tank-pumping-bonita-springs-fl/'>Bonita Springs</a>.</p>
 </div>''')+sec(PRICE_PANEL,"priceband")+sec(QUOTES,"quotes")+sec(STANDAPART,"standapart")+sec(EDU,"edu")+
  f'''<section class="truck"><figure class="tphoto">{SIDE.replace('sizes="(min-width:960px) 680px, 100vw"','sizes="100vw"').replace('<figure class="shot">','').replace('</figure>','')}</figure><div class="wrap tcopy"><p class="eyebrow">The truck</p><h2>4,200 gallons, split tank</h2><p>The tank is split in two: one side for septic, one side for grease, so the two never mix. Licensed &amp; insured · USDOT 6673233.</p></div></section>'''+
@@ -504,21 +506,33 @@ LIFT_FAQ=[
  ("Where do you pump lift stations?","We're based in Estero and serve Lee, Collier and Charlotte County, plus LaBelle in Hendry County. Call (239) 451-3261."),
 ]
 GREASE_FAQ=[
- ("Do you pump grease interceptors?","Yes. We pump in-ground grease interceptors and indoor traps for restaurants and food service. Quoted based on trap size and schedule. Call (239) 451-3261."),
+ ("How much does grease trap pumping cost?","$695 for a 1,000-gallon grease trap or interceptor; other sizes are quoted. Call (239) 451-3261."),
+ ("Do you pump grease interceptors?","Yes. We pump in-ground grease interceptors and indoor traps for restaurants and food service. $695 for a 1,000-gallon grease trap or interceptor; other sizes are quoted. Call (239) 451-3261."),
  ("How often does a grease interceptor need pumping in Lee County?","Lee County Ordinance 14-24 requires grease interceptors to be fully pumped at least every 90 calendar days. Indoor grease traps must be cleaned at least weekly or whenever grease and solids exceed 20% of the unit volume. We can set up a recurring pump-out schedule. Call (239) 451-3261."),
- ("Do you pump grease traps?","Yes. We pump grease traps and interceptors for restaurants and food service, one-time or on a recurring schedule. Quoted based on trap size and schedule. Call (239) 451-3261."),
- ("How is grease trap pumping quoted?","Grease trap and interceptor pumping is quoted based on trap size and schedule. Call (239) 451-3261."),
+ ("Do you pump grease traps?","Yes. We pump grease traps and interceptors for restaurants and food service, one-time or on a recurring schedule. $695 for a 1,000-gallon grease trap or interceptor; other sizes are quoted. Call (239) 451-3261."),
  ("Do you keep grease and septic loads separate?","Yes. Our 4,200-gallon truck has a split tank, one side for septic and one side for grease, so the two never mix."),
+]
+BACTERIA_FAQ=[
+ ("What do bacteria do in a septic tank?","Anaerobic bacteria in the tank break down solids. Heavier material settles as sludge, and lighter material, including grease, floats as scum. Wastewater in the middle, called effluent, leaves the tank toward the drain field."),
+ ("How do bacteria in the drain field treat wastewater?","Aerobic bacteria in the drain-field soil, and a thin living layer called the biomat, treat effluent after it leaves the tank and before it moves farther toward groundwater."),
+ ("What can kill or overload good septic bacteria?","Bleach and harsh cleaners in large amounts, antibacterial soaps, drain openers, antibiotics and other medications that are flushed, grease, wipes, heavy garbage-disposal use, and too much water at once, such as doing all the laundry in one day."),
+ ("What are signs the bacterial balance is off?","Odors, slow drains, soggy spots in the yard, and unusually lush grass over the drain field. These can have other causes too. If you notice them, call (239) 451-3261."),
+ ("Do I need septic tank additives?","A healthy septic system normally gets the bacteria it needs from everyday household waste. Additives are not a substitute for regular pumping. See the U.S. EPA SepticSmart page at https://www.epa.gov/septic."),
+ ("How does pumping help the drain field?","Regular pumping removes sludge and scum that bacteria cannot fully break down, so solids are less likely to leave the tank and overload the drain field."),
+ ("Do you clean the effluent filter when you pump?","Yes. We clean your filter at no charge on pump-outs and can show you how to keep it clean. A clean filter helps keep solids out of the drain field. See <a href='/septic-filter-care/'>effluent filter care</a>."),
 ]
 FILTER_FAQ=[
  ("How often should I clean my septic effluent filter?","If your tank has an effluent filter, it should be checked and cleaned at every pump-out and whenever drains slow. Express can advise on a schedule for your system. Call (239) 451-3261."),
  ("Where is the septic effluent filter?","The effluent filter is in the outlet side of the tank, under the lid. A 6-inch riser ($299.99 each) brings the lid up to ground level so the filter is easier to reach."),
  ("What happens if the effluent filter is dirty?","A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house. Express cleans your filter at no charge on pump-outs and can show you how to keep it clean."),
- ("How does soil bacteria protect a drain field?","Healthy bacteria in the soil break down effluent after it leaves the tank. Harsh chemicals, solids and grease overload can hurt that process."),
+ ("How does soil bacteria protect a drain field?","Healthy bacteria in the soil break down effluent after it leaves the tank. Harsh chemicals, solids and grease overload can hurt that process. See <a href='/septic-bacteria-drain-field/'>why good bacteria protect your septic tank and drain field</a>."),
  ("Do you clean the effluent filter when you pump?","Yes. We clean your filter at no charge on pump-outs and show you how to keep it clean."),
 ]
 def faq_html(items, heading_tag="h3"):
   return "".join(f"<{heading_tag}>{q}</{heading_tag}><p>{a}</p>" for q,a in items)
+EXTRA["drain-field-replacement"]=(
+ "<p>Keeping good bacteria healthy in the tank and the drain-field soil helps protect a drain field before it fails. See <a href='/septic-bacteria-drain-field/'>why good bacteria protect your septic tank and drain field</a>.</p>"
+)
 EXTRA["lift-station-pumping"]=(
  "<h2>What is lift station pumping?</h2>"
  "<p>A lift station is a pump that moves wastewater when it cannot flow by gravity. Express pumps lift stations in our service area. We quote the work after we inspect the system.</p>"
@@ -534,15 +548,15 @@ LEE_ORD='<a href="https://www.leegov.com/bocc/Ordinances/14-24.pdf" rel="noopene
 FL_STATUTE='<a href="https://www.flsenate.gov/Laws/Statutes/2026/403.0741" rel="noopener">Florida Statute 403.0741</a>'
 EXTRA["grease-trap-pumping"]=(
  "<h2>Do you pump grease interceptors?</h2>"
- "<p>Yes. We pump in-ground grease interceptors and indoor traps for restaurants and food service in Fort Myers, Cape Coral, Bonita Springs, Naples, Estero and across Lee, Collier, and Charlotte County, plus LaBelle. Service is quoted based on trap size and schedule. We can set up a recurring pump-out schedule. Call <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>"
+ "<p>Yes. We pump in-ground grease interceptors and indoor traps for restaurants and food service in Fort Myers, Cape Coral, Bonita Springs, Naples, Estero and across Lee, Collier, and Charlotte County, plus LaBelle. $695 for a 1,000-gallon grease trap or interceptor; other sizes are quoted. We can set up a recurring pump-out schedule. Call <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>"
  "<h2>Where do you pump grease traps and interceptors?</h2>"
  "<p>This is our main page for grease trap and interceptor pumping in Southwest Florida. We serve restaurants and food-service kitchens in Lee, Collier and Charlotte County, plus LaBelle in Hendry County, including Fort Myers, Cape Coral, Bonita Springs, Naples and Estero.</p>"
  "<h2>How often does a grease interceptor need pumping in Lee County?</h2>"
  "<p>"+LEE_ORD+" requires grease interceptors to be fully pumped at least every 90 calendar days. Indoor grease traps must be cleaned at least weekly or whenever grease and solids exceed 20% of the unit volume. We can set up a recurring pump-out schedule that fits your kitchen.</p>"
  "<h2>What Florida law says about grease waste manifests</h2>"
  "<p>"+FL_STATUTE+" requires a signed grease waste service manifest for every pump-out.</p>"
- "<h2>How is grease trap and interceptor pumping quoted?</h2>"
- "<p>Service is quoted based on trap size and schedule. Call <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>"
+ "<h2>How much does grease trap pumping cost?</h2>"
+ "<p>$695 for a 1,000-gallon grease trap or interceptor; other sizes are quoted. Call <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>"
  "<h2>How do you keep grease and septic separate?</h2>"
  "<p>Our 4,200-gallon truck has a split tank, one side for septic and one side for grease, so grease trap loads and septic loads never mix.</p>"
  "<p>A shorter overview is on our <a href='/commercial-grease-trap-service/'>commercial grease trap service</a> page. This page is the main one for grease trap and interceptor pumping in Southwest Florida.</p>"
@@ -554,7 +568,7 @@ for s in SERVICES:
   intro="" if s[0] in ("lift-station-pumping","grease-trap-pumping") else VAL
   no_generic_price=s[0] in ("septic-tank-riser-installation","residential-septic-tank-pumping","septic-inspections","lift-station-pumping","grease-trap-pumping")
   body=photo(s[0],s[1]+" job photo")+intro+"".join(f"<p>{p}</p>" for p in s[4])+EXTRA.get(s[0],"")+("" if no_generic_price else "<h2>Pricing</h2><p>Call for a quote — <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>")+"<h2>Service Areas</h2>"+city_list+"<h2>Other Services</h2>"+svc_list
-  offers=({"offers":{"@type":"Offer","name":"6-inch septic tank riser, installed (each)","price":299.99,"priceCurrency":"USD"}} if s[0]=="septic-tank-riser-installation" else {"offers":{"@type":"Offer","priceSpecification":{"@type":"PriceSpecification","minPrice":399.99,"priceCurrency":"USD"}}} if s[0]=="residential-septic-tank-pumping" else {"offers":{"@type":"Offer","name":"Septic inspection with pump-out","price":549.99,"priceCurrency":"USD"}} if s[0]=="septic-inspections" else {"offers":{"@type":"Offer","description":"Quoted after we inspect the system"}} if s[0] in ("drain-field-replacement","lift-station-pumping") else {"offers":{"@type":"Offer","description":"Quoted based on trap size and schedule"}} if s[0]=="grease-trap-pumping" else {})
+  offers=({"offers":{"@type":"Offer","name":"6-inch septic tank riser, installed (each)","price":299.99,"priceCurrency":"USD"}} if s[0]=="septic-tank-riser-installation" else {"offers":{"@type":"Offer","priceSpecification":{"@type":"PriceSpecification","minPrice":399.99,"priceCurrency":"USD"}}} if s[0]=="residential-septic-tank-pumping" else {"offers":{"@type":"Offer","name":"Septic inspection with pump-out","price":549.99,"priceCurrency":"USD"}} if s[0]=="septic-inspections" else {"offers":{"@type":"Offer","description":"Quoted after we inspect the system"}} if s[0] in ("drain-field-replacement","lift-station-pumping") else {"offers":{"@type":"Offer","price":695,"priceCurrency":"USD","description":"1,000 gallons"}} if s[0]=="grease-trap-pumping" else {})
   svc={"@context":"https://schema.org","@type":"Service","name":s[1],"serviceType":s[1],"url":f"{BASE}/{s[0]}/","provider":PROV,"areaServed":[{"@type":"City","name":c+", FL"} for c in CITIES_ALL],**offers}
   extra=svc; trail=None
   if s[0]=="lift-station-pumping":
@@ -628,6 +642,36 @@ _j=next((x for x in JOBS if x["id"]=="lehigh-acres-2026-11-17"), None)
 if _j:
   _out=[p for p in (_j.get("photos") or []) if "effluent filter" in (p.get("cap") or "").lower() or "outlet side" in (p.get("cap") or "").lower()]
   FILTER_PHOTOS=job_shots({"photos":_out} if _out else {"photos":[]})
+
+page("/septic-bacteria-drain-field/","Why Good Bacteria Protect Your Septic Tank and Drain Field | Express Septic",
+ "Anaerobic bacteria in the tank and aerobic bacteria in the drain field treat wastewater before it reaches groundwater. What helps, what hurts, and why pumping and filter cleaning matter. Call (239) 451-3261.",
+ "Why good bacteria protect your septic tank and drain field",
+ "<p>Good bacteria do two jobs in a septic system. In the tank, anaerobic bacteria break down solids. In the drain field, aerobic bacteria and a living layer called the biomat treat effluent before it reaches groundwater. Regular pumping and a clean effluent filter help protect that balance. Express cleans your filter at no charge on pump-outs.</p>"
+ "<h2>What do anaerobic bacteria do in the septic tank?</h2>"
+ "<p>Wastewater from the house flows into the tank. Anaerobic bacteria, which work without oxygen, break down some of the solids. Heavier material settles to the bottom as sludge. Lighter material, including grease, floats to the top as scum. The clearer wastewater in the middle, called effluent, moves on to the drain field.</p>"
+ "<h2>How do aerobic bacteria and the biomat treat effluent in the drain field?</h2>"
+ "<p>Effluent leaving the tank still needs treatment. In the drain-field soil, aerobic bacteria, which need oxygen, continue breaking down what remains. A thin, living layer called the biomat forms in the soil around the drain-field pipes. Together, the soil bacteria and the biomat treat effluent before it moves farther through the soil and toward groundwater.</p>"
+ "<h2>Why does this matter in Southwest Florida?</h2>"
+ "<p>Much of Southwest Florida has sandy soils and a high water table, especially in the rainy season. Sandy soil can let water move quickly, and a high water table leaves less unsaturated soil between the drain field and groundwater. That makes it more important to keep bacteria in the tank and the drain-field biomat healthy, and to pump the tank so solids and grease do not overload the field.</p>"
+ "<h2>What kills or overloads septic bacteria?</h2>"
+ "<p>Some household products and habits can kill helpful bacteria or send more solids and water to the drain field than it can treat:</p>"
+ "<ul><li>Bleach and harsh cleaners in large amounts</li><li>Antibacterial soaps</li><li>Drain openers</li><li>Antibiotics and other medications flushed down the toilet or drain</li><li>Grease</li><li>Wipes, even ones labeled flushable</li><li>Heavy use of a garbage disposal</li><li>Too much water at once, such as doing all the laundry in one day</li></ul>"
+ "<p>See our <a href='/septic-system-maintenance/'>septic system maintenance</a> tips for more on what not to flush or pour down drains.</p>"
+ "<h2>What are signs the bacterial balance is off?</h2>"
+ "<p>Odors, slow drains, soggy spots in the yard, and unusually lush grass over the drain field can mean the system is out of balance. Those signs can also have other causes. If you notice them, call <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>"
+ "<h2>What daily habits help?</h2>"
+ "<ul><li>Keep grease, wipes, paper towels, and medications out of the drains and toilet</li><li>Use household cleaners in normal amounts rather than large amounts of bleach or drain opener</li><li>Spread laundry loads through the week instead of doing them all in one day</li><li>Go easy on the garbage disposal</li><li>Have the tank pumped on a regular schedule, and have the effluent filter cleaned when the tank is pumped</li></ul>"
+ "<h2>Why does regular pumping matter for bacteria?</h2>"
+ "<p>Bacteria in the tank cannot fully break down all of the solids. Regular <a href='/septic-tank-pumping/'>septic tank pumping</a> removes the sludge and scum that build up so those solids are less likely to leave the tank and reach the drain field, where they can clog soil and harm the biomat.</p>"
+ "<h2>How does effluent filter cleaning help?</h2>"
+ "<p>If your tank has an effluent filter, a clean filter helps keep solids out of the drain field so soil bacteria and the biomat can do their job. Express cleans your filter at no charge on pump-outs and can show you how to keep it clean. See <a href='/septic-filter-care/'>effluent filter care</a>.</p>"
+ "<h2>Do septic tank additives replace pumping?</h2>"
+ "<p>A healthy septic system normally gets the bacteria it needs from everyday household waste. Additives are not a substitute for regular pumping. The U.S. EPA's <a href='https://www.epa.gov/septic' rel='noopener'>SepticSmart guidance</a> is a good place to read more about caring for a septic system.</p>"
+ "<h2>Questions about septic bacteria</h2>"+faq_html(BACTERIA_FAQ)+
+ '<p class="srcs">Source: <a href="https://www.epa.gov/septic" rel="noopener">U.S. EPA, Septic systems (SepticSmart)</a>.</p>',
+ [faq_ld(BACTERIA_FAQ), crumbs_ld([("Home",BASE+"/"),("Good bacteria and the drain field",BASE+"/septic-bacteria-drain-field/")])],
+ trail=[("Home","/"),("Good bacteria and the drain field","/septic-bacteria-drain-field/")])
+
 page("/septic-filter-care/","Septic Filter Care and Drain Field Tips | Express Septic",
  "How to care for a septic effluent filter, why a riser makes it easier to clean, what a dirty filter can cause, and how healthy soil bacteria help protect the drain field. Call (239) 451-3261.",
  "Septic filter care and drain field protection",
@@ -642,7 +686,7 @@ page("/septic-filter-care/","Septic Filter Care and Drain Field Tips | Express S
  "<h2>What can happen with a dirty filter?</h2>"
  "<p>A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house. Express cleans your filter at no charge on pump-outs and can show you how to keep it clean.</p>"
  "<h2 id='drain-field'>How healthy soil bacteria protect the drain field</h2>"
- "<p>Healthy bacteria in the soil break down effluent after it leaves the tank, which helps protect the drain field. Harsh chemicals, solids and grease overload can hurt that process. If a drain field has already failed, see <a href='/drain-field-replacement/'>drain field replacement</a>.</p>"
+ "<p>Healthy bacteria in the soil break down effluent after it leaves the tank, which helps protect the drain field. Harsh chemicals, solids and grease overload can hurt that process. Read more about <a href='/septic-bacteria-drain-field/'>why good bacteria protect your septic tank and drain field</a>. If a drain field has already failed, see <a href='/drain-field-replacement/'>drain field replacement</a>.</p>"
  "<h2>Filter and drain field questions</h2>"+faq_html(FILTER_FAQ),
  [faq_ld(FILTER_FAQ), crumbs_ld([("Home",BASE+"/"),("Septic filter care",BASE+"/septic-filter-care/")])],
  trail=[("Home","/"),("Septic filter care","/septic-filter-care/")])
@@ -665,7 +709,7 @@ page("/commercial-grease-trap-service/","Commercial Grease Trap Service in South
  "A short overview of commercial grease trap service for restaurants in Fort Myers, Cape Coral, Bonita Springs, Naples, Estero and across Lee, Collier and Charlotte County. See our main grease trap and interceptor pumping page for full details. Call (239) 451-3261.",
  "Commercial grease trap service in Southwest Florida",
  REAR+"<p><strong>This is a short overview.</strong> Our main page for restaurants and food service is <a href='/grease-trap-pumping/'>grease trap and interceptor pumping</a>, covering in-ground interceptors and indoor traps in Fort Myers, Cape Coral, Bonita Springs, Naples, Estero and across Lee, Collier and Charlotte County, plus LaBelle.</p>"
- "<p>Restaurants and commercial kitchens need their grease traps pumped before fats, oils and grease build up and cause backups, odors or problems with the drain line. Express can set up a one-time pump-out or a recurring schedule. Service is quoted based on trap size and schedule.</p>"
+ "<p>Restaurants and commercial kitchens need their grease traps pumped before fats, oils and grease build up and cause backups, odors or problems with the drain line. Express can set up a one-time pump-out or a recurring schedule. $695 for a 1,000-gallon grease trap or interceptor; other sizes are quoted.</p>"
  "<h2>Lee County interceptor pumping rule</h2>"
  "<p><a href='https://www.leegov.com/bocc/Ordinances/14-24.pdf' rel='noopener'>Lee County Ordinance 14-24</a> requires grease interceptors to be fully pumped at least every 90 calendar days. Indoor grease traps must be cleaned at least weekly or whenever grease and solids exceed 20% of the unit volume. We can set up a recurring pump-out schedule. Details are on the <a href='/grease-trap-pumping/'>grease trap and interceptor pumping</a> page.</p>"
  +SIDE+"<p>Our 4,200-gallon truck has a split tank, one side for septic and one side for grease, so grease trap loads and septic loads never mix.</p>"
@@ -730,7 +774,7 @@ f"- [Commercial grease trap service]({BASE}/commercial-grease-trap-service/): sh
 f"- [Septic repair]({BASE}/septic-repair/): quoted after we look at the system. Repair work performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332.",
 f"- [Drain field replacement]({BASE}/drain-field-replacement/): quoted after we inspect the system. The work is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332.",
 f"- [Lift station pumping]({BASE}/lift-station-pumping/): Express pumps lift stations in Estero and across Southwest Florida. Quoted after we inspect the system. Call (239) 451-3261.",
-f"- [Grease trap and interceptor pumping]({BASE}/grease-trap-pumping/): main page for restaurants and food service in Fort Myers, Cape Coral, Bonita Springs, Naples, Estero and across Lee, Collier and Charlotte County, plus LaBelle, including in-ground grease interceptors and indoor traps. Quoted based on trap size and schedule. We can set up a recurring pump-out schedule. The 4,200-gallon truck is split for septic and grease, so the two never mix. Lee County Ordinance 14-24 requires grease interceptors to be fully pumped at least every 90 calendar days. Indoor grease traps must be cleaned at least weekly or whenever grease and solids exceed 20% of the unit volume. Florida Statute 403.0741 requires a signed grease waste service manifest for every pump-out. Call (239) 451-3261.",
+f"- [Grease trap and interceptor pumping]({BASE}/grease-trap-pumping/): main page for restaurants and food service in Fort Myers, Cape Coral, Bonita Springs, Naples, Estero and across Lee, Collier and Charlotte County, plus LaBelle, including in-ground grease interceptors and indoor traps. $695 for a 1,000-gallon grease trap or interceptor; other sizes are quoted. We can set up a recurring pump-out schedule. The 4,200-gallon truck is split for septic and grease, so the two never mix. Lee County Ordinance 14-24 requires grease interceptors to be fully pumped at least every 90 calendar days. Indoor grease traps must be cleaned at least weekly or whenever grease and solids exceed 20% of the unit volume. Florida Statute 403.0741 requires a signed grease waste service manifest for every pump-out. Call (239) 451-3261.",
 f"- [Commercial septic tank pumping]({BASE}/commercial-septic-tank-pumping/): call for a quote.",f"- [Septic inspections]({BASE}/septic-inspections/): septic inspection with pump-out $549.99.","",
 "## Credentials","- Work performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332, licensed since 1981.","- USDOT 6673233. Truck: 4,200-gallon split tank, one side for septic and one for grease.","",
 "## Main service-area pages"]+[f"- [{c}, FL]({BASE}/{slug(c)}/)" for c in CITY_PLUS]+[f"- [All areas]({BASE}/service-area/)","",
@@ -738,5 +782,5 @@ f"- [Commercial septic tank pumping]({BASE}/commercial-septic-tank-pumping/): ca
 "- If we commit to a same-day pump-out, we keep working into the night until every scheduled job is done.",
 "- We pump both the inlet and the outlet compartments. Some companies only pump the inlet.",
 "- We clean your filter at no charge on pump-outs and show you how to keep it clean.","",
-"## More",f"- [Completed jobs]({BASE}/completed-jobs/)",f"- [FAQ]({BASE}/faq/)",f"- [Septic filter care]({BASE}/septic-filter-care/): If a tank has an effluent filter, it should be checked and cleaned at every pump-out and whenever drains slow. Express cleans the filter at no charge on pump-outs and can show you how to keep it clean. A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house. Healthy soil bacteria break down effluent after it leaves the tank and help protect the drain field.",f"- [How often to pump]({BASE}/how-often-to-pump-septic-tank/)",f"- [About]({BASE}/about/)",""]
+"## More",f"- [Completed jobs]({BASE}/completed-jobs/)",f"- [FAQ]({BASE}/faq/)",f"- [Septic filter care]({BASE}/septic-filter-care/): If a tank has an effluent filter, it should be checked and cleaned at every pump-out and whenever drains slow. Express cleans the filter at no charge on pump-outs and can show you how to keep it clean. A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house.",f"- [Why good bacteria protect your septic tank and drain field]({BASE}/septic-bacteria-drain-field/): Anaerobic bacteria in the tank break down solids and form sludge and scum layers. Aerobic bacteria and the biomat in drain-field soil treat effluent before it reaches groundwater. That matters in Southwest Florida's sandy soils and high water table. A healthy system normally gets the bacteria it needs from household waste; additives do not replace pumping. Express cleans the effluent filter at no charge on pump-outs.",f"- [How often to pump]({BASE}/how-often-to-pump-septic-tank/)",f"- [About]({BASE}/about/)",""]
 open("llms.txt","w").write("\n".join(LL))
