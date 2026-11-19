@@ -1,6 +1,19 @@
 #!/usr/bin/env python3
 """Build script: generates static pages at repo root from data in this file + src/styles.css."""
-import json, os, shutil
+import json, os, shutil, re, html as htmllib
+from datetime import date
+TODAY=date.today().isoformat()
+def plain(s):
+  return re.sub(r'<[^>]+>','',s)
+def crumbs_ld(items):
+  return {'@context':'https://schema.org','@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':i,'name':n,'item':u} for i,(n,u) in enumerate(items,1)]}
+def crumbs_html(items):
+  out=[]
+  for i,(name,url) in enumerate(items):
+    safe=htmllib.escape(name)
+    if i==len(items)-1: out.append(f'<li aria-current="page"><span>{safe}</span></li>')
+    else: out.append(f'<li><a href="{url}">{safe}</a></li>')
+  return '<nav class="crumbs" aria-label="Breadcrumb"><ol>'+''.join(out)+'</ol></nav>'
 BASE="https://expresssepticpumping.com"
 NAME="Express Septic Tank Pumping"; PHONE="(239) 451-3261"; TEL="+12394513261"
 BOOK="https://book.servicem8.com/request_booking?uuid=019fca12-b6bf-721c-8a2b-41d89e1a1b5b"
@@ -33,9 +46,11 @@ SERVICES=[
   ["Express Septic Tank Pumping does drain field replacement for homes and businesses across Southwest Florida.",
    "We quote drain field replacement after inspecting the system. Call (239) 451-3261 to set up a visit.",
    "The work is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332, licensed since 1981."]),
- ("lift-station-pumping","Lift Station Pumping","Lift Station Pumping | Lee & Collier County | Express Septic Tank Pumping","Lift station pumping in Southwest Florida. Quoted after we inspect the system. Call (239) 451-3261.",
-  ["Express Septic Tank Pumping does lift station pumping for homes and businesses across Southwest Florida.",
-   "We quote lift station work after inspecting the system. Call (239) 451-3261 to set up a visit."]),
+ ("lift-station-pumping","Lift Station Pumping","Lift Station Pumping in Lee & Collier County | Express Septic","Express Septic Tank Pumping pumps lift stations in Estero and across Southwest Florida. Work is quoted after we inspect the system. Call (239) 451-3261.",
+  ["Express Septic Tank Pumping pumps lift stations for homes and businesses in Estero and across Lee, Collier, and Charlotte County, plus LaBelle. Lift station work is quoted after we inspect the system. Call (239) 451-3261."]),
+ ("grease-trap-pumping","Grease Trap & Interceptor Pumping","Grease Trap & Interceptor Pumping for Restaurants | Express Septic","Express Septic Tank Pumping pumps grease traps and interceptors for restaurants and food service in Estero and across Southwest Florida. Quoted based on trap size and schedule. Call (239) 451-3261.",
+  ["Express Septic Tank Pumping pumps grease traps and interceptors for restaurants and food service in Estero and across Lee, Collier, and Charlotte County, plus LaBelle. We pump in-ground grease interceptors and indoor traps. Service is quoted based on trap size and schedule. We can set up a recurring pump-out schedule. Call (239) 451-3261.",
+   "Our 4,200-gallon truck has a split tank, one side for septic and one side for grease, so grease trap loads and septic loads never mix."]),
  ("septic-inspections","Septic Inspections","Septic Inspection for Home Purchase | Fort Myers & Naples | Express Septic","Septic inspection & real estate septic inspection for home purchases in Fort Myers, Naples, Estero & nearby. Septic inspection with pump-out $549.99. Call (239) 451-3261.",
   ["A septic inspection checks the condition of your tank and how the system is working. It's common when buying or selling a home, and a good idea if you're noticing problems.",
    "Buying a home on septic? An inspection helps you understand what you're getting before closing. Selling? Having the system checked ahead of time can help avoid surprises during the sale.",
@@ -91,15 +106,22 @@ FAQ=[("How often should I pump my septic tank?","Most homes need septic tank pum
 ("How much does it cost to pump a septic tank in Florida?","Residential septic pumping starts at $399.99. After-hours pumping is $599.99. Call (239) 451-3261 to confirm for your tank. Your final quote depends on tank size, tank access, and whether the lid needs locating or digging."),
 ("What are signs my septic tank is full?","Slow drains, gurgling pipes, sewage odors, wet or extra-green spots over the drain field, and backups are common signs."),
 ("Do you pump commercial septic tanks?","Yes. We provide commercial septic tank pumping for businesses and other properties."),
-("Do you pump grease traps?","Yes. We pump grease traps for restaurants and commercial kitchens, one-time or on a recurring schedule. Call (239) 451-3261."),
+("Do you pump grease traps?","Yes. We pump <a href='/grease-trap-pumping/'>grease traps and interceptors</a> for restaurants and food service, including in-ground interceptors and indoor traps, one-time or on a recurring schedule. Quoted based on trap size and schedule. Call (239) 451-3261."),
+("Do you pump grease interceptors?","Yes. We pump in-ground grease interceptors and indoor traps for restaurants and food service. Quoted based on trap size and schedule. Call (239) 451-3261. See <a href='/grease-trap-pumping/'>grease trap and interceptor pumping</a>."),
+("How often does a grease interceptor need pumping in Lee County?","<a href='https://www.leegov.com/bocc/Ordinances/14-24.pdf' rel='noopener'>Lee County Ordinance 14-24</a> requires interceptors to be fully pumped at least every 90 days, or sooner when grease and solids exceed 20% of capacity, and indoor traps cleaned weekly. We can set up a recurring pump-out schedule. Call (239) 451-3261."),
 ("Do you do septic repairs?","Yes. We look at the system first, then quote the repair. Call (239) 451-3261. Repair work is performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
 ("Do you replace drain fields?","Yes. We quote drain field replacement after inspecting the system. Call (239) 451-3261. The work is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
-("Do you pump lift stations?","Yes. Lift station work is quoted after we inspect the system. Call (239) 451-3261."),
+("Do you pump lift stations?","Yes. <a href='/lift-station-pumping/'>Lift station work</a> is quoted after we inspect the system. Call (239) 451-3261."),
 ("Do you do septic inspections for real estate?","Yes. We offer septic inspections for buyers, sellers and homeowners. A septic inspection with pump-out is $549.99."),
 ("What areas do you serve?","Estero, Bonita Springs, Naples, North Naples, Fort Myers, Cape Coral, Lehigh Acres, San Carlos Park and nearby areas of Lee and Collier County."),
 ("What shouldn't go into a septic system?","Avoid grease, wipes (even 'flushable'), paper towels, feminine products, harsh chemicals and medications. They can clog the system or harm the bacteria that break down waste."),
 ("What is a septic tank riser?","A riser is an extension installed on top of the tank's access opening that brings the lid up to ground level, so future pump-outs don't need digging to find and open the tank. Express installs 6-inch risers for $299.99 each. Call (239) 451-3261 to confirm what your tank needs."),
 ("How much does it cost to find and dig up a buried lid?","Locating and digging up a buried lid is $100, plus $50 for each additional hour. A riser avoids digging on future visits."),
+("How often should I clean my septic effluent filter?","If your tank has an effluent filter, it should be checked and cleaned at every pump-out and whenever drains slow. Express can advise on a schedule for your system. See <a href='/septic-filter-care/'>effluent filter care</a>. Call (239) 451-3261."),
+("Where is the septic effluent filter?","The effluent filter is in the outlet side of the tank, under the lid. A <a href='/septic-tank-riser-installation/'>6-inch riser</a> ($299.99 each) brings the lid up to ground level so the filter is easier to reach. Call (239) 451-3261."),
+("What happens if the effluent filter is dirty?","A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house. Express cleans your filter at no charge on pump-outs and can show you how to keep it clean. See <a href='/septic-filter-care/'>effluent filter care</a>."),
+("How does soil bacteria protect a drain field?","Healthy bacteria in the soil break down effluent after it leaves the tank. Harsh chemicals, solids and grease overload can hurt that process. See <a href='/septic-filter-care/#drain-field'>why soil bacteria matter</a> and <a href='/drain-field-replacement/'>drain field replacement</a>."),
+("Do you clean the effluent filter when you pump?","Yes. We clean your filter at no charge on pump-outs and show you how to keep it clean."),
 ("How do I book?","For routine pumping, send a request through our ServiceM8 booking page. We'll contact you to confirm a time; it isn't a confirmed appointment until we do. For a backup, call (239) 451-3261 day or night.")]
 PAGES=[]
 EXTRA={
@@ -115,10 +137,11 @@ def schema(extra=None):
   s={"@context":"https://schema.org","@type":["LocalBusiness","Plumber"],"@id":BID,"name":NAME,"legalName":NAME+" LLC","url":BASE+"/","telephone":TEL,"email":EMAIL,"priceRange":"$399.99+","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"}],"image":BASE+"/assets/img/truck-wide-1536.webp","hasMap":REVIEWS_READ,"sameAs":[REVIEWS_READ],
    "address":{"@type":"PostalAddress","streetAddress":"23357 Olde Meadowbrook Circle","addressLocality":"Estero","addressRegion":"FL","postalCode":"34134","addressCountry":"US"},
    "areaServed":[{"@type":"City","name":c+", FL"} for c in CITIES_ALL],
-   "makesOffer":[({"@type":"Offer","itemOffered":{"@type":"Service","name":s[1],"url":f"{BASE}/{s[0]}/"},"priceSpecification":{"@type":"PriceSpecification","minPrice":399.99,"priceCurrency":"USD"}} if s[0]=="residential-septic-tank-pumping" else {"@type":"Offer","itemOffered":{"@type":"Service","name":s[1],"url":f"{BASE}/{s[0]}/"}}) for s in SERVICES if s[0] not in ("septic-tank-riser-installation","septic-inspections","septic-repair","drain-field-replacement","lift-station-pumping")]
+   "makesOffer":[({"@type":"Offer","itemOffered":{"@type":"Service","name":s[1],"url":f"{BASE}/{s[0]}/"},"priceSpecification":{"@type":"PriceSpecification","minPrice":399.99,"priceCurrency":"USD"}} if s[0]=="residential-septic-tank-pumping" else {"@type":"Offer","itemOffered":{"@type":"Service","name":s[1],"url":f"{BASE}/{s[0]}/"}}) for s in SERVICES if s[0] not in ("septic-tank-riser-installation","septic-inspections","septic-repair","drain-field-replacement","lift-station-pumping","grease-trap-pumping")]
      +[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Septic Repair","url":BASE+"/septic-repair/","description":"Quoted after we look at the system"}},
         {"@type":"Offer","itemOffered":{"@type":"Service","name":"Drain Field Replacement","url":BASE+"/drain-field-replacement/","description":"Quoted after we inspect the system"}},
-        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Lift Station Pumping","url":BASE+"/lift-station-pumping/","description":"Quoted after we inspect the system"}}]
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Lift Station Pumping","url":BASE+"/lift-station-pumping/","description":"Quoted after we inspect the system"}},
+        {"@type":"Offer","itemOffered":{"@type":"Service","name":"Grease Trap & Interceptor Pumping","url":BASE+"/grease-trap-pumping/","description":"Quoted based on trap size and schedule"}}]
      +[{"@type":"Offer","name":"Septic inspection with pump-out","price":549.99,"priceCurrency":"USD","itemOffered":{"@type":"Service","name":"Septic Inspections","url":BASE+"/septic-inspections/"}}]
      +[{"@type":"Offer","name":"6-inch septic tank riser, installed (each)","price":299.99,"priceCurrency":"USD","itemOffered":{"@type":"Service","name":"Septic Tank Riser Installation","url":BASE+"/septic-tank-riser-installation/"}},
        {"@type":"Offer","name":"Locating and digging up a buried septic tank lid","price":100,"priceCurrency":"USD","description":"$100, plus $50 for each additional hour"},
@@ -157,7 +180,7 @@ def photo(sid,alt):
   return ""
 NAVITEMS=[("/residential-septic-tank-pumping/","Residential"),("/commercial-grease-trap-service/","Grease traps"),("/septic-tank-riser-installation/","Risers"),("/septic-repair/","Repairs"),("/service-area/","Service area"),("/about/","About"),("/faq/","FAQ")]
 NAVL="".join(f'<a href="{h}">{t}</a>' for h,t in NAVITEMS)
-NAV="".join(f'<a href="/{s[0]}/">{s[1]}</a>' for s in SERVICES)+'<a href="/commercial-grease-trap-service/">Commercial Grease Trap Service</a>'
+NAV="".join(f'<a href="/{s[0]}/">{htmllib.escape(s[1])}</a>' for s in SERVICES)+'<a href="/commercial-grease-trap-service/">Commercial Grease Trap Service</a>'
 VAL="<p class='values'>Honest, reliable and fair — great customer service is our top priority.</p>"
 EMERG="Night or day, we're available for emergencies. Call (239) 451-3261. For routine service, we can often make it same day when possible."
 CTA=f'<div class="cta"><a class="btn primary" href="tel:{TEL}">Call {PHONE}</a><a class="btn ghost" href="/contact/#book">Book routine service</a></div>'
@@ -182,16 +205,18 @@ ROBOTS={}
 LICENSE_URL="https://www.myfloridalicense.com/portalsearches/VerifyLicensee/Results?LicNbr=CFC020332&amp;SearchType=SearchByLicenseNumber"
 LICENSE_BODY='Work performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License <a href="'+LICENSE_URL+'" rel="noopener">#CFC020332</a>, licensed since 1981 (45+ years).'
 LICENSE_FOOT='Work performed under FL Certified Plumbing Contractor Raymond F. Dibble, License <a href="'+LICENSE_URL+'" rel="noopener">#CFC020332</a>, licensed since 1981.'
-def page(path,title,desc,h1,body,extra=None,hero=None,lead=""):
+def page(path,title,desc,h1,body,extra=None,hero=None,lead="",trail=None):
   foot="".join(f'<a href="/{slug(c)}/">{c}</a>' for c in CITIES_ALL[:12])+'<a href="/service-area/">All areas</a>'
   H1A=' data-sth-field="headline"' if path=="/" else ""
   if not hero: body=f'<div class="wrap prose">{body}</div>'
-  top=hero if hero else f'<section class="phead"><div class="wrap"><p class="eyebrow">Express Septic Tank Pumping</p><h1>{h1}</h1>{lead}{CTA}</div></section>'
+  crumb=(crumbs_html(trail) if trail else "")
+  et,ed,eh=htmllib.escape(title,True),htmllib.escape(desc,True),htmllib.escape(h1)
+  top=hero if hero else f'<section class="phead"><div class="wrap">{crumb}<p class="eyebrow">Express Septic Tank Pumping</p><h1>{eh}</h1>{lead}{CTA}</div></section>'
   if hero: top=top.replace("<h1>",f"<h1{H1A}>",1)
-  html=f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  doc=f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESN48M0VEZ"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-ESN48M0VEZ');</script>
-<title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{BASE}{path}">{ROBOTS.get(path,"")}<meta name="theme-color" content="#0f1b2d">
-<meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}/assets/img/truck-wide-1536.webp">
+<title>{et}</title><meta name="description" content="{ed}"><link rel="canonical" href="{BASE}{path}">{ROBOTS.get(path,"")}<meta name="theme-color" content="#0f1b2d">
+<meta property="og:title" content="{et}"><meta property="og:description" content="{ed}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}/assets/img/truck-wide-1536.webp">
 {'<link rel="preload" as="image" href="/assets/img/truck-wide-1024.webp" imagesrcset="/assets/img/truck-wide-640.webp 640w, /assets/img/truck-wide-1024.webp 1024w, /assets/img/truck-wide-1536.webp 1536w" imagesizes="100vw">' if hero else ''}
 <link rel="stylesheet" href="/styles.css">{schema(extra)}<script src="/site.js" defer></script></head><body>
 <a class="skip" href="#main">Skip to content</a>
@@ -200,15 +225,15 @@ def page(path,title,desc,h1,body,extra=None,hero=None,lead=""):
 <details class="menu"><summary aria-label="Open menu">Menu</summary><nav aria-label="Mobile">{NAVL}<a href="/contact/">Contact</a><a href="tel:{TEL}">Call {PHONE}</a></nav></details></div></header>
 <main id="main">{top}<div class="body">{body}</div>{REV}<section class="band closer"><div class="wrap"><h2>Talk to Express about your tank</h2><p>{AVAIL}</p>{CTA}</div></section></main>
 <footer id="contact" class="foot"><div class="wrap fgrid"><div><p class="mark">EXPRESS</p><p>{NAME} LLC<br>23357 Olde Meadowbrook Circle, Estero, FL 34134<br><a href="tel:{TEL}">{PHONE}</a><br><a data-sth-field="email" href="{"mailto:"+EMAIL if EMAIL else "/contact/"}">{EMAIL or "Send a request"}</a></p><p>Open 24 hours, 7 days a week.</p><p>Owner-operated. Licensed &amp; insured. We come to you.</p><p class="dot">USDOT 6673233</p><p class="license-foot">{LICENSE_FOOT}</p></div>
-<div><p class="fh">Services</p>{NAV}</div><div><p class="fh">Areas</p>{foot}</div><div><p class="fh">Info</p><a href="/">Home</a><a href="/how-it-works/">How it works</a><a href="/septic-system-maintenance/">Septic maintenance</a><a href="/how-often-to-pump-septic-tank/">How often to pump</a><a href="/completed-jobs/">Completed jobs</a><a href="/about/">About</a><a href="/faq/">FAQ</a><a href="/contact/">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></div></footer>
+<div><p class="fh">Services</p>{NAV}</div><div><p class="fh">Areas</p>{foot}</div><div><p class="fh">Info</p><a href="/">Home</a><a href="/how-it-works/">How it works</a><a href="/septic-system-maintenance/">Septic maintenance</a><a href="/septic-filter-care/">Filter care</a><a href="/how-often-to-pump-septic-tank/">How often to pump</a><a href="/completed-jobs/">Completed jobs</a><a href="/about/">About</a><a href="/faq/">FAQ</a><a href="/contact/">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></div></footer>
 <div class="mbar" role="region" aria-label="Quick contact"><a class="btn primary" href="tel:{TEL}">Call · {PHONE}</a><a class="btn ghost" href="/contact/#book">Book</a></div></body></html>'''
-  html=html.replace("<div class=\"body\"></div>","")
-  if 'id="book"' in body: html=html.replace('href="/contact/#book"','href="#book"')
+  doc=doc.replace("<div class=\"body\"></div>","")
+  if 'id="book"' in body: doc=doc.replace('href="/contact/#book"','href="#book"')
   pre="../"*(path.count("/")-1) or "./"
-  html=html.replace('href="/','href="'+pre).replace('src="/','src="'+pre).replace(', /assets',', '+pre+'assets').replace('srcset="/','srcset="'+pre).replace("href='/","href='"+pre).replace('imagesrcset="'+pre,'imagesrcset="'+pre)
-  d="."+path; os.makedirs(d,exist_ok=True); open(d+"index.html","w").write(html); PAGES.append(path)
+  doc=doc.replace('href="/','href="'+pre).replace('src="/','src="'+pre).replace(', /assets',', '+pre+'assets').replace('srcset="/','srcset="'+pre).replace("href='/","href='"+pre).replace('imagesrcset="'+pre,'imagesrcset="'+pre)
+  d="."+path; os.makedirs(d,exist_ok=True); open(d+"index.html","w").write(doc); PAGES.append(path)
 def sec(inner,cls=""): return f'<section class="sec {cls}"><div class="wrap">{inner}</div></section>'
-svc_list="<ul class='rows'>"+"".join(f'<li><a href="/{s[0]}/">{s[1]}</a></li>' for s in SERVICES)+"<li><a href='/commercial-grease-trap-service/'>Commercial Grease Trap Service</a></li></ul>"
+svc_list="<ul class='rows'>"+"".join(f'<li><a href="/{s[0]}/">{htmllib.escape(s[1])}</a></li>' for s in SERVICES)+"<li><a href='/commercial-grease-trap-service/'>Commercial Grease Trap Service</a></li></ul>"
 city_list="<ul class='cities'>"+"".join(f'<li><a href="/{slug(c)}/">{c}</a></li>' for c in CITIES_ALL)+"</ul>"
 REQUEST=f'''<div class="book" id="book"><p class="eyebrow">Book or call</p><h2>What do you need?</h2>
 <ol class="paths">
@@ -297,11 +322,13 @@ def city_faq(c,cp):
    ("Do you do septic repairs?","Yes. We look at the system first, then quote the repair. Call (239) 451-3261. Repair work is performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
    (f"Do you pump grease traps in {c}?","Yes. We pump grease traps for restaurants and commercial kitchens, one-time or on a recurring schedule. Call (239) 451-3261 to set it up."),
    ("Can I book online?","Yes, for routine pumping. Send a request through our ServiceM8 booking page and we'll contact you to confirm a time. It isn't a confirmed appointment until we confirm. For a backup, call (239) 451-3261 day or night.")]
-def faq_ld(items): return {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in items]}
+def faq_ld(items): return {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":plain(a)}} for q,a in items]}
 # Completed jobs: add only real, owner-approved jobs (city, service, month, what was done; never a street address).
 # Example: JOBS.append(dict(city="Lehigh Acres", service="Residential septic tank pumping", month="2026-11", summary="..."))
 # Owner-supplied jobs (Timemark-stamped photos, Nov 2026). Only what the photos show; no addresses, names or prices.
 JOBS=[
+ dict(id="lehigh-acres-2026-11-17",city="Lehigh Acres",date="November 17, 2026",title="Residential pump-out, system was backing up",
+   found="The septic system was backing up.",done="Residential pump-out."),
  dict(id="cape-coral-2026-11-14",city="Cape Coral",date="November 14, 2026",title="Buried lids, inlet and outlet tees, effluent filter",
    found="Round concrete tank lids were buried.",done="Dug up the lids, exposed the inlet and outlet tees, and pulled and cleaned the effluent filter."),
  dict(id="lehigh-acres-2026-11-13",city="Lehigh Acres",date="November 13, 2026 (night visit)",title="Pump-out through an existing riser",
@@ -315,19 +342,51 @@ JOBS=[
 ]
 # Cities with septic pumping jobs confirmed in ServiceM8 (owner screenshots); city level only.
 SERVED_RECENTLY={"Lehigh Acres","Fort Myers","North Fort Myers","Naples"}
+def job_shots(j, limit=None):
+  photos=list(j.get("photos") or [])
+  if limit is not None: photos=photos[:limit]
+  if not photos: return ""
+  figs="".join(f"<figure class='jobshot'><img src='{p['src']}' srcset='{p.get('srcset',p['src'])}' sizes='(min-width:960px) 560px, 100vw' alt='{p['alt']}' width='{p.get('w',1200)}' height='{p.get('h',900)}' loading='lazy'>"+(f"<figcaption>{p['cap']}</figcaption>" if p.get('cap') else "")+"</figure>" for p in photos)
+  return f"<div class='jobshots'>{figs}</div>"
+def attach_job_photos():
+  # Attach processed WebP files if present (never invent captions beyond the approved wording).
+  specs={
+    "lehigh-acres-2026-11-17":[
+      ("lehigh-acres-2026-11-17-inlet.webp","Opened inlet side of a septic tank in Lehigh Acres during a November 2026 residential pump-out, with scum and solids visible. No street address is shown.","Lehigh Acres pump-out, Nov 2026: system was backing up"),
+      ("lehigh-acres-2026-11-17-inlet-2.webp","Opened inlet side of a septic tank in Lehigh Acres during a November 2026 residential pump-out. No street address is shown.","Lehigh Acres pump-out, Nov 2026: system was backing up"),
+      ("lehigh-acres-2026-11-17-outlet.webp","Outlet side of a septic tank in Lehigh Acres during a November 2026 residential pump-out, showing the effluent filter housing. No street address is shown.","Outlet side with effluent filter"),
+      ("lehigh-acres-2026-11-17-outlet-2.webp","Outlet side of a septic tank in Lehigh Acres during a November 2026 residential pump-out, with the effluent filter housing visible. No street address is shown.","Outlet side with effluent filter"),
+    ]
+  }
+  for j in JOBS:
+    out=[]
+    for fn,alt,cap in specs.get(j["id"],[]):
+      path=f"assets/img/jobs/{fn}"
+      if os.path.exists(path):
+        w,h=1200,900
+        try:
+          from PIL import Image
+          with Image.open(path) as im:
+            w,h=im.size
+        except Exception:
+          pass
+        out.append(dict(src="/"+path, alt=alt, cap=cap, w=w, h=h))
+    if out:
+      j["photos"]=out
+attach_job_photos()
 def jobs_block(c):
   js=[j for j in JOBS if j["city"]==c]
   served=f"<p>We've done septic tank pumping jobs in {c} recently.</p>" if c in SERVED_RECENTLY else ""
   if not js: return (f"<h2>Recent work in {c}</h2>"+served) if served else ""
-  return (f"<h2>Recent jobs in {c}</h2>"+served+"<ul>"+"".join(f"<li><strong>{j['date']}: {j['title']}.</strong> {j['found']} {j['done']} <a href='/completed-jobs/#{j['id']}'>See job</a></li>" for j in js)+"</ul>")
+  return (f"<h2>Recent jobs in {c}</h2>"+served+"<ul>"+"".join(f"<li><strong>{j['date']}: {j['title']}.</strong> {j['found']} {j['done']} <a href='/completed-jobs/#{j['id']}'>See job</a></li>"+job_shots(j) for j in js)+"</ul>")
 def city_plus_page(c,county,a,b):
   cp=CITY_PLUS[c]; faq=city_faq(c,cp); path=f"/{slug(c)}/"
   quick=(f"<div class='quick'><p class='eyebrow'>Quick answer</p><p><strong>Express Septic Tank Pumping pumps septic tanks in {c}, FL.</strong> Residential pumping starts at $399.99. "
    f"For a backup, call <a href='tel:{TEL}'>{PHONE}</a> day or night. For routine pumping, request a time online and we'll contact you to confirm.</p>"
-   f"<ul class='facts'><li><b>Services:</b> residential and commercial septic pumping, septic repairs, drain field replacement, lift station pumping, septic tank risers, grease trap pumping, septic inspections</li><li><b>Price:</b> residential pumping from $399.99; after-hours pumping $599.99; septic inspection with pump-out $549.99; 6-inch risers $299.99 each; buried-lid locating/digging $100, plus $50 for each additional hour</li><li><b>Hours:</b> open 24 hours, 7 days a week</li><li><b>Based in:</b> Estero, serving {c} and the rest of {county}</li><li><b>Licensing:</b> work performed under FL Certified Plumbing Contractor Raymond F. Dibble, #CFC020332</li></ul></div>")
+   f"<ul class='facts'><li><b>Services:</b> residential and commercial septic pumping, septic repairs, drain field replacement, <a href='/lift-station-pumping/'>lift station pumping</a>, septic tank risers, <a href='/grease-trap-pumping/'>grease trap and interceptor pumping</a>, septic inspections</li><li><b>Price:</b> residential pumping from $399.99; after-hours pumping $599.99; septic inspection with pump-out $549.99; 6-inch risers $299.99 each; buried-lid locating/digging $100, plus $50 for each additional hour</li><li><b>Hours:</b> open 24 hours, 7 days a week</li><li><b>Based in:</b> Estero, serving {c} and the rest of {county}</li><li><b>Licensing:</b> work performed under FL Certified Plumbing Contractor Raymond F. Dibble, #CFC020332</li></ul></div>")
   body=(quick+photo(slug(c),f"Septic tank pumping job in {c}, FL")+cp["local"]+jobs_block(c)+
    f"<h2>What septic pumping costs in {c}</h2>"+PRICE_PANEL+LID_ASK+
-   f"<h2>Septic services in {c}</h2><ul class='cards'>"+"".join(f'<li><a href="/{s[0]}/">{s[1]}</a></li>' for s in SERVICES)+"<li><a href='/commercial-grease-trap-service/'>Commercial Grease Trap Service</a></li></ul>"
+   f"<h2>Septic services in {c}</h2><ul class='cards'>"+"".join(f'<li><a href="/{s[0]}/">{htmllib.escape(s[1])}</a></li>' for s in SERVICES)+"<li><a href='/commercial-grease-trap-service/'>Commercial Grease Trap Service</a></li></ul>"
    f"<h2>Signs your tank needs pumping</h2><p>Slow drains, gurgling pipes, sewage odors outside, or soggy, extra-green grass over the drain field. If it's been 3 to 5 years since your last pump-out, or you don't know, it's time to call.</p>"
    +REQUEST+f"<h2>{c} septic questions</h2>"+"".join(f"<h3>{q}</h3><p>{x}</p>" for q,x in faq)+
    "<h2>Nearby areas we serve</h2><ul class='cards'>"+"".join(f'<li><a href="/{slug(x)}/">{x}</a></li>' for x in cp["near"])+"<li><a href='/service-area/'>All areas</a></li></ul>"
@@ -337,11 +396,38 @@ def city_plus_page(c,county,a,b):
   page(path,cp["title"],cp["desc"],cp["h1"],body,[svc,faq_ld(faq),crumbs])
 HOME_FAQ=[("How much does septic tank pumping cost?",f"Residential pumping starts at $399.99. {PRICE_COND} Call (239) 451-3261 to confirm for your tank."),RISER_QA,
  ("How often should I pump my septic tank?","The U.S. EPA recommends pumping most household tanks every 3 to 5 years, depending on tank size, household size and water use."),
- ("Do you pump grease traps?","Yes, for restaurants and commercial kitchens, one-time or on a recurring schedule."),
+ ("Do you pump grease traps?","Yes. We pump <a href='/grease-trap-pumping/'>grease traps and interceptors</a> for restaurants and food service, including in-ground interceptors and indoor traps, one-time or on a recurring schedule. Quoted based on trap size and schedule. Call (239) 451-3261."),
+ ("Do you pump grease interceptors?","Yes. We pump in-ground grease interceptors and indoor traps for restaurants and food service. Quoted based on trap size and schedule. Call (239) 451-3261."),
+ ("How often does a grease interceptor need pumping in Lee County?","<a href='https://www.leegov.com/bocc/Ordinances/14-24.pdf' rel='noopener'>Lee County Ordinance 14-24</a> requires interceptors to be fully pumped at least every 90 days, or sooner when grease and solids exceed 20% of capacity, and indoor traps cleaned weekly. We can set up a recurring pump-out schedule. Call (239) 451-3261."),
  ("Do you do septic repairs?","Yes. We look at the system first, then quote the repair. Call (239) 451-3261. Repair work is performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
  ("Do you replace drain fields?","Yes. We quote drain field replacement after inspecting the system. Call (239) 451-3261. The work is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
- ("Do you pump lift stations?","Yes. Lift station work is quoted after we inspect the system. Call (239) 451-3261."),
+ ("Do you pump lift stations?","Yes. <a href='/lift-station-pumping/'>Lift station work</a> is quoted after we inspect the system. Call (239) 451-3261."),
+ ("How often should I clean my septic effluent filter?","If your tank has an effluent filter, it should be checked and cleaned at every pump-out and whenever drains slow. Express can advise on a schedule for your system. See <a href='/septic-filter-care/'>effluent filter care</a>. Call (239) 451-3261."),
+ ("What happens if the effluent filter is dirty?","A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house. Express cleans your filter at no charge on pump-outs and can show you how to keep it clean."),
+ ("How does soil bacteria protect a drain field?","Healthy bacteria in the soil break down effluent after it leaves the tank. Harsh chemicals, solids and grease overload can hurt that process. See <a href='/septic-filter-care/#drain-field'>why soil bacteria matter</a>."),
  ("Can I book online?","Yes, for routine pumping: send a request on ServiceM8 and we'll contact you to confirm a time. For a backup, call (239) 451-3261 day or night.")]
+
+STANDAPART=("""<div class="aparthead"><p class="eyebrow">How we stand apart</p>
+<h2>What you can expect from Express</h2></div>
+<ul class="apartgrid">
+<li><h3>If we commit to a same-day pump-out</h3><p>We keep working into the night until every scheduled job is done.</p></li>
+<li><h3>We pump both compartments</h3><p>We pump both the inlet and the outlet compartments. Some companies only pump the inlet.</p></li>
+<li><h3>Filter cleaning at no charge</h3><p>We clean your filter at no charge on pump-outs and show you how to keep it clean.</p></li>
+</ul>""")
+EDU=("""<div class="eduhead"><p class="eyebrow">Septic care</p>
+<h2>Protect your system between pump-outs</h2></div>
+<ul class="edugrid">
+<li><h3>Effluent filter care</h3><p>If your tank has an effluent filter, it should be checked and cleaned at every pump-out and whenever drains slow. A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house. We clean your filter at no charge on pump-outs and can show you how to keep it clean.</p><a class="txtlink" href="/septic-filter-care/">How to care for your filter</a></li>
+<li><h3>Healthy soil bacteria protect the drain field</h3><p>Bacteria in the soil break down effluent after it leaves the tank, which helps protect the drain field. Harsh chemicals, solids and grease overload can hurt that process.</p><p><a class="txtlink" href="/septic-filter-care/#drain-field">Why soil bacteria matter</a> <a class="txtlink" href="/drain-field-replacement/">Drain field replacement</a></p></li>
+</ul>""")
+def work_card(jid, blurb):
+  j=next(x for x in JOBS if x["id"]==jid)
+  return f"<li class='workcard'>{job_shots(j, limit=1)}<p class='jdate'>{j['date']} · {j['city']}</p><h3>{j['title']}</h3><p>{blurb}</p><a class='txtlink' href='/completed-jobs/#{j['id']}'>See this job</a></li>"
+WORK_SEC=("<div class='workhead'><p class='eyebrow'>Recent work</p><h2>Jobs from this month</h2><p>Recent septic pump-outs from our crew. Customer addresses and names are never shown.</p></div><ul class='workgrid'>"
+ +work_card("lehigh-acres-2026-11-17","Lehigh Acres pump-out, Nov 2026: system was backing up.")
+ +work_card("cape-coral-2026-11-14","We dug up buried lids, exposed the inlet and outlet tees, and pulled and cleaned the effluent filter.")
+ +"</ul><p class='more'><a class='txtlink' href='/completed-jobs/'>All completed jobs</a></p>")
+
 page("/","Septic Tank Pumping Southwest Florida | Bonita Springs, Estero, Fort Myers | Express Septic",
  "Owner-operated septic tank pumping in Southwest Florida: Bonita Springs, Estero, Naples, Fort Myers, Cape Coral & Lehigh Acres. Grease trap service too. Call (239) 451-3261.",
  "Septic tank pumping in Southwest Florida",
@@ -353,11 +439,12 @@ page("/","Septic Tank Pumping Southwest Florida | Bonita Springs, Estero, Fort M
 <li><a href="/septic-repair/"><b>Septic repairs</b><span>We look at the system first, then quote the repair.</span></a></li>
 <li><a href="/drain-field-replacement/"><b>Drain field replacement</b><span>Quoted after we inspect the system. The work is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332.</span></a></li>
 <li><a href="/lift-station-pumping/"><b>Lift station pumping</b><span>Quoted after we inspect the system.</span></a></li>
+<li><a href="/grease-trap-pumping/"><b>Grease trap &amp; interceptor pumping</b><span>For restaurants and food service, including in-ground interceptors and indoor traps. Quoted based on trap size and schedule.</span></a></li>
 <li><a href="/septic-inspections/"><b>Septic inspections</b><span>For buyers, sellers and homeowners. Inspection with pump-out $549.99.</span></a></li></ul>
-</div>''')+sec(PRICE_PANEL,"priceband")+sec(QUOTES,"quotes")+
+</div>''')+sec(PRICE_PANEL,"priceband")+sec(QUOTES,"quotes")+sec(STANDAPART,"standapart")+sec(EDU,"edu")+
  f'''<section class="truck"><figure class="tphoto">{SIDE.replace('sizes="(min-width:960px) 680px, 100vw"','sizes="100vw"').replace('<figure class="shot">','').replace('</figure>','')}</figure><div class="wrap tcopy"><p class="eyebrow">The truck</p><h2>4,200 gallons, split tank</h2><p>The tank is split in two: one side for septic, one side for grease, so the two never mix. Licensed &amp; insured · USDOT 6673233.</p></div></section>'''+
  sec(f'''<div class="owner">'''+CREW.replace('alt="Express Septic Tank Pumping crew with the 4,200-gallon vacuum truck"','alt="ORyan Atkinson, owner of Express Septic Tank Pumping (right, in the cap), with a crew member and the Express truck"').replace('sizes="(min-width:960px) 680px, 100vw"','sizes="(min-width:960px) 600px, 100vw"').replace("</figure>","<figcaption>ORyan Atkinson, owner (right, in the cap), with a crew member and the Express truck</figcaption></figure>")+f'''<div><p class="eyebrow">The owner</p><blockquote class="promise">When you call, you're talking to the person who runs the business.</blockquote><p>Express is owned and run by ORyan Atkinson, based in Estero. Licensed &amp; insured. Honest, reliable and fair: great customer service is our top priority.</p><p><a class="btn ghost" href="tel:{TEL}">Call ORyan · {PHONE}</a></p><p><a href="/about/">More about Express</a></p></div></div><div class="cred"><p class="eyebrow">Credentials</p><h2>Licensed &amp; Experienced</h2><p>{LICENSE_BODY}</p><p class="crev"><a class="txtlink" href="{REVIEWS_READ}" rel="noopener">Read our Google reviews</a></p></div>''',"warm")+
- sec("""<div class="workhead"><p class="eyebrow">Recent work</p><h2>Jobs from this month</h2><p>Two recent septic pump-outs from our crew. Customer addresses and names are never shown.</p></div><ul class="workgrid"><li class="workcard"><p class="jdate">November 13, 2026 · Lehigh Acres · night visit</p><h3>Pump-out through an existing riser</h3><p>The tank already had a riser, so no digging was needed. We pumped the tank through the riser; the baffle was visible during the pump-out.</p><a class="txtlink" href="/completed-jobs/#lehigh-acres-2026-11-13">See this job</a></li><li class="workcard"><p class="jdate">November 14, 2026 · Cape Coral</p><h3>Buried lids and effluent filter</h3><p>We dug up buried lids, exposed the inlet and outlet tees, and pulled and cleaned the effluent filter.</p><a class="txtlink" href="/completed-jobs/#cape-coral-2026-11-14">See this job</a></li></ul><p class="more"><a class="txtlink" href="/completed-jobs/">All completed jobs</a></p>""", "work")+
+ sec(WORK_SEC, "work")+
  sec(f'<div class="split"><div><p class="eyebrow">Service area</p><h2>Lee, Collier &amp; Charlotte County</h2><p>Based in Estero, between Bonita Springs and Fort Myers. We also cover LaBelle in Hendry County.</p><p><a href="/service-area/">See every area we serve</a></p></div><div>{city_list}</div></div>',"area")+
  sec(REQUEST,"bookband")+sec("<p class='eyebrow'>FAQ</p><h2>Common questions</h2>"+"".join(f"<h3>{q}</h3><p>{a}</p>" for q,a in HOME_FAQ)+"<p><a href='/faq/'>More septic questions</a></p>","hfaq"),hero=HERO,extra=faq_ld(HOME_FAQ))
 RES_EXTRA=("<h2>What happens during a visit</h2>"+LIDS+"<ol><li><strong>We locate the tank.</strong> We find the tank and its lid or access port. If the lid is buried, we dig to reach it: $100, plus $50 for each additional hour.</li><li><strong>We pump it out.</strong> The truck pumps the liquid, sludge and scum out of the tank.</li><li><strong>We tell you what we saw.</strong> You'll hear about anything that looks like it needs attention.</li></ol>"
@@ -366,9 +453,71 @@ RES_EXTRA=("<h2>What happens during a visit</h2>"+LIDS+"<ol><li><strong>We locat
  "<div class='price-slot'><p class='pp'>Residential septic pumping starting at $399.99</p><p>Your final quote depends on tank size, tank access, and whether the lid needs locating or digging. After-hours pumping is $599.99. Call to confirm for your tank.</p></div>"
  "<p>Call <a href='tel:"+TEL+"'>"+PHONE+"</a> to confirm pricing for your tank.</p>")
 EXTRA["residential-septic-tank-pumping"]="<div class='price-slot'><p class='pp'>Residential septic pumping starting at $399.99</p><p>Your final quote depends on tank size, tank access, and whether the lid needs locating or digging. After-hours pumping is $599.99. Call to confirm for your tank.</p></div>"+RES_EXTRA+EXTRA.get("residential-septic-tank-pumping","")
+
+LIFT_FAQ=[
+ ("Do you pump lift stations?","Yes. Lift station work is quoted after we inspect the system. Call (239) 451-3261."),
+ ("How is lift station work quoted?","Lift station work is quoted after we inspect the system. Call (239) 451-3261 to set up a visit."),
+ ("Where do you pump lift stations?","We're based in Estero and serve Lee, Collier and Charlotte County, plus LaBelle in Hendry County. Call (239) 451-3261."),
+]
+GREASE_FAQ=[
+ ("Do you pump grease interceptors?","Yes. We pump in-ground grease interceptors and indoor traps for restaurants and food service. Quoted based on trap size and schedule. Call (239) 451-3261."),
+ ("How often does a grease interceptor need pumping in Lee County?","Lee County Ordinance 14-24 requires interceptors to be fully pumped at least every 90 days, or sooner when grease and solids exceed 20% of capacity, and indoor traps cleaned weekly. We can set up a recurring pump-out schedule. Call (239) 451-3261."),
+ ("Do you pump grease traps?","Yes. We pump grease traps and interceptors for restaurants and food service, one-time or on a recurring schedule. Quoted based on trap size and schedule. Call (239) 451-3261."),
+ ("How is grease trap pumping quoted?","Grease trap and interceptor pumping is quoted based on trap size and schedule. Call (239) 451-3261."),
+ ("Do you keep grease and septic loads separate?","Yes. Our 4,200-gallon truck has a split tank, one side for septic and one side for grease, so the two never mix."),
+]
+FILTER_FAQ=[
+ ("How often should I clean my septic effluent filter?","If your tank has an effluent filter, it should be checked and cleaned at every pump-out and whenever drains slow. Express can advise on a schedule for your system. Call (239) 451-3261."),
+ ("Where is the septic effluent filter?","The effluent filter is in the outlet side of the tank, under the lid. A 6-inch riser ($299.99 each) brings the lid up to ground level so the filter is easier to reach."),
+ ("What happens if the effluent filter is dirty?","A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house. Express cleans your filter at no charge on pump-outs and can show you how to keep it clean."),
+ ("How does soil bacteria protect a drain field?","Healthy bacteria in the soil break down effluent after it leaves the tank. Harsh chemicals, solids and grease overload can hurt that process."),
+ ("Do you clean the effluent filter when you pump?","Yes. We clean your filter at no charge on pump-outs and show you how to keep it clean."),
+]
+def faq_html(items, heading_tag="h3"):
+  return "".join(f"<{heading_tag}>{q}</{heading_tag}><p>{a}</p>" for q,a in items)
+EXTRA["lift-station-pumping"]=(
+ "<h2>What is lift station pumping?</h2>"
+ "<p>A lift station is a pump that moves wastewater when it cannot flow by gravity. Express pumps lift stations in our service area. We quote the work after we inspect the system.</p>"
+ "<h2>Do you pump lift stations?</h2>"
+ "<p>Yes. Lift station work is quoted after we inspect the system. Call <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>"
+ "<h2>How is lift station work quoted?</h2>"
+ "<p>Lift station work is quoted after we inspect the system. Call <a href='tel:"+TEL+"'>"+PHONE+"</a> to set up a visit.</p>"
+ "<h2>Where do you pump lift stations?</h2>"
+ "<p>We're based in Estero and serve Lee, Collier and Charlotte County, plus LaBelle in Hendry County. See our <a href='/service-area/'>service area</a>.</p>"
+ "<h2>Lift station questions</h2>"+faq_html(LIFT_FAQ)
+)
+LEE_ORD='<a href="https://www.leegov.com/bocc/Ordinances/14-24.pdf" rel="noopener">Lee County Ordinance 14-24</a>'
+FL_STATUTE='<a href="https://www.flsenate.gov/Laws/Statutes/2026/403.0741" rel="noopener">Florida Statute 403.0741</a>'
+EXTRA["grease-trap-pumping"]=(
+ "<h2>Do you pump grease interceptors?</h2>"
+ "<p>Yes. We pump in-ground grease interceptors and indoor traps for restaurants and food service. Service is quoted based on trap size and schedule. We can set up a recurring pump-out schedule. Call <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>"
+ "<h2>How often does a grease interceptor need pumping in Lee County?</h2>"
+ "<p>"+LEE_ORD+" requires interceptors to be fully pumped at least every 90 days, or sooner when grease and solids exceed 20% of capacity, and indoor traps cleaned weekly. We can set up a recurring pump-out schedule that fits your kitchen.</p>"
+ "<h2>What Florida law says about grease waste manifests</h2>"
+ "<p>"+FL_STATUTE+" requires a signed grease waste service manifest for every pump-out.</p>"
+ "<h2>How is grease trap and interceptor pumping quoted?</h2>"
+ "<p>Service is quoted based on trap size and schedule. Call <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>"
+ "<h2>How do you keep grease and septic separate?</h2>"
+ "<p>Our 4,200-gallon truck has a split tank, one side for septic and one side for grease, so grease trap loads and septic loads never mix.</p>"
+ "<p>See also our <a href='/commercial-grease-trap-service/'>commercial grease trap service</a> page.</p>"
+ "<h2>Grease trap and interceptor questions</h2>"+faq_html(GREASE_FAQ)+
+ '<p class="srcs">Sources: '+LEE_ORD+'; '+FL_STATUTE+'.</p>'
+)
+
 for s in SERVICES:
-  body=photo(s[0],s[1]+" job photo")+VAL+"".join(f"<p>{p}</p>" for p in s[4])+EXTRA.get(s[0],"")+("" if s[0] in ("septic-tank-riser-installation","residential-septic-tank-pumping","septic-inspections") else "<h2>Pricing</h2><p>Call for a quote — <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>")+"<h2>Service Areas</h2>"+city_list+"<h2>Other Services</h2>"+svc_list
-  page(f"/{s[0]}/",s[2],s[3],s[1]+" in Southwest Florida",body,{"@context":"https://schema.org","@type":"Service","name":s[1],"serviceType":s[1],"url":f"{BASE}/{s[0]}/","provider":PROV,"areaServed":[{"@type":"City","name":c+", FL"} for c in CITIES_ALL],**({"offers":{"@type":"Offer","name":"6-inch septic tank riser, installed (each)","price":299.99,"priceCurrency":"USD"}} if s[0]=="septic-tank-riser-installation" else {"offers":{"@type":"Offer","priceSpecification":{"@type":"PriceSpecification","minPrice":399.99,"priceCurrency":"USD"}}} if s[0]=="residential-septic-tank-pumping" else {"offers":{"@type":"Offer","name":"Septic inspection with pump-out","price":549.99,"priceCurrency":"USD"}} if s[0]=="septic-inspections" else {"offers":{"@type":"Offer","description":"Quoted after we inspect the system"}} if s[0]=="drain-field-replacement" else {"offers":{"@type":"Offer","description":"Quoted after we inspect the system"}} if s[0]=="lift-station-pumping" else {})})
+  intro="" if s[0] in ("lift-station-pumping","grease-trap-pumping") else VAL
+  no_generic_price=s[0] in ("septic-tank-riser-installation","residential-septic-tank-pumping","septic-inspections","lift-station-pumping","grease-trap-pumping")
+  body=photo(s[0],s[1]+" job photo")+intro+"".join(f"<p>{p}</p>" for p in s[4])+EXTRA.get(s[0],"")+("" if no_generic_price else "<h2>Pricing</h2><p>Call for a quote — <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>")+"<h2>Service Areas</h2>"+city_list+"<h2>Other Services</h2>"+svc_list
+  offers=({"offers":{"@type":"Offer","name":"6-inch septic tank riser, installed (each)","price":299.99,"priceCurrency":"USD"}} if s[0]=="septic-tank-riser-installation" else {"offers":{"@type":"Offer","priceSpecification":{"@type":"PriceSpecification","minPrice":399.99,"priceCurrency":"USD"}}} if s[0]=="residential-septic-tank-pumping" else {"offers":{"@type":"Offer","name":"Septic inspection with pump-out","price":549.99,"priceCurrency":"USD"}} if s[0]=="septic-inspections" else {"offers":{"@type":"Offer","description":"Quoted after we inspect the system"}} if s[0] in ("drain-field-replacement","lift-station-pumping") else {"offers":{"@type":"Offer","description":"Quoted based on trap size and schedule"}} if s[0]=="grease-trap-pumping" else {})
+  svc={"@context":"https://schema.org","@type":"Service","name":s[1],"serviceType":s[1],"url":f"{BASE}/{s[0]}/","provider":PROV,"areaServed":[{"@type":"City","name":c+", FL"} for c in CITIES_ALL],**offers}
+  extra=svc; trail=None
+  if s[0]=="lift-station-pumping":
+    extra=[svc,faq_ld(LIFT_FAQ),crumbs_ld([("Home",BASE+"/"),("Lift Station Pumping",BASE+"/lift-station-pumping/")])]
+    trail=[("Home","/"),("Lift Station Pumping","/lift-station-pumping/")]
+  elif s[0]=="grease-trap-pumping":
+    extra=[svc,faq_ld(GREASE_FAQ),crumbs_ld([("Home",BASE+"/"),("Grease Trap & Interceptor Pumping",BASE+"/grease-trap-pumping/")])]
+    trail=[("Home","/"),("Grease Trap & Interceptor Pumping","/grease-trap-pumping/")]
+  page(f"/{s[0]}/",s[2],s[3],s[1]+" in Southwest Florida",body,extra,trail=trail)
 for c,(county,a,b) in CITY.items():
   if c in CITY_PLUS: city_plus_page(c,county,a,b); continue
   near=[x for x in CITIES_ALL if x!=c]
@@ -395,6 +544,31 @@ page("/septic-system-maintenance/","Septic System Maintenance Tips | Southwest F
  "<h2>Warning Signs of Problems</h2><p>Slow drains, gurgling pipes, sewage odors, soggy or extra-green grass over the drain field, and backups in toilets or drains. Call right away if you notice these.</p>"
  "<h2>Why Regular Inspections Help</h2><p>An inspection can catch problems early, before they turn into costly repairs, and gives you a record of your system's condition. Learn about <a href='/septic-inspections/'>septic inspections</a>.</p>"
  "<p>See <a href='/how-it-works/'>how our service works</a> and <a href='/how-often-to-pump-septic-tank/'>how often to pump your septic tank</a>.</p><h2>Our Services</h2>"+svc_list)
+
+FILTER_PHOTOS=""
+_j=next((x for x in JOBS if x["id"]=="lehigh-acres-2026-11-17"), None)
+if _j:
+  _out=[p for p in (_j.get("photos") or []) if "effluent filter" in (p.get("cap") or "").lower() or "outlet side" in (p.get("cap") or "").lower()]
+  FILTER_PHOTOS=job_shots({"photos":_out} if _out else {"photos":[]})
+page("/septic-filter-care/","Septic Filter Care and Drain Field Tips | Express Septic",
+ "How to care for a septic effluent filter, why a riser makes it easier to clean, what a dirty filter can cause, and how healthy soil bacteria help protect the drain field. Call (239) 451-3261.",
+ "Septic filter care and drain field protection",
+ "<p>If your septic tank has an effluent filter, keeping it clean helps wastewater leave the tank as it should. This page explains how to access the filter, when to check it, and how healthy bacteria in the soil help protect the drain field.</p>"
+ "<h2>How often should I clean my septic effluent filter?</h2>"
+ "<p>If your tank has an effluent filter, it should be checked and cleaned at every pump-out and whenever drains slow. Express can advise on a schedule for your system. Call <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>"
+ "<h2>How do I access the effluent filter?</h2>"
+ "<p>The effluent filter is in the outlet side of the tank, under the lid.</p>"
+ +FILTER_PHOTOS+
+ "<h2>Why does a riser help?</h2>"
+ "<p>A <a href='/septic-tank-riser-installation/'>6-inch riser</a> ($299.99 each) brings the lid up to ground level, so the filter is easier to reach on later visits without digging.</p>"
+ "<h2>What can happen with a dirty filter?</h2>"
+ "<p>A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house. Express cleans your filter at no charge on pump-outs and can show you how to keep it clean.</p>"
+ "<h2 id='drain-field'>How healthy soil bacteria protect the drain field</h2>"
+ "<p>Healthy bacteria in the soil break down effluent after it leaves the tank, which helps protect the drain field. Harsh chemicals, solids and grease overload can hurt that process. If a drain field has already failed, see <a href='/drain-field-replacement/'>drain field replacement</a>.</p>"
+ "<h2>Filter and drain field questions</h2>"+faq_html(FILTER_FAQ),
+ [faq_ld(FILTER_FAQ), crumbs_ld([("Home",BASE+"/"),("Septic filter care",BASE+"/septic-filter-care/")])],
+ trail=[("Home","/"),("Septic filter care","/septic-filter-care/")])
+
 page("/how-it-works/","How Septic Pumping Service Works | Express Septic Tank Pumping","How booking septic tank pumping with Express Septic works: call or book online, we schedule, pump your tank and walk you through what we found.","How Our Septic Service Works",
  photo("how-it-works","Express Septic technician at work")+
  "<ol><li><strong>Call or book online.</strong> Tap to call (239) 451-3261 or use Book Online.</li><li><strong>Get a quote and schedule.</strong> Tell us about your property and we'll quote and set a time.</li><li><strong>We locate and pump the tank.</strong> Our crew finds the tank lid and pumps the tank.</li><li><strong>We share what we saw.</strong> We let you know about anything that needs attention.</li></ol>"
@@ -413,6 +587,7 @@ page("/commercial-grease-trap-service/","Commercial Grease Trap Service & Pumpin
  "Grease trap pumping for restaurants and commercial kitchens in Lee & Collier County. One-time or recurring service from Express Septic. Call (239) 451-3261.",
  "Commercial grease trap service",
  REAR+"<p>Restaurants and commercial kitchens need their grease traps pumped before fats, oils and grease build up and cause backups, odors or problems with the drain line. Express pumps grease traps for businesses across Southwest Florida.</p>"
+"<p>We also pump in-ground grease interceptors and indoor traps for restaurants and food service. See <a href='/grease-trap-pumping/'>grease trap and interceptor pumping</a>.</p>"
  +SIDE+"<p>Our 4,200-gallon truck has a split tank, one side for septic and one side for grease, so grease trap loads and septic loads never mix.</p>"
  "<h2>One-time or recurring</h2><p>Some businesses call us when a trap is full. Most are better off on a recurring schedule based on how much cooking they do and the size of the trap. Tell us about your kitchen and we'll talk through how often makes sense.</p>"
  "<p><a class='btn primary' href='tel:"+TEL+"'>Call about recurring service · "+PHONE+"</a></p>"
@@ -434,7 +609,7 @@ page("/contact/","Contact & Request Septic Service | Express Septic Tank Pumping
  "<h2>Mailing address</h2><p>Express Septic Tank Pumping LLC<br>23357 Olde Meadowbrook Circle, Estero, FL 34134</p>")
 faqhtml="".join(f"<h2>{q}</h2><p>{a}</p>" for q,a in FAQ)
 page("/faq/","Septic Tank FAQ | How Often to Pump, Cost & Signs | Express Septic","Answers to common septic tank questions: how often to pump, signs your tank is full, cost and what areas Express Septic Tank Pumping serves.","Septic Tank Pumping FAQ",faqhtml,
- {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in FAQ]})
+ faq_ld(FAQ))
 page("/privacy/","Privacy Policy | Express Septic Tank Pumping","Privacy policy for Express Septic Tank Pumping website visitors and customers.","Privacy Policy",
  f"<p>Express Septic Tank Pumping respects your privacy. Information you give us by phone, through our online booking provider (ServiceM8) or by text is used only to schedule and provide service, send quotes and invoices, and communicate with you about your job.</p><p>We do not sell your personal information. Mobile phone numbers and SMS consent are not shared with third parties for marketing purposes.</p><p>This site does not use advertising trackers. Online booking is handled by ServiceM8 under its own privacy policy.</p><p>Questions? Call {PHONE}.</p>")
 page("/terms/","Terms of Service | Express Septic Tank Pumping","Terms of service for the Express Septic Tank Pumping website and services.","Terms of Service",
@@ -446,7 +621,7 @@ page("/accessibility/","Accessibility Statement | Express Septic Tank Pumping","
 
 page("/completed-jobs/","Completed Septic Jobs in Southwest Florida | Express Septic Tank Pumping","Recent septic jobs by Express Septic Tank Pumping in Lehigh Acres, Cape Coral and Bonita Springs: buried lids, risers, effluent filters and pump-outs.","Completed jobs",
  "<p>Recent jobs from our crew, with the city, date, what we found and what we did. Customer addresses and names are never shown.</p><p>We've also done septic tank pumping jobs recently in Fort Myers, North Fort Myers and Naples.</p>"+
- "".join(f"<section class='job' id='{j['id']}'><h2>{j['city']}: {j['title']}</h2><p class='jdate'>{j['date']}</p><p><strong>What we found:</strong> {j['found']}</p><p><strong>What we did:</strong> {j['done']}</p><p><a href='/{slug(j['city'])}/'>Septic service in {j['city']}</a></p></section>" for j in JOBS)+
+ "".join(f"<section class='job' id='{j['id']}'><h2>{j['city']}: {j['title']}</h2><p class='jdate'>{j['date']}</p><p><strong>What we found:</strong> {j['found']}</p><p><strong>What we did:</strong> {j['done']}</p>"+job_shots(j)+f"<p><a href='/{slug(j['city'])}/'>Septic service in {j['city']}</a></p></section>" for j in JOBS)+
  "<p>Need your tank pumped? Call <a href='tel:"+TEL+"'>"+PHONE+"</a> or see <a href='/residential-septic-tank-pumping/'>residential septic pumping</a>.</p>",
  {"@context":"https://schema.org","@type":"ItemList","name":"Completed septic jobs","itemListElement":[{"@type":"ListItem","position":k+1,"url":f"{BASE}/completed-jobs/#{j['id']}","name":f"{j['city']}: {j['title']}"} for k,j in enumerate(JOBS)]})
 ROBOTS["/404/"]='<meta name="robots" content="noindex">'
@@ -455,10 +630,10 @@ PAGES.remove("/404/")
 h=open("404/index.html").read().replace('<link rel="canonical" href="'+BASE+'/404/">','').replace('<meta property="og:url" content="'+BASE+'/404/">','').replace('href="../','href="/').replace('src="../','src="/').replace(', ../',', /').replace('srcset="../','srcset="/').replace("href='../","href='/")
 open("404.html","w").write(h); shutil.rmtree("404")
 shutil.copy("src/styles.css","styles.css"); shutil.copy("src/site.js","site.js")
-open("sitemap.xml","w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+"".join(f"<url><loc>{BASE}{p}</loc></url>" for p in PAGES)+"</urlset>\n")
+open("sitemap.xml","w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+"".join(f"<url><loc>{BASE}{p}</loc><lastmod>{TODAY}</lastmod></url>" for p in PAGES)+"</urlset>\n")
 # Sitemap index: static pages + ServiceTechHub Project Showcase (served by functions/ once configured)
 open("sitemap-index.xml","w").write(f'<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><sitemap><loc>{BASE}/sitemap.xml</loc></sitemap></sitemapindex>\n')
-open("robots.txt","w").write(f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap-index.xml\nSitemap: {BASE}/sitemap.xml\n")
+open("robots.txt","w").write("User-agent: *\nAllow: /\n\n""User-agent: GPTBot\nAllow: /\n\n""User-agent: PerplexityBot\nAllow: /\n\n""User-agent: ClaudeBot\nAllow: /\n\n""User-agent: Google-Extended\nAllow: /\n\n""User-agent: OAI-SearchBot\nAllow: /\n\n"f"Sitemap: {BASE}/sitemap-index.xml\nSitemap: {BASE}/sitemap.xml\n")
 print("\n".join(PAGES))
 # llms.txt: plain-text facts for AI assistants (same NAP and prices as the pages).
 LL=[f"# {NAME}","",f"> Owner-operated septic tank pumping company based in Estero, Florida, serving Lee, Collier and Charlotte County plus LaBelle (Hendry County). Residential septic pumping starts at $399.99.","",
@@ -471,9 +646,14 @@ f"- [Septic tank riser installation]({BASE}/septic-tank-riser-installation/): 6-
 f"- [Commercial grease trap service]({BASE}/commercial-grease-trap-service/): restaurants and commercial kitchens, one-time or recurring. Call for a quote.",
 f"- [Septic repair]({BASE}/septic-repair/): quoted after we look at the system. Repair work performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332.",
 f"- [Drain field replacement]({BASE}/drain-field-replacement/): quoted after we inspect the system. The work is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332.",
-f"- [Lift station pumping]({BASE}/lift-station-pumping/): quoted after we inspect the system.",
+f"- [Lift station pumping]({BASE}/lift-station-pumping/): Express pumps lift stations in Estero and across Southwest Florida. Quoted after we inspect the system. Call (239) 451-3261.",
+f"- [Grease trap and interceptor pumping]({BASE}/grease-trap-pumping/): for restaurants and food service, including in-ground grease interceptors and indoor traps. Quoted based on trap size and schedule. We can set up a recurring pump-out schedule. The 4,200-gallon truck is split for septic and grease, so the two never mix. Lee County Ordinance 14-24 requires interceptors to be fully pumped at least every 90 days, or sooner when grease and solids exceed 20% of capacity, and indoor traps cleaned weekly. Florida Statute 403.0741 requires a signed grease waste service manifest for every pump-out. Call (239) 451-3261.",
 f"- [Commercial septic tank pumping]({BASE}/commercial-septic-tank-pumping/): call for a quote.",f"- [Septic inspections]({BASE}/septic-inspections/): septic inspection with pump-out $549.99.","",
 "## Credentials","- Work performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332, licensed since 1981.","- USDOT 6673233. Truck: 4,200-gallon split tank, one side for septic and one for grease.","",
 "## Main service-area pages"]+[f"- [{c}, FL]({BASE}/{slug(c)}/)" for c in CITY_PLUS]+[f"- [All areas]({BASE}/service-area/)","",
-"## More",f"- [Completed jobs]({BASE}/completed-jobs/)",f"- [FAQ]({BASE}/faq/)",f"- [How often to pump]({BASE}/how-often-to-pump-septic-tank/)",f"- [About]({BASE}/about/)",""]
+"## How we stand apart",
+"- If we commit to a same-day pump-out, we keep working into the night until every scheduled job is done.",
+"- We pump both the inlet and the outlet compartments. Some companies only pump the inlet.",
+"- We clean your filter at no charge on pump-outs and show you how to keep it clean.","",
+"## More",f"- [Completed jobs]({BASE}/completed-jobs/)",f"- [FAQ]({BASE}/faq/)",f"- [Septic filter care]({BASE}/septic-filter-care/): If a tank has an effluent filter, it should be checked and cleaned at every pump-out and whenever drains slow. Express cleans the filter at no charge on pump-outs and can show you how to keep it clean. A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house. Healthy soil bacteria break down effluent after it leaves the tank and help protect the drain field.",f"- [How often to pump]({BASE}/how-often-to-pump-septic-tank/)",f"- [About]({BASE}/about/)",""]
 open("llms.txt","w").write("\n".join(LL))

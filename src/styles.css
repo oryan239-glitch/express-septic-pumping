@@ -212,6 +212,33 @@ h1,h2{font-weight:850;letter-spacing:-.03em}
 .quotecard blockquote p{margin:0;color:var(--ink);font-size:1.02rem;line-height:1.55;overflow-wrap:anywhere}
 .qattr{margin:0;margin-top:auto;color:var(--slate);font-size:.92rem}
 .qattr cite{font-style:normal;font-weight:700;color:var(--ink)}
+
+/* Breadcrumbs, stand-apart, educational teasers, job photos */
+.crumbs{font-size:.92rem;margin:0 0 18px}
+.crumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 0;align-items:center}
+.crumbs li{color:var(--slate);display:flex;align-items:center}
+.crumbs li:not(:last-child)::after{content:"/";margin:0 10px;color:var(--line)}
+.crumbs a{color:var(--slate)}
+.standapart{background:var(--paper)}
+.aparthead,.eduhead{max-width:40rem;margin-bottom:28px}
+.aparthead h2,.eduhead h2{margin:0;letter-spacing:-.02em}
+.apartgrid,.edugrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border-top:2px solid var(--ink)}
+.edugrid{grid-template-columns:1fr 1fr}
+.apartgrid li,.edugrid li{padding:24px 24px 28px 0;display:flex;flex-direction:column;gap:10px;min-width:0}
+.apartgrid li+li,.edugrid li+li{padding-left:24px;border-left:1px solid var(--line)}
+.apartgrid h3,.edugrid h3{margin:0;font-size:1.2rem;letter-spacing:-.02em}
+.apartgrid p,.edugrid p{margin:0;color:var(--slate)}
+.edugrid .txtlink{margin-top:auto}
+.jobshots{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;max-width:52rem}
+.jobshot{margin:0}
+.jobshot img{width:100%;height:auto;display:block;border:1px solid var(--line);aspect-ratio:4/3;object-fit:cover}
+.jobshot figcaption{margin-top:6px;color:var(--slate);font-size:.9rem}
+.workcard .jobshots{grid-template-columns:1fr;margin:0 0 8px;max-width:none}
+.workcard .jobshot figcaption{display:none}
+@media (max-width:959px){
+  .apartgrid,.edugrid,.jobshots{grid-template-columns:1fr}
+  .apartgrid li,.apartgrid li+li,.edugrid li,.edugrid li+li{padding:22px 0;border-left:0;border-bottom:1px solid var(--line)}
+}
 /* Hero: copy first on phones, truck still recognizable */
 @media (max-width:959px){
   .hero .hcopy{padding-top:28px;padding-bottom:32px}
