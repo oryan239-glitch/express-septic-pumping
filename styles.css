@@ -223,7 +223,6 @@ h1,h2{font-weight:850;letter-spacing:-.03em}
 .aparthead,.eduhead{max-width:40rem;margin-bottom:28px}
 .aparthead h2,.eduhead h2{margin:0;letter-spacing:-.02em}
 .apartgrid,.edugrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border-top:2px solid var(--ink)}
-.edugrid{grid-template-columns:1fr 1fr}
 .apartgrid li,.edugrid li{padding:24px 24px 28px 0;display:flex;flex-direction:column;gap:10px;min-width:0}
 .apartgrid li+li,.edugrid li+li{padding-left:24px;border-left:1px solid var(--line)}
 .apartgrid h3,.edugrid h3{margin:0;font-size:1.2rem;letter-spacing:-.02em}

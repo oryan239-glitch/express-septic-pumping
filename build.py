@@ -230,7 +230,7 @@ def page(path,title,desc,h1,body,extra=None,hero=None,lead="",trail=None,canonic
 <details class="menu"><summary aria-label="Open menu">Menu</summary><nav aria-label="Mobile">{NAVL}<a href="/contact/">Contact</a><a href="tel:{TEL}">Call {PHONE}</a></nav></details></div></header>
 <main id="main">{top}<div class="body">{body}</div>{REV}<section class="band closer"><div class="wrap"><h2>Talk to Express about your tank</h2><p>{AVAIL}</p>{CTA}</div></section></main>
 <footer id="contact" class="foot"><div class="wrap fgrid"><div><p class="mark">EXPRESS</p><p>{NAME} LLC<br>23357 Olde Meadowbrook Circle, Estero, FL 34134<br><a href="tel:{TEL}">{PHONE}</a><br><a data-sth-field="email" href="{"mailto:"+EMAIL if EMAIL else "/contact/"}">{EMAIL or "Send a request"}</a></p><p>Open 24 hours, 7 days a week.</p><p>Owner-operated. Licensed &amp; insured. We come to you.</p><p class="dot">USDOT 6673233</p><p class="license-foot">{LICENSE_FOOT}</p></div>
-<div><p class="fh">Services</p>{NAV}</div><div><p class="fh">Areas</p>{foot}</div><div><p class="fh">Info</p><a href="/">Home</a><a href="/how-it-works/">How it works</a><a href="/septic-system-maintenance/">Septic maintenance</a><a href="/septic-filter-care/">Filter care</a><a href="/septic-bacteria-drain-field/">Good bacteria</a><a href="/how-often-to-pump-septic-tank/">How often to pump</a><a href="/completed-jobs/">Completed jobs</a><a href="/about/">About</a><a href="/faq/">FAQ</a><a href="/contact/">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></div></footer>
+<div><p class="fh">Services</p>{NAV}</div><div><p class="fh">Areas</p>{foot}</div><div><p class="fh">Info</p><a href="/">Home</a><a href="/how-it-works/">How it works</a><a href="/septic-system-maintenance/">Septic maintenance</a><a href="/septic-filter-care/">Filter care</a><a href="/septic-bacteria-drain-field/">Good bacteria</a><a href="/first-time-septic-owner/">First-time septic guide</a><a href="/septic-maintenance-checklist/">Maintenance checklist</a><a href="/how-often-to-pump-septic-tank/">How often to pump</a><a href="/emergency-septic-backup/">Emergency backup</a><a href="/hurricane-and-flood-septic-prep/">Hurricane and flood prep</a><a href="/completed-jobs/">Completed jobs</a><a href="/about/">About</a><a href="/faq/">FAQ</a><a href="/contact/">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></div></footer>
 <div class="mbar" role="region" aria-label="Quick contact"><a class="btn primary" href="tel:{TEL}">Call · {PHONE}</a><a class="btn ghost" href="/contact/#book">Book</a></div></body></html>'''
   doc=doc.replace("<div class=\"body\"></div>","")
   if 'id="book"' in body: doc=doc.replace('href="/contact/#book"','href="#book"')
@@ -463,6 +463,7 @@ STANDAPART=("""<div class="aparthead"><p class="eyebrow">How we stand apart</p>
 EDU=("""<div class="eduhead"><p class="eyebrow">Septic care</p>
 <h2>Protect your system between pump-outs</h2></div>
 <ul class="edugrid">
+<li><h3>First time with a septic system?</h3><p>If you just moved from city sewer, bought a new-build home, or this is your first house on a septic tank, start with a complete guide: how the system works, first steps after you move in, what not to flush, and when to call.</p><a class="txtlink" href="/first-time-septic-owner/">First-time septic guide</a></li>
 <li><h3>Effluent filter care</h3><p>If your tank has an effluent filter, it should be checked and cleaned at every pump-out and whenever drains slow. A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house. We clean your filter at no charge on pump-outs and can show you how to keep it clean.</p><a class="txtlink" href="/septic-filter-care/">How to care for your filter</a></li>
 <li><h3>Healthy bacteria protect the tank and drain field</h3><p>Anaerobic bacteria in the tank break down solids. Aerobic bacteria and the biomat in drain-field soil treat effluent before it reaches groundwater. Harsh chemicals, grease and solids overload can hurt that process.</p><p><a class="txtlink" href="/septic-bacteria-drain-field/">Why good bacteria matter</a> <a class="txtlink" href="/drain-field-replacement/">Drain field replacement</a></p></li>
 </ul>""")
@@ -696,6 +697,287 @@ page("/how-it-works/","How Septic Pumping Service Works | Express Septic Tank Pu
  "<ol><li><strong>Call or book online.</strong> Tap to call (239) 451-3261 or use Book Online.</li><li><strong>Get a quote and schedule.</strong> Tell us about your property and we'll quote and set a time.</li><li><strong>We locate and pump the tank.</strong> Our crew finds the tank lid and pumps the tank.</li><li><strong>We share what we saw.</strong> We let you know about anything that needs attention.</li></ol>"
  "<p>Keep your system healthy between visits with our <a href='/septic-system-maintenance/'>septic maintenance tips</a> and our guide to <a href='/how-often-to-pump-septic-tank/'>how often to pump your septic tank</a>.</p><h2>Our Services</h2>"+svc_list)
 
+# --- Batch 1 educational guides (unique audience pages) ---
+def guide(path, title, desc, h1, body, faq, crumb):
+  p=path if path.endswith("/") else path+"/"
+  page(p, title, desc, h1, body+"<h2>"+crumb+" questions</h2>"+faq_html(faq),
+    [faq_ld(faq), crumbs_ld([("Home",BASE+"/"),(crumb,BASE+p)])],
+    trail=[("Home","/"),(crumb,p)])
+
+FT_FAQ=[
+ ("What should I do first if I just moved into a house with a septic tank?","Find the tank and its lids, ask for pumping and inspection records, and schedule a pump-out if you don't know when it was last serviced. A septic inspection with pump-out is $549.99. Call (239) 451-3261."),
+ ("How often should a first-time owner pump the tank?","The U.S. EPA's SepticSmart guidance is that most household tanks are pumped every 3 to 5 years. Household size, tank size, and water use change that. See <a href='/how-often-to-pump-septic-tank/'>how often to pump</a>."),
+ ("Where is the effluent filter and how often should I clean it?","If your tank has one, it is in the outlet side, under the lid. Check and clean it at every pump-out and whenever drains slow. Express cleans the filter at no charge on pump-outs. See <a href='/septic-filter-care/'>effluent filter care</a>."),
+ ("What should never go down a septic drain?","Wipes, even those labeled flushable, grease and oil, large amounts of bleach or harsh cleaners, medications, paint, and feminine products. Septic-safe, biodegradable toilet paper is a better choice than thick or 'flushable' wipes."),
+ ("Does Express pump both compartments of the tank?","Yes. We pump both the inlet and the outlet compartments and clean your effluent filter at no charge on pump-outs."),
+ ("What does residential pumping cost?","Residential pumping starts at $399.99 (standard 1–3 bed). After-hours pumping is $599.99. A septic inspection with pump-out is $549.99. 6-inch risers are $299.99 each. Locating and digging a buried lid is $100, plus $50 for each additional hour. Repairs and drain field work are quoted after we inspect the system."),
+]
+guide("/first-time-septic-owner/","First Time With a Septic System? The Complete Guide | Express Septic",
+ "A complete guide for Southwest Florida homeowners new to septic systems: how the tank and drain field work, first steps after you move in, what not to flush, and when to call. Pumping starts at $399.99. Call (239) 451-3261.",
+ "First time with a septic system? The complete guide",
+ "<p><strong>If you just moved from city sewer, bought a new-build home, or this is your first house on a septic tank, start here.</strong> A septic system treats wastewater on your property instead of sending it to a municipal plant. In Southwest Florida, many homes in and around Estero, Bonita Springs, Fort Myers, Cape Coral, Naples, and Lehigh Acres use one. This guide covers how the system works, what to do in the first weeks, and how to keep it healthy. Call <a href='tel:"+TEL+"'>"+PHONE+"</a> or <a href='"+BOOK+"' rel='noopener' target='_blank'>book routine service on ServiceM8</a> when you are ready for a pump-out or inspection.</p>"
+ "<h2>How does a septic system work?</h2>"
+ "<p>Wastewater from toilets, sinks, showers, and laundry flows into an underground tank. Inside the tank, heavier solids settle in the inlet compartment as sludge. Lighter material, including grease, floats as scum. Wastewater in the middle, called effluent, moves into the outlet compartment and then out to the drain field.</p>"
+ "<p>If the tank has an effluent filter, it sits in the outlet side, under the lid, and helps keep solids from leaving the tank. From there, effluent soaks into the drain field. Bacteria in the soil, including a living layer called the biomat, treat it before it moves farther toward groundwater. For a fuller explanation, see <a href='/septic-bacteria-drain-field/'>why good bacteria protect your tank and drain field</a>.</p>"
+ "<h2>How often should I pump a septic tank?</h2>"
+ "<p>The <a href='https://www.epa.gov/septic' rel='noopener'>U.S. EPA SepticSmart guidance</a> is that most household tanks are pumped every 3 to 5 years. That is a general range, not a fixed schedule for every home. A larger household, a smaller tank, a garbage disposal, or heavy water use can mean you need service sooner. Snowbird and rental homes can also fill faster when they are occupied. We do not guess your interval from a chart alone; household size and tank size are the starting point, and an inspection shows what your tank actually needs. See <a href='/how-often-to-pump-septic-tank/'>how often to pump your septic tank</a> for more detail.</p>"
+ "<p>Residential pumping starts at $399.99 (standard 1–3 bed). After-hours pumping is $599.99.</p>"
+ "<h2>What should I do first after moving into a house with a septic system?</h2>"
+ "<ol><li><strong>Find the tank and lids.</strong> Lids can be buried under grass or soil. Locating and digging up a buried lid is $100, plus $50 for each additional hour. If you know where the lid is, mark it or tell us when you call.</li>"
+ "<li><strong>Ask for records.</strong> Previous pumping dates, permits, and inspection reports tell you whether the system is current or overdue.</li>"
+ "<li><strong>Schedule a pump-out, and an inspection if you do not know the system's condition.</strong> A septic inspection with pump-out is $549.99. That is a practical first step when records are missing, especially after a purchase.</li>"
+ "<li><strong>Ask about risers.</strong> A <a href='/septic-tank-riser-installation/'>6-inch riser</a> ($299.99 each) brings the lid up to ground level so later visits do not start with digging.</li></ol>"
+ "<h2>How do I care for the effluent filter?</h2>"
+ "<p>If your tank has an effluent filter, it should be checked and cleaned at every pump-out and whenever drains slow. There is no single calendar interval that fits every house. A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house. Express cleans your filter at no charge on pump-outs and can show you how to keep it clean. See <a href='/septic-filter-care/'>effluent filter care</a>.</p>"
+ "<h2>What should never go down the drains or toilet?</h2>"
+ "<ul><li>Wipes, including ones labeled flushable</li><li>Cooking grease, fats, and oil</li><li>Bleach and harsh cleaners in large amounts, which can kill helpful bacteria</li><li>Medications</li><li>Paint and solvents</li><li>Feminine products, paper towels, and diapers</li></ul>"
+ "<p>Septic-safe, biodegradable toilet paper is easier on the system than thick wipes. For habits that protect bacteria, see <a href='/septic-bacteria-drain-field/'>good bacteria and the drain field</a> and our <a href='/septic-system-maintenance/'>maintenance tips</a>.</p>"
+ "<h2>What are the drain field do's and don'ts?</h2>"
+ "<ul><li>Do not park, drive, or build on the drain field</li><li>Do not plant trees or large shrubs over it; grass is the better cover</li><li>Divert roof gutters and runoff away from the field</li><li>Do not drain a swimming pool or spa onto the field; a large volume of chlorinated water can overload it</li><li>A garbage disposal adds solids, so you may need pumping more often</li><li>A water softener can send extra water into the system when it recharges; factor that into how often you pump</li></ul>"
+ "<p>If the field is already soggy or backing up, see <a href='/drain-field-not-draining/'>what to do when a drain field is not draining</a>. Replacement, if it is needed, is <a href='/drain-field-replacement/'>quoted after we inspect the system</a>.</p>"
+ "<h2>How should I use water in a septic home?</h2>"
+ "<p>Spread laundry through the week instead of running many loads in one day. Fix leaky toilets and faucets. A sudden flood of water can push solids toward the drain field before they have time to settle in the tank.</p>"
+ "<h2>What warning signs mean I should call?</h2>"
+ "<ul><li>Sewage odors inside or outside</li><li>Gurgling pipes</li><li>Slow drains</li><li>Wet spots or unusually lush grass over the drain field</li><li>Toilets or drains backing up</li><li>An alarm, if your system has one</li></ul>"
+ "<p>If you have a backup now, do not book online. Stop running water and call <a href='tel:"+TEL+"'>"+PHONE+"</a>. After-hours pumping is $599.99. See <a href='/emergency-septic-backup/'>emergency septic backup service</a>.</p>"
+ "<h2>What is different about septic systems in Southwest Florida?</h2>"
+ "<p>Much of this area has sandy soil and a high water table, especially in the rainy season. That leaves less room between the drain field and groundwater, so a full tank or a saturated yard can show problems sooner. After a hurricane or flood, wait until standing water recedes before using the system, then have it checked. Snowbirds returning to a house that sat unused should confirm when the tank was last pumped before filling it with several days of heavy use. See <a href='/hurricane-and-flood-septic-prep/'>hurricane and flood septic prep</a> and <a href='/snowbird-seasonal-septic/'>seasonal and snowbird septic care</a>.</p>"
+ "<h2>Why does Express pump both the inlet and the outlet?</h2>"
+ "<p>Some companies pump only the inlet compartment. Express pumps both the inlet and the outlet so sludge and scum are removed from the whole tank, and we clean your effluent filter at no charge on pump-outs. We are based in Estero, at 23357 Olde Meadowbrook Circle, and serve homes across Lee, Collier, and Charlotte County, plus LaBelle. Browse area pages for <a href='/septic-tank-pumping-fort-myers-fl/'>Fort Myers</a>, <a href='/septic-tank-pumping-cape-coral-fl/'>Cape Coral</a>, <a href='/septic-tank-pumping-bonita-springs-fl/'>Bonita Springs</a>, <a href='/septic-tank-pumping-estero-fl/'>Estero</a>, <a href='/septic-tank-pumping-naples-fl/'>Naples</a>, and <a href='/septic-tank-pumping-lehigh-acres-fl/'>Lehigh Acres</a>, or see the <a href='/faq/'>FAQ</a>.</p>"
+ "<h2>What does service cost for a new septic owner?</h2>"
+ "<ul><li>Residential pumping starts at $399.99 (standard 1–3 bed)</li><li>After-hours pumping is $599.99</li><li>Septic inspection with pump-out is $549.99</li><li>6-inch risers are $299.99 each</li><li>Locating and digging a buried lid is $100, plus $50 for each additional hour</li><li>Repairs and drain field work are quoted after we inspect the system</li></ul>"
+ "<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Book routine service on ServiceM8<span class='sr'> (opens in a new tab)</span></a></p>",
+ FT_FAQ, "First-time septic guide")
+
+RE_FAQ=[
+ ("When should a listing mention a septic inspection?","If the home is on a septic tank and the last pump-out or inspection is unknown, recommend a septic inspection with pump-out before or during the inspection period. That service is $549.99. Call (239) 451-3261."),
+ ("Can Express work on a short closing timeline?","Call and tell us the contract dates. Routine work can often be requested through ServiceM8; a backup is not something to book online. We confirm times after we hear from you."),
+ ("What should I tell buyers who have only lived on city sewer?","Point them to our <a href='/first-time-septic-owner/'>first-time septic guide</a> and to a professional inspection, not to guesses about the tank's condition."),
+ ("Do you provide a report I can share with both sides?","After an inspection with pump-out, we tell you what we saw. Share that conversation and any written notes with your clients and their inspectors as you normally would for other property reports."),
+]
+guide("/septic-guide-for-realtors/","Septic Guide for Southwest Florida Realtors | Express Septic",
+ "A practical septic briefing for Realtors in Lee, Collier, and Charlotte County: when to recommend a $549.99 inspection with pump-out, what to tell first-time buyers, and how to reach Express at (239) 451-3261.",
+ "Septic guide for Realtors",
+ "<p><strong>If you list or sell homes on septic in Southwest Florida, your clients often need a clear next step more than a lecture on tanks.</strong> This page is written for agents. It covers when to suggest a pump-out or inspection, how to help buyers who have only known city sewer, and how to reach Express without slowing a contract. It is not legal advice about disclosure; your broker and the parties' attorneys handle that.</p>"
+ "<h2>When should I recommend a septic inspection?</h2>"
+ "<p>Recommend one when the property has a septic tank and the file has no recent pumping record, the buyers are uncertain, or the listing is in an area where many lots are still on tanks rather than central sewer. A <a href='/septic-inspections/'>septic inspection with pump-out</a> is $549.99. That visit is the cleanest way for both sides to see the tank, not a substitute for a general home inspection.</p>"
+ "<h2>How do I talk about septic with first-time buyers?</h2>"
+ "<p>Many buyers moving to Estero, Bonita Springs, or unincorporated Lee and Collier County are leaving municipal sewer for the first time. Send them to the <a href='/first-time-septic-owner/'>first-time owner guide</a> so they can read about lids, filters, and drain fields at their own pace. On a showing, it is enough to say the home treats wastewater on site, records should be requested, and Express can inspect and pump if they want a current look.</p>"
+ "<h2>What belongs in the file besides the marketing remarks?</h2>"
+ "<p>Ask the seller for the last pumping date, any risers already installed, and whether the lids are buried. If the lid is buried, locating and digging it is $100, plus $50 for each additional hour, which is useful to mention so a buyer is not surprised on service day. A riser at $299.99 each can be a simple improvement to note in negotiations. For a longer checklist aimed at the parties themselves, use <a href='/buying-or-selling-a-home-with-septic/'>buying or selling a home with a septic tank</a>.</p>"
+ "<h2>How do I schedule around a closing date?</h2>"
+ "<p>Call <a href='tel:"+TEL+"'>"+PHONE+"</a> and give us the inspection deadline or closing date. For routine pumping or a planned inspection, clients can also <a href='"+BOOK+"' rel='noopener' target='_blank'>request a time on ServiceM8</a>. We contact them to confirm; a request is not a booked appointment until we confirm. If a occupied house has a backup, they should call, not book online.</p>"
+ "<h2>Where do you work?</h2>"
+ "<p>Express is based in Estero and serves Lee, Collier, and Charlotte County, plus LaBelle. We pump tanks for listings and purchases across those areas, including Fort Myers, Cape Coral, Naples, Lehigh Acres, and the islands. We do not quote drain field replacement or repairs until we inspect the system.</p>"
+ "<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a></p>",
+ RE_FAQ, "Realtor septic guide")
+
+BS_FAQ=[
+ ("Should I get a septic inspection before closing?","If the home has a septic tank and you do not have recent records, yes, an inspection with pump-out is a sound step. That service is $549.99. Call (239) 451-3261."),
+ ("Is a pump-out the same as an inspection?","A pump-out empties the tank. An inspection with pump-out is a visit that includes pumping and a look at the system so you hear what we saw. Buyers and sellers often want that combined visit."),
+ ("Who usually pays for the pump-out in a sale?","That is a contract question, not a rule we set. Either party can schedule and pay. We just need access to the lids and a contact who can confirm the appointment."),
+ ("What if nobody can find the lid before closing?","We can locate and dig a buried lid for $100, plus $50 for each additional hour. Tell us before the visit if the lid has not been opened in years."),
+]
+guide("/buying-or-selling-a-home-with-septic/","Buying or Selling a Home With a Septic Tank in SWFL | Express Septic",
+ "Pre-sale septic pump-outs and inspections for buyers and sellers in Southwest Florida. Inspection with pump-out is $549.99. Call (239) 451-3261 or request a time on ServiceM8.",
+ "Buying or selling a home with a septic tank",
+ "<p><strong>If you are buying or selling a Southwest Florida home that uses a septic tank, a current pump-out and inspection is often the missing piece in the due-diligence file.</strong> This page is for the buyer and the seller, not for agents (agents can start with the <a href='/septic-guide-for-realtors/'>Realtor septic guide</a>). The goal is simple: know when the tank was last pumped, see its condition before closing, and avoid inheriting a surprise.</p>"
+ "<h2>Why schedule a pump-out before or during the inspection period?</h2>"
+ "<p>A tank that has not been opened in years can hide a full sludge layer, a dirty outlet filter, or a lid no one can find. Waiting until after closing leaves the new owner to discover that on a holiday weekend. A <a href='/septic-inspections/'>septic inspection with pump-out</a> is $549.99 and gives both sides a current look. Residential pumping alone starts at $399.99 (standard 1–3 bed) if you only need the tank emptied and already know the system.</p>"
+ "<h2>What should a buyer request from the seller?</h2>"
+ "<p>Ask for pumping receipts, any county or state permits, and notes about risers or prior repairs. If those papers do not exist, treat the system as unknown and schedule the inspection visit. Buyers who have never owned a septic system can read the <a href='/first-time-septic-owner/'>first-time owner guide</a> in parallel so terms like outlet filter and drain field are familiar before walkthrough.</p>"
+ "<h2>What should a seller do before listing?</h2>"
+ "<p>Have the tank pumped if it is due, or if you cannot prove the last service date. If lids are buried, budget for locating and digging at $100, plus $50 for each additional hour, or install a <a href='/septic-tank-riser-installation/'>riser</a> ($299.99 each) so future access is easier to show. A tidy, recently serviced tank is easier to explain than a yard with no idea where the lid is.</p>"
+ "<h2>What happens on the appointment?</h2>"
+ "<p>We find the lid, pump the tank, and tell you what we saw. If the tank has an effluent filter, we clean it at no charge on that pump-out. We do not invent a clean bill of health for a drain field we have not been asked to evaluate in depth; drain field replacement, if it ever comes up, is quoted only after we inspect the system.</p>"
+ "<h2>How do I book around a closing date?</h2>"
+ "<p>Call <a href='tel:"+TEL+"'>"+PHONE+"</a> with your inspection deadline, or <a href='"+BOOK+"' rel='noopener' target='_blank'>request routine service on ServiceM8</a>. We confirm the time before it is set. If the house is already backing up, skip the booking form and call; after-hours pumping is $599.99.</p>",
+ BS_FAQ, "Buying or selling with septic")
+
+BU_FAQ=[
+ ("Can crews drive or stage materials on a drain field?","No. Parking, storing fill, or running equipment over the field can compact soil and damage pipes. Mark the field before work starts and keep traffic off it."),
+ ("Do you pump tanks on active job sites?","Yes, when we can reach the lids safely. Call (239) 451-3261 with access notes, gate codes, and where the tank is relative to the work."),
+ ("Is construction pumping priced like a house pump-out?","Residential pumping starts at $399.99 (standard 1–3 bed). Work tied to a construction site is discussed when we see access and tank size. Drain field and repair work are quoted after inspection."),
+ ("Who should be on site when you arrive?","Someone who can show lid locations, unlock gates, and confirm buried utilities in the work area."),
+]
+guide("/septic-service-for-builders-and-contractors/","Septic Service for Builders and Contractors in SWFL | Express Septic",
+ "Pumping and access guidance for builders, remodelers, and site contractors working around septic tanks and drain fields in Lee, Collier, and Charlotte County. Call (239) 451-3261.",
+ "Septic service for builders and contractors",
+ "<p><strong>If you are building, remodeling, or running a crew on a lot that already has a septic tank, the drain field is the part of the yard that cannot be treated like extra staging space.</strong> This page is for general contractors, excavation crews, and trade partners who need the tank pumped or need to keep the field intact while other work happens. Express pumps tanks; we quote other system work only after we inspect.</p>"
+ "<h2>How do I protect the drain field during construction?</h2>"
+ "<p>Find out where the tank and drain field are before the first delivery of fill or equipment. Do not park trucks, store block, or cut a temporary road across the field. Compacted soil and broken laterals are much harder to undo than a marked-off corner of the lot. If you are not sure where the field is, stop and have it located rather than guessing with a skid steer.</p>"
+ "<h2>When should a job site call for pumping?</h2>"
+ "<p>Call when a temporary facility is on the existing tank, when a house has been occupied through a remodel, or when the tank must be opened before other trades close up the yard. Tell us about mud, fences, and overhead work so we can reach the lids. Buried-lid locating and digging is $100, plus $50 for each additional hour.</p>"
+ "<h2>How do new-construction and remodel access differ?</h2>"
+ "<p>On a remodel, the tank is often already in a finished yard, sometimes with landscaping over the lids. On an open pad, the risk is equipment traffic more than hidden lids. In both cases we need a clear path for the hose and a contact who knows the lot. We pump both the inlet and outlet compartments when we pump, and we clean an effluent filter at no charge if the tank has one.</p>"
+ "<h2>Can you coordinate with the plumber or the owner?</h2>"
+ "<p>Yes. Have the site supervisor or the property owner call <a href='tel:"+TEL+"'>"+PHONE+"</a> with the address and the preferred window. Routine visits can also be requested through <a href='"+BOOK+"' rel='noopener' target='_blank'>ServiceM8</a>. If a drain field is already failing, do not assume a pump-out will finish the project; <a href='/drain-field-replacement/'>drain field work is quoted after inspection</a>.</p>",
+ BU_FAQ, "Builders and contractors")
+
+PM_FAQ=[
+ ("Can you put several properties on a recurring pump-out schedule?","Yes. Call (239) 451-3261 with the addresses and last service dates, and we can set a schedule that you track for the board or owner."),
+ ("What should tenants be told about the septic system?","A short house rule: no wipes, grease, or paint down the drains, and call management immediately if drains slow or an odor appears. Our <a href='/first-time-septic-owner/'>first-time guide</a> can be shared as background."),
+ ("What does after-hours service cost if a unit backs up at night?","After-hours pumping is $599.99. For a backup, the occupant should stop running water and call us or you should call on their behalf. Do not use the online booking form for an active backup."),
+ ("Do HOAs need anything different than a single rental house?","The plumbing is the same idea, but you may be coordinating common-area systems or many lots. Keep a shared log of pump dates and lid locations so a turnover in the board does not lose the map."),
+]
+guide("/septic-for-property-managers-and-hoas/","Septic Service for Property Managers and HOAs in SWFL | Express Septic",
+ "Recurring septic pump-outs, tenant guidance, and after-hours backup service for property managers and HOA boards in Southwest Florida. After-hours pumping is $599.99. Call (239) 451-3261.",
+ "Septic service for property managers and HOAs",
+ "<p><strong>Property managers and HOA boards are usually the ones who get the call when a tenant or a resident has a slow drain on a Friday night.</strong> This page is about keeping pumping dates, lid locations, and after-hours contacts in one place so you are not starting from zero at each turnover. Express can pump on a recurring schedule and respond when a unit backs up. After-hours pumping is $599.99.</p>"
+ "<h2>How should I track septic service across multiple addresses?</h2>"
+ "<p>Keep a simple log: address, tank access notes, last pump-out date, and whether a riser is already in place. When a board or owner changes, that log is what you hand off. If dates are missing, treat the tank as overdue and schedule a visit rather than guessing. Residential pumping starts at $399.99 (standard 1–3 bed). An inspection with pump-out is $549.99 when the history is a blank page.</p>"
+ "<h2>What belongs in a tenant or resident handout?</h2>"
+ "<p>A short list works better than a manual: no wipes (including flushable labels), no grease, no paint or medications down the toilet, and a phone number to call if drains gurgle or the yard is soggy. Point people who want more detail to the <a href='/first-time-septic-owner/'>first-time septic guide</a>. You do not need to teach soil bacteria on move-in day; you need fewer emergency calls.</p>"
+ "<h2>How do after-hours backups work for a managed property?</h2>"
+ "<p>Tell occupants to stop running water and to call you or <a href='tel:"+TEL+"'>"+PHONE+"</a> directly. Online booking is for routine work, not an active backup. We are open 24 hours, 7 days a week. After-hours pumping is $599.99. More detail is on the <a href='/emergency-septic-backup/'>emergency backup</a> page.</p>"
+ "<h2>Can an HOA set a neighborhood-wide pumping reminder?</h2>"
+ "<p>Yes, as a policy or a reminder letter, even if each lot is a separate system. A shared calendar for older sections of a community, especially where lids are buried, reduces the number of 'we cannot find the tank' visits. Locating and digging a buried lid is $100, plus $50 for each additional hour. A riser at $299.99 each is often the longer-term fix for those lots.</p>"
+ "<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Book routine service on ServiceM8<span class='sr'> (opens in a new tab)</span></a></p>",
+ PM_FAQ, "Property managers and HOAs")
+
+LL_FAQ=[
+ ("Do short-term rentals need pumping more often?","They can. Guest turnover and weekend occupancy can load a tank faster than a full-time household of the same bedroom count. Track actual use and pump on a tighter schedule if the house stays busy. Call (239) 451-3261."),
+ ("What house rules help protect a septic tank in an Airbnb?","No wipes, no grease down the kitchen sink, and a note to call the host if drains slow. Put the rule where guests see it, not only in a buried listing paragraph."),
+ ("What if a guest reports a backup after checkout?","Treat it as a backup: stop water use, and call us. After-hours pumping is $599.99. Online booking is for planned pump-outs, not an active backup."),
+ ("Should I pump between long gaps in reservations?","If the home will sit, or if a packed season is about to start, check the last pump date and schedule service before guests arrive. See also <a href='/snowbird-seasonal-septic/'>seasonal septic care</a>."),
+]
+guide("/septic-for-landlords-and-short-term-rentals/","Septic Care for Landlords and Airbnb Hosts in SWFL | Express Septic",
+ "Septic pumping and guest-use guidance for landlords and short-term rental hosts in Southwest Florida. Busy rentals can need service sooner. After-hours backups are $599.99. Call (239) 451-3261.",
+ "Septic care for landlords and Airbnb hosts",
+ "<p><strong>A rental or Airbnb on a septic tank has a different risk profile than a family that lives in the house all year.</strong> Guests do not know your rules, weekend groups can run a lot of water, and a backup during a stay becomes your emergency, not theirs. This page is for landlords and hosts. Property managers handling many units may prefer <a href='/septic-for-property-managers-and-hoas/'>the managers and HOA page</a>.</p>"
+ "<h2>Why can a short-term rental need pumping sooner?</h2>"
+ "<p>The EPA's general 3 to 5 year range for household tanks still applies as a starting point, but a house that sleeps more people on weekends than it was sized for will fill faster. So will a kitchen that sees vacation cooking and a bathroom where guests use wipes. Keep a pump-out date on your turnover calendar, not only in a folder you open when something fails. Residential pumping starts at $399.99 (standard 1–3 bed).</p>"
+ "<h2>What should I put in the guest book?</h2>"
+ "<p>Three lines are enough: do not flush wipes or paper towels, do not pour grease down the sink, and text the host if a drain is slow or the yard smells. You can link the <a href='/first-time-septic-owner/'>first-time owner guide</a> in a welcome email for long-term tenants who are new to septic. For a one-night stay, the three lines in the bathroom matter more.</p>"
+ "<h2>How should I plan around busy season and empty weeks?</h2>"
+ "<p>Pump before a heavy reservation stretch if the last service was a long time ago. If the house will sit for months, note the date you return or the next check-in, and do not wait until the afternoon guests arrive. That pattern is close to what snowbird owners do; the <a href='/snowbird-seasonal-septic/'>seasonal return page</a> covers houses that go empty part of the year.</p>"
+ "<h2>What do I do if a guest has a backup?</h2>"
+ "<p>Ask them to stop using water. Call <a href='tel:"+TEL+"'>"+PHONE+"</a>. After-hours pumping is $599.99. We are open 24 hours. Do not send them to the online booking form while sewage is backing up. Details are on <a href='/emergency-septic-backup/'>emergency septic backup</a>.</p>",
+ LL_FAQ, "Landlords and short-term rentals")
+
+CL_FAQ=[
+ ("Is this the same as the how-often-to-pump page?","No. That page explains the 3 to 5 year range and the factors that change it. This checklist is a season-by-season list of tasks for Southwest Florida homes. Use both."),
+ ("What should I do before the rainy season?","If a pump-out is due, schedule it before summer rains raise the water table. Walk the drain field after a storm later, but do not wait for standing water to think about a full tank."),
+ ("What belongs on a monthly once-over?","Look and listen: odors, slow drains, soggy ground, unusually green grass over the field. You do not need to open the tank every month."),
+ ("When should the effluent filter be cleaned?","At every pump-out and whenever drains slow. Express cleans it at no charge when we pump. There is no separate monthly interval that fits every house."),
+]
+guide("/septic-maintenance-checklist/","Southwest Florida Septic Maintenance Checklist | Express Septic",
+ "A season-by-season septic checklist for Southwest Florida homes: before rainy season, before guests or snowbird return, and monthly walk-arounds. Call (239) 451-3261 for a pump-out.",
+ "Southwest Florida septic maintenance checklist",
+ "<p><strong>This is a task list, not another explanation of how often most tanks are pumped.</strong> The <a href='/how-often-to-pump-septic-tank/'>how often to pump</a> page already covers the U.S. EPA SepticSmart 3 to 5 year range and the factors that shorten it. The <a href='/septic-system-maintenance/'>maintenance tips</a> page covers what not to flush. Use this checklist to plan the year in a climate with a rainy season, holiday guests, and houses that sit part of the year.</p>"
+ "<h2>What should I do before the summer rainy season?</h2>"
+ "<p>If you are due for pumping, or you cannot remember the last date, schedule it before the water table rises. A tank with room in it gives the drain field a better chance when the yard is already wet. Residential pumping starts at $399.99 (standard 1–3 bed). Walk the field after a typical rain later in the season so you know what 'normal wet' looks like for your lot.</p>"
+ "<h2>What should I do before guests, holidays, or snowbird return?</h2>"
+ "<p>Check the last pump-out date. If a full house is about to arrive and the tank is overdue, pump first. If you are coming back after months away, do the same before you run laundry and showers all day. The <a href='/snowbird-seasonal-septic/'>snowbird page</a> is written for that return; this checklist is the reminder to put it on the calendar.</p>"
+ "<h2>What is worth a monthly walk-around?</h2>"
+ "<p>Odors, gurgling, slow drains, soggy spots, and grass that is much greener over the drain field than the rest of the yard. You are not opening lids every month. You are noticing change. If something looks wrong, call <a href='tel:"+TEL+"'>"+PHONE+"</a> rather than adding more water to the system.</p>"
+ "<h2>What belongs on the annual service visit?</h2>"
+ "<p>A pump-out when it is due, filter cleaning (included at no charge when Express pumps), and a conversation about access. If the lid is still buried, consider a riser at $299.99 each so the next visit is faster. If you want a written look at the system as well, an inspection with pump-out is $549.99.</p>"
+ "<h2>Where do I go for habits, not dates?</h2>"
+ "<p>For what never to flush, water use, and drain field care, stay with the <a href='/septic-system-maintenance/'>maintenance guide</a>. For bacteria, bleach, and additives, use <a href='/septic-bacteria-drain-field/'>good bacteria and the drain field</a>. This page stays on timing.</p>"
+ "<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Book routine service on ServiceM8<span class='sr'> (opens in a new tab)</span></a></p>",
+ CL_FAQ, "Maintenance checklist")
+
+DF_FAQ=[
+ ("Does a soggy drain field always mean the field has failed?","No. A full tank, a dirty outlet filter, or a high water table after heavy rain can also leave the yard wet. We start by looking at the tank. Drain field replacement is quoted only after we inspect the system."),
+ ("What should I do today if the yard is soggy over the field?","Cut back water use, do not run extra laundry, and call (239) 451-3261. Do not drive on the wet area and do not add fill or more pipe on your own."),
+ ("Will a pump-out fix a drain field that is not draining?","It can help if the tank is full and solids or a clogged filter are part of the problem. It will not rebuild a field that has already failed. We will tell you what we see."),
+ ("When is replacement even on the table?","Only after an inspection. We do not quote drain field replacement over the phone from a description of wet grass."),
+]
+guide("/drain-field-not-draining/","Drain Field Not Draining in Southwest Florida | Express Septic",
+ "What to do when a septic drain field is soggy, smelly, or not taking water in Southwest Florida. A pump-out may help if the tank is full; replacement is quoted after inspection. Call (239) 451-3261.",
+ "What to do when a drain field is not draining",
+ "<p><strong>If wastewater is pooling over the drain field, the grass there is suddenly lush and wet, or drains in the house are slow at the same time, stop adding water and call.</strong> This page is about that problem, not a general maintenance overview. A wet field in Southwest Florida can mean a full tank, a dirty filter, a high water table after rain, or a field that is no longer taking water. Those are different problems, and they are not diagnosed from a photo alone.</p>"
+ "<h2>What are the signs the field is not taking water?</h2>"
+ "<p>Standing water or persistently soggy soil over the drain field, sewage odor in the yard, extra-green grass in that footprint, and slow or backing-up fixtures inside the house can show up together. After a heavy rain, some yards are wet everywhere; a field problem is more likely when the wet or smelly area sits over the drain field and stays after the rest of the lot dries.</p>"
+ "<h2>What should I do before anyone arrives?</h2>"
+ "<p>Stop laundry, long showers, and dishwasher runs. Do not drive or park on the wet area. Do not trench, add gravel, or 'air out' the field with a homemade fix. Call <a href='tel:"+TEL+"'>"+PHONE+"</a>. If sewage is already backing up inside, treat it as a <a href='/emergency-septic-backup/'>backup</a> and call day or night. After-hours pumping is $599.99.</p>"
+ "<h2>Can pumping the tank help a field that looks failed?</h2>"
+ "<p>Sometimes. If the tank is full, sludge is escaping, or the effluent filter is clogged, emptying the tank and cleaning the filter can take pressure off the field. Express pumps both compartments and cleans the filter at no charge on pump-outs. If the field itself has failed, a pump-out will not make the soil work like new. <a href='/drain-field-replacement/'>Drain field replacement is quoted after we inspect the system</a>.</p>"
+ "<h2>Why is this more common in the rainy season here?</h2>"
+ "<p>Sandy soils and a high water table leave less unsaturated soil under many Southwest Florida yards when summer storms sit over the area. A field that was marginal in dry weather can start to show at the surface in those weeks. That is a reason to pump when you are due, not a reason to assume every wet yard needs a new field. For how soil bacteria and the biomat treat effluent, see <a href='/septic-bacteria-drain-field/'>good bacteria and the drain field</a>.</p>",
+ DF_FAQ, "Drain field not draining")
+
+EM_FAQ=[
+ ("What does after-hours septic pumping cost?","After-hours pumping is $599.99. Call (239) 451-3261. Do not use the online booking form while a backup is happening."),
+ ("What should I do until someone arrives?","Stop running water, including laundry and showers. Do not keep flushing 'to see if it cleared.' If sewage is on the floor, keep people and pets away from it."),
+ ("Are you open at night and on weekends?","Yes. Express is open 24 hours, 7 days a week for this kind of call."),
+ ("Is after-hours service the same as a routine pump-out?","The work is still pumping the tank. The after-hours price is $599.99. Routine residential pumping starts at $399.99 (standard 1–3 bed) when it is not an after-hours emergency visit."),
+]
+guide("/emergency-septic-backup/","Emergency and After-Hours Septic Backup Pumping in SWFL | Express Septic",
+ "Sewage backing up? Stop running water and call Express at (239) 451-3261, day or night. After-hours septic pumping is $599.99. Online booking is for routine service only.",
+ "Emergency and after-hours septic backup pumping",
+ "<p><strong>If sewage is coming back up a drain or toilet, stop running water and call <a href='tel:"+TEL+"'>"+PHONE+"</a> now.</strong> Do not request a time on the booking form while a backup is in progress. Express is open 24 hours, 7 days a week. After-hours pumping is $599.99.</p>"
+ "<h2>What counts as a backup that should be called in immediately?</h2>"
+ "<p>Wastewater rising in a shower, toilet, or floor drain; sewage on the floor; or a sudden, strong sewage odor with fixtures that will not drain. Gurgling alone is a warning, but standing sewage is an emergency visit, not a 'maybe next week' pump-out.</p>"
+ "<h2>What should I do in the house while I wait?</h2>"
+ "<p>Turn off anything that adds water: laundry, dishwashers, ice makers, and showers. Avoid flushing. Keep children and pets away from spilled sewage. If you can, note whether one fixture is affected or several, and whether the problem started after heavy rain. That information helps when you call, but it should not delay the call.</p>"
+ "<h2>What will we do when we arrive?</h2>"
+ "<p>We access the tank and pump it, including both the inlet and outlet compartments, and we clean the effluent filter at no charge if the tank has one. A pump-out often relieves a backup caused by a full tank. If the drain field is not taking water, we will tell you what we see; further work is quoted after inspection, not invented on the spot.</p>"
+ "<h2>How is after-hours pricing different from a planned visit?</h2>"
+ "<p>After-hours pumping is $599.99. Planned residential pumping starts at $399.99 (standard 1–3 bed). If you have a slow drain but no backup, you can still call, or you can <a href='"+BOOK+"' rel='noopener' target='_blank'>request a routine time on ServiceM8</a> once it is clearly not an active overflow. For wet yards without an indoor overflow, see <a href='/drain-field-not-draining/'>drain field not draining</a>.</p>",
+ EM_FAQ, "Emergency septic backup")
+
+CO_FAQ=[
+ ("Do you pump septic tanks at churches, schools, and RV parks?","Yes. We provide commercial septic tank pumping for churches, schools, RV parks, and similar properties in our service area. Call (239) 451-3261 to talk through the tank and the schedule."),
+ ("Is the residential $399.99 starting price for a large commercial tank?","No. Residential pumping starts at $399.99 for a standard 1–3 bedroom home. Commercial tanks and busier sites are quoted for that system and its use."),
+ ("Can we set a recurring schedule around services, school terms, or seasonal occupancy?","Yes. Tell us when the property is busiest so pump-outs are not left until a weekend event or a full park weekend."),
+ ("What if we have a backup during an event?","Call (239) 451-3261. After-hours pumping is $599.99. Do not use the online booking form during an active backup."),
+]
+guide("/commercial-septic-churches-schools-rv-parks/","Commercial Septic Pumping for Churches, Schools, and RV Parks | Express Septic",
+ "Commercial septic tank pumping for churches, schools, and RV parks in Southwest Florida. Quoted for your tank and use. After-hours backups are $599.99. Call (239) 451-3261.",
+ "Commercial septic pumping for churches, schools, and RV parks",
+ "<p><strong>Churches, schools, and RV parks put a different kind of load on a septic tank than a single-family house.</strong> Use often clusters around services, school days, weekends, or seasonal occupancy, then drops. This page is for those sites. It is not a restaurant grease-trap guide; kitchens with interceptors should use <a href='/grease-trap-pumping/'>grease trap and interceptor pumping</a>. General commercial pumping background is also on <a href='/commercial-septic-tank-pumping/'>commercial septic tank pumping</a>.</p>"
+ "<h2>Why do these properties need a planned schedule instead of 'every few years'?</h2>"
+ "<p>A church that is quiet on weekdays and full on Sunday, a school with long breaks, or an RV park that fills in winter can send a lot of water through the tank in a short window. The EPA's household 3 to 5 year range is not a good sole guide here. We set a recurring pump-out around how the property is actually used, then adjust if events or occupancy change.</p>"
+ "<h2>How is this priced?</h2>"
+ "<p>Commercial pumping is quoted for your tank size and use. The published residential starting price of $399.99 applies to a standard 1–3 bedroom home, not automatically to a large commercial tank. After-hours pumping is $599.99 if you have a backup outside routine hours. We will ask about access, tank size if you know it, and the last service date when you call <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>"
+ "<h2>What should a facilities manager have ready?</h2>"
+ "<p>Gate codes, lid locations, a contact who can meet the truck, and any rules about working around worship times, school pickup, or campers. If lids are buried in a lawn or gravel lot, locating and digging is $100, plus $50 for each additional hour. A riser at $299.99 each is often worth it on a site that will be pumped on a regular route.</p>"
+ "<h2>What about dump stations or unusually heavy weekend use?</h2>"
+ "<p>Tell us if the tank receives waste from an RV dump station or from a hall that hosts large events. Those details change how often the tank needs to be emptied. We pump inlet and outlet compartments and can set reminders so the next event does not start with a full tank.</p>",
+ CO_FAQ, "Churches, schools, and RV parks")
+
+HU_FAQ=[
+ ("Should I always pump the tank before every named storm?","Not automatically. If a pump-out is already due, or the tank is close to full, pumping before a storm can help. If the tank was recently emptied, a special trip is not a rule we invent for every forecast. Call (239) 451-3261 if you are unsure."),
+ ("Can I use the septic system while the yard is flooded?","Do not use it while standing water covers the tank or drain field. Wait until the water recedes, then have the system checked before you return to normal use."),
+ ("What should I do after a hurricane or flood?","Stay off a saturated drain field, watch for electrical hazards if you have pumps or an alarm, and call us when you can reach the lids safely. We will tell you what we see; we do not quote a repair from a storm photo alone."),
+ ("Is after-hours pumping available during storm recovery?","We are open 24 hours, 7 days a week. After-hours pumping is $599.99. Call (239) 451-3261."),
+]
+guide("/hurricane-and-flood-septic-prep/","Hurricane and Flood Septic Prep in Southwest Florida | Express Septic",
+ "What to do with a septic system before and after a hurricane or flood in Southwest Florida: when to pump, when not to use a flooded system, and how to reach Express at (239) 451-3261.",
+ "Hurricane and flood septic prep",
+ "<p><strong>A hurricane or a long flood changes how you should treat a septic system, but it does not require a special ritual for every storm on the map.</strong> This page is about when to pump beforehand, what not to do while the yard is underwater, and how to come back to the system safely. It is not a promise of emergency response times, and it is not a rule that every house must be pumped the day a watch is issued.</p>"
+ "<h2>What should I do before a storm if I have time?</h2>"
+ "<p>If the tank is due, or you know it is close to full, schedule a pump-out before heavy rain if we can reach you. A tank with room in it is less likely to overflow when the water table rises. Residential pumping starts at $399.99 (standard 1–3 bed). If you just had the tank pumped, you do not need a second trip just because a forecast changed. Call <a href='tel:"+TEL+"'>"+PHONE+"</a> if you want a straight answer for your last service date.</p>"
+ "<h2>What should I do while the lot is flooded?</h2>"
+ "<p>Do not run water into a system whose tank or drain field is under standing water. Keep vehicles off the field. If you have a pump, alarm, or electrical components at a lift station, treat water and power as a safety issue and do not wade in to inspect them yourself. More on indoor backups is at <a href='/emergency-septic-backup/'>emergency septic backup</a>.</p>"
+ "<h2>What should I do after the water goes down?</h2>"
+ "<p>Wait until you can reach the lids without standing in floodwater. Then have the system checked before you return to full household use, especially if the house took on water or the field stayed submerged. We pump both compartments when we pump, and we clean the effluent filter at no charge. Damage beyond a full tank, including drain field work, is quoted after we inspect, not estimated from a storm report.</p>"
+ "<h2>Why does flooding matter so much here?</h2>"
+ "<p>Southwest Florida yards often sit on sandy soil with a water table that is already high in the rainy season. A storm surge or long rain on top of that can saturate a drain field that was working in dry weather. Pumping when you are due is one of the few steps you can take in advance. Afterward, patience and an inspection matter more than rushing water through a still-soggy field.</p>",
+ HU_FAQ, "Hurricane and flood prep")
+
+SN_FAQ=[
+ ("When should a snowbird pump, before leaving or after coming back?","If a pump-out is due, do it before you leave, or as soon as you return and before several days of heavy use. Call (239) 451-3261 and tell us which end of the season you are in."),
+ ("The house sat empty for months. Can I just start using everything?","Check the last pump date first. If you do not know it, schedule a pump-out or an inspection with pump-out ($549.99) before you run many loads of laundry and long showers."),
+ ("Do seasonal homes follow the same 3 to 5 year range?","That EPA range is still a starting point, but months of empty time plus a busy winter can change when the tank actually needs service. Track occupancy, not only the calendar."),
+ ("The lid is buried and I am only in town for a short stay. What then?","Tell us that when you call. Locating and digging a buried lid is $100, plus $50 for each additional hour. A riser at $299.99 each makes the next return easier."),
+]
+guide("/snowbird-seasonal-septic/","Snowbird and Seasonal Septic Care in Southwest Florida | Express Septic",
+ "Septic guidance for snowbirds and seasonal residents in Southwest Florida: when to pump before you leave or after you return, and what to do if the house sat empty. Call (239) 451-3261.",
+ "Snowbird and seasonal septic care",
+ "<p><strong>If you spend only part of the year in a Southwest Florida home on a septic tank, the calendar that matters is your occupancy, not a year-round household's routine.</strong> This page is for snowbirds, seasonal residents, and anyone who closes a house for months and then returns to showers, laundry, and company. It is not the same problem as a weekend Airbnb; hosts can see <a href='/septic-for-landlords-and-short-term-rentals/'>landlords and short-term rentals</a>.</p>"
+ "<h2>Should I pump before I leave or when I get back?</h2>"
+ "<p>If a pump-out is already due, have it done before you lock up, so the tank is not sitting full through the off months and you are not hunting for a truck the afternoon you land. If you ran out of time in the spring, schedule service as soon as you return and before you fill the house with several days of water use. Residential pumping starts at $399.99 (standard 1–3 bed). Call <a href='tel:"+TEL+"'>"+PHONE+"</a> or <a href='"+BOOK+"' rel='noopener' target='_blank'>request a routine visit on ServiceM8</a> ahead of your flight when you can.</p>"
+ "<h2>What is risky about coming back to a house that sat empty?</h2>"
+ "<p>The tank may still be holding sludge from last season. A week of catching-up laundry and long showers can push that load toward the drain field. If you have no record of the last pump-out, treat the system as unknown: an inspection with pump-out is $549.99. If the lid is buried after a summer of grass growth, locating and digging is $100, plus $50 for each additional hour.</p>"
+ "<h2>How do I plan around a short stay?</h2>"
+ "<p>Book the visit before you arrive, leave a gate code or a neighbor who can meet the truck, and consider a riser ($299.99 each) if every visit starts with a shovel. A <a href='/septic-maintenance-checklist/'>seasonal checklist</a> can sit on the fridge for the next departure. If you return to a backup, skip the form and call; after-hours pumping is $599.99.</p>"
+ "<h2>Does a high water table change the off-season plan?</h2>"
+ "<p>If you leave at the start of the rainy season and the tank is already due, pump before you go. Sandy soil and a high water table are harder on a drain field when the tank is full and storms pass over an empty house you cannot watch. That is timing, not a different kind of tank. For storm-specific steps, use <a href='/hurricane-and-flood-septic-prep/'>hurricane and flood septic prep</a>.</p>",
+ SN_FAQ, "Snowbird and seasonal septic")
+
 page("/how-often-to-pump-septic-tank/","How Often Should You Pump Your Septic Tank? | Express Septic","How often to pump a septic tank: EPA says every 3-5 years for most homes. See our pumping frequency chart by tank size and household size.","How Often Should You Pump Your Septic Tank?",
  "<p>The U.S. EPA recommends that most household septic tanks be pumped every 3 to 5 years, and that systems be inspected by a professional at least every 3 years. Your exact schedule depends on tank size, how many people live in the home and how much water you use.</p>"
  "<h2>Septic Pumping Frequency Chart</h2><p>Estimated years between pumpings, based on a widely published university extension estimate. A general guide only; an inspection tells you what your tank actually needs.</p>"+"<div class='tw'><table><tr><th>Tank size</th><th>1 person</th><th>2 people</th><th>3 people</th><th>4 people</th><th>5 people</th><th>6 people</th></tr><tr><td>500 gal</td><td>5.8 yrs</td><td>2.6 yrs</td><td>1.5 yrs</td><td>1.0 yrs</td><td>0.7 yrs</td><td>0.4 yrs</td></tr><tr><td>750 gal</td><td>9.1 yrs</td><td>4.2 yrs</td><td>2.6 yrs</td><td>1.8 yrs</td><td>1.3 yrs</td><td>1.0 yrs</td></tr><tr><td>1,000 gal</td><td>12.4 yrs</td><td>5.9 yrs</td><td>3.7 yrs</td><td>2.6 yrs</td><td>2.0 yrs</td><td>1.5 yrs</td></tr><tr><td>1,250 gal</td><td>15.6 yrs</td><td>7.5 yrs</td><td>4.8 yrs</td><td>3.4 yrs</td><td>2.6 yrs</td><td>2.0 yrs</td></tr><tr><td>1,500 gal</td><td>18.9 yrs</td><td>9.1 yrs</td><td>5.9 yrs</td><td>4.2 yrs</td><td>3.3 yrs</td><td>2.6 yrs</td></tr></table></div>"+
@@ -782,5 +1064,18 @@ f"- [Commercial septic tank pumping]({BASE}/commercial-septic-tank-pumping/): ca
 "- If we commit to a same-day pump-out, we keep working into the night until every scheduled job is done.",
 "- We pump both the inlet and the outlet compartments. Some companies only pump the inlet.",
 "- We clean your filter at no charge on pump-outs and show you how to keep it clean.","",
-"## More",f"- [Completed jobs]({BASE}/completed-jobs/)",f"- [FAQ]({BASE}/faq/)",f"- [Septic filter care]({BASE}/septic-filter-care/): If a tank has an effluent filter, it should be checked and cleaned at every pump-out and whenever drains slow. Express cleans the filter at no charge on pump-outs and can show you how to keep it clean. A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house.",f"- [Why good bacteria protect your septic tank and drain field]({BASE}/septic-bacteria-drain-field/): Anaerobic bacteria in the tank break down solids and form sludge and scum layers. Aerobic bacteria and the biomat in drain-field soil treat effluent before it reaches groundwater. That matters in Southwest Florida's sandy soils and high water table. A healthy system normally gets the bacteria it needs from household waste; additives do not replace pumping. Express cleans the effluent filter at no charge on pump-outs.",f"- [How often to pump]({BASE}/how-often-to-pump-septic-tank/)",f"- [About]({BASE}/about/)",""]
+"## More",f"- [Completed jobs]({BASE}/completed-jobs/)",f"- [FAQ]({BASE}/faq/)",f"- [Septic filter care]({BASE}/septic-filter-care/): If a tank has an effluent filter, it should be checked and cleaned at every pump-out and whenever drains slow. Express cleans the filter at no charge on pump-outs and can show you how to keep it clean. A dirty filter can cause backups or slow drains, and wastewater can be pushed back into the house.",f"- [Why good bacteria protect your septic tank and drain field]({BASE}/septic-bacteria-drain-field/): Anaerobic bacteria in the tank break down solids and form sludge and scum layers. Aerobic bacteria and the biomat in drain-field soil treat effluent before it reaches groundwater. That matters in Southwest Florida's sandy soils and high water table. A healthy system normally gets the bacteria it needs from household waste; additives do not replace pumping. Express cleans the effluent filter at no charge on pump-outs.",f"- [How often to pump]({BASE}/how-often-to-pump-septic-tank/)",
+f"- [First time with a septic system]({BASE}/first-time-septic-owner/): complete guide for Southwest Florida homeowners new to septic tanks.",
+f"- [Septic guide for Realtors]({BASE}/septic-guide-for-realtors/)",
+f"- [Buying or selling a home with a septic tank]({BASE}/buying-or-selling-a-home-with-septic/)",
+f"- [Septic service for builders and contractors]({BASE}/septic-service-for-builders-and-contractors/)",
+f"- [Septic service for property managers and HOAs]({BASE}/septic-for-property-managers-and-hoas/)",
+f"- [Septic care for landlords and Airbnb hosts]({BASE}/septic-for-landlords-and-short-term-rentals/)",
+f"- [Southwest Florida septic maintenance checklist]({BASE}/septic-maintenance-checklist/)",
+f"- [Drain field not draining]({BASE}/drain-field-not-draining/)",
+f"- [Emergency and after-hours septic backup]({BASE}/emergency-septic-backup/): after-hours pumping is $599.99. Call (239) 451-3261. Do not use the online booking form during a backup.",
+f"- [Commercial septic pumping for churches, schools, and RV parks]({BASE}/commercial-septic-churches-schools-rv-parks/): quoted for your tank and use. The residential starting price of $399.99 does not automatically apply to large commercial tanks.",
+f"- [Hurricane and flood septic prep]({BASE}/hurricane-and-flood-septic-prep/)",
+f"- [Snowbird and seasonal septic care]({BASE}/snowbird-seasonal-septic/)",
+f"- [About]({BASE}/about/)",""]
 open("llms.txt","w").write("\n".join(LL))
