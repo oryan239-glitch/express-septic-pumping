@@ -7,13 +7,13 @@ def plain(s):
   return re.sub(r'<[^>]+>','',s)
 def crumbs_ld(items):
   return {'@context':'https://schema.org','@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':i,'name':n,'item':u} for i,(n,u) in enumerate(items,1)]}
-def crumbs_html(items):
+def crumbs_html(items, aria="Breadcrumb"):
   out=[]
   for i,(name,url) in enumerate(items):
     safe=htmllib.escape(name)
     if i==len(items)-1: out.append(f'<li aria-current="page"><span>{safe}</span></li>')
     else: out.append(f'<li><a href="{url}">{safe}</a></li>')
-  return '<nav class="crumbs" aria-label="Breadcrumb"><ol>'+''.join(out)+'</ol></nav>'
+  return '<nav class="crumbs" aria-label="'+htmllib.escape(aria)+'"><ol>'+''.join(out)+'</ol></nav>'
 BASE="https://expresssepticpumping.com"
 NAME="Express Septic Tank Pumping"; PHONE="(239) 451-3261"; TEL="+12394513261"
 BOOK="https://book.servicem8.com/request_booking?uuid=019fca12-b6bf-721c-8a2b-41d89e1a1b5b"
@@ -209,31 +209,126 @@ ROBOTS={}
 LICENSE_URL="https://www.myfloridalicense.com/portalsearches/VerifyLicensee/Results?LicNbr=CFC020332&amp;SearchType=SearchByLicenseNumber"
 LICENSE_BODY='Work performed under Florida Certified Plumbing Contractor Raymond F. Dibble, License <a href="'+LICENSE_URL+'" rel="noopener">#CFC020332</a>, licensed since 1981 (45+ years).'
 LICENSE_FOOT='Work performed under FL Certified Plumbing Contractor Raymond F. Dibble, License <a href="'+LICENSE_URL+'" rel="noopener">#CFC020332</a>, licensed since 1981.'
+# Spanish / English URL pairs for hreflang, language switch, and x-default (English).
+ES_PAIRS={
+  "/":"/es/",
+  "/residential-septic-tank-pumping/":"/es/bombeo-residencial-de-tanque-septico/",
+  "/emergency-septic-backup/":"/es/emergencia-tanque-septico/",
+  "/septic-inspections/":"/es/inspeccion-con-bombeo-de-tanque-septico/",
+  "/septic-tank-riser-installation/":"/es/extensiones-riser-tanque-septico/",
+  "/cant-find-septic-tank-lid/":"/es/localizar-tapa-tanque-septico/",
+  "/grease-trap-pumping/":"/es/bombeo-trampa-de-grasa/",
+  "/drain-field-replacement/":"/es/reemplazo-campo-de-drenaje/",
+  "/septic-filter-care/":"/es/cuidado-filtro-septico/",
+  "/first-time-septic-owner/":"/es/guia-primeros-duenos-tanque-septico/",
+}
+EN_PAIRS={v:k for k,v in ES_PAIRS.items()}
+ES_NAVITEMS=[
+  ("/es/","Inicio"),
+  ("/es/bombeo-residencial-de-tanque-septico/","Bombeo"),
+  ("/es/emergencia-tanque-septico/","Emergencias"),
+  ("/es/bombeo-trampa-de-grasa/","Trampas de grasa"),
+  ("/es/reemplazo-campo-de-drenaje/","Campo de drenaje"),
+  ("/es/cuidado-filtro-septico/","Filtro"),
+  ("/es/guia-primeros-duenos-tanque-septico/","Guía"),
+]
+NAVL_ES="".join(f'<a href="{h}">{t}</a>' for h,t in ES_NAVITEMS)
+NAV_ES=(
+  '<a href="/es/bombeo-residencial-de-tanque-septico/">Bombeo residencial</a>'
+  '<a href="/es/emergencia-tanque-septico/">Emergencias y fuera de horario</a>'
+  '<a href="/es/inspeccion-con-bombeo-de-tanque-septico/">Inspección con bombeo</a>'
+  '<a href="/es/extensiones-riser-tanque-septico/">Extensiones (risers)</a>'
+  '<a href="/es/localizar-tapa-tanque-septico/">Localizar la tapa</a>'
+  '<a href="/es/bombeo-trampa-de-grasa/">Trampas e interceptores de grasa</a>'
+  '<a href="/es/reemplazo-campo-de-drenaje/">Campo de drenaje</a>'
+  '<a href="/es/cuidado-filtro-septico/">Cuidado del filtro</a>'
+  '<a href="/es/guia-primeros-duenos-tanque-septico/">Guía para dueños nuevos</a>'
+)
+CTA_ES=f'<div class="cta"><a class="btn primary" href="tel:{TEL}">Llamar {PHONE}</a><a class="btn ghost" href="/es/#reservar">Solicitar servicio de rutina</a></div>'
+AVAIL_ES="Si hay un retorno de aguas residuales, llame de día o de noche. Para un bombeo programado, pregunte si hay disponibilidad el mismo día."
+REV_ES=f'<section class="band reviews"><div class="wrap revrow"><div><p class="eyebrow">Reseñas</p><h2>Lo que dicen los clientes en Google</h2><p>Las reseñas están en nuestro perfil de Google (la mayoría están en inglés).</p></div><div class="revlinks"><a class="btn dark" href="{REVIEWS_READ}" rel="noopener">Leer reseñas en Google</a><a class="txtlink" href="{REVIEW}" rel="noopener">¿Trabajó con nosotros? Deje una reseña</a></div></div></section>'
+LICENSE_FOOT_ES='Trabajo realizado bajo FL Certified Plumbing Contractor Raymond F. Dibble, License <a href="'+LICENSE_URL+'" rel="noopener">#CFC020332</a>, con licencia desde 1981.'
 def page(path,title,desc,h1,body,extra=None,hero=None,lead="",trail=None,canonical=None):
-  foot="".join(f'<a href="/{slug(c)}/">{c}</a>' for c in CITIES_ALL[:12])+'<a href="/service-area/">All areas</a>'
+  is_es=path.startswith("/es/")
+  html_lang="es" if is_es else "en"
+  en_url=es_url=""
+  hreflang_html=""
+  switch=""
+  if path in ES_PAIRS:
+    en_url=BASE+path; es_url=BASE+ES_PAIRS[path]
+  elif path in EN_PAIRS:
+    en_url=BASE+EN_PAIRS[path]; es_url=BASE+path
+  if en_url:
+    hreflang_html=(f'<link rel="alternate" hreflang="en" href="{en_url}">'
+                   f'<link rel="alternate" hreflang="es" href="{es_url}">'
+                   f'<link rel="alternate" hreflang="x-default" href="{en_url}">')
+    if not is_es:
+      switch=f'<a class="langsw" href="{ES_PAIRS[path]}" lang="es" hreflang="es">Español</a>'
+    else:
+      switch=f'<a class="langsw" href="{EN_PAIRS[path]}" lang="en" hreflang="en">English</a>'
+  if is_es:
+    foot="".join(f'<a href="/{slug(c)}/">{c}</a>' for c in CITIES_ALL[:12])+'<a href="/service-area/">Todas las áreas (en inglés)</a>'
+    navl,cta,avail,rev,nav=NAVL_ES,CTA_ES,AVAIL_ES,REV_ES,NAV_ES
+    logo_href="/es/"; logo_aria=NAME+" inicio"
+    skip="Saltar al contenido"; menu_lbl="Abrir menú"; nav_aria="Principal"; mob_aria="Móvil"; call_lbl="Llamar"
+    closer_h2="Hable con Express sobre su tanque"; contact_aria="Contacto rápido"; book_mbar="Reservar"
+    lic_foot=LICENSE_FOOT_ES
+    hours_p="Abierto las 24 horas, los 7 días de la semana."
+    tag_p="Empresa de dueño operador. Con licencia y seguro. Vamos a su casa o negocio."
+    fh_svc,fh_areas,fh_info="Servicios","Áreas","Información"
+    info_links=('<a href="/es/">Inicio</a>'
+      '<a href="/es/bombeo-residencial-de-tanque-septico/">Bombeo residencial</a>'
+      '<a href="/es/emergencia-tanque-septico/">Emergencias</a>'
+      '<a href="/es/inspeccion-con-bombeo-de-tanque-septico/">Inspección con bombeo</a>'
+      '<a href="/es/extensiones-riser-tanque-septico/">Extensiones (risers)</a>'
+      '<a href="/es/localizar-tapa-tanque-septico/">Localizar la tapa</a>'
+      '<a href="/es/bombeo-trampa-de-grasa/">Trampas de grasa</a>'
+      '<a href="/es/reemplazo-campo-de-drenaje/">Campo de drenaje</a>'
+      '<a href="/es/cuidado-filtro-septico/">Cuidado del filtro</a>'
+      '<a href="/es/guia-primeros-duenos-tanque-septico/">Guía para dueños nuevos</a>'
+      '<a href="/privacy/">Privacidad (en inglés)</a>'
+      '<a href="/terms/">Términos (en inglés)</a>'
+      '<a href="/contact/">Contacto (en inglés)</a>')
+    crumb_aria="Ruta de navegación"
+    mbar_book_href="/es/#reservar"
+  else:
+    foot="".join(f'<a href="/{slug(c)}/">{c}</a>' for c in CITIES_ALL[:12])+'<a href="/service-area/">All areas</a>'
+    navl,cta,avail,rev,nav=NAVL,CTA,AVAIL,REV,NAV
+    logo_href="/"; logo_aria=NAME+" home"
+    skip="Skip to content"; menu_lbl="Open menu"; nav_aria="Primary"; mob_aria="Mobile"; call_lbl="Call"
+    closer_h2="Talk to Express about your tank"; contact_aria="Quick contact"; book_mbar="Book"
+    lic_foot=LICENSE_FOOT
+    hours_p="Open 24 hours, 7 days a week."
+    tag_p="Owner-operated. Licensed &amp; insured. We come to you."
+    fh_svc,fh_areas,fh_info="Services","Areas","Info"
+    info_links=('<a href="/">Home</a><a href="/how-it-works/">How it works</a><a href="/septic-system-maintenance/">Septic maintenance</a><a href="/septic-filter-care/">Filter care</a><a href="/septic-filter-cleaning-service-areas/">Filter care service areas</a><a href="/why-we-pump-both-tanks-service-areas/">Why we pump both tanks</a><a href="/drain-field-dos-and-donts-service-areas/">Drain field do\'s and don\'ts</a><a href="/septic-bacteria-drain-field/">Good bacteria</a><a href="/first-time-septic-owner/">First-time septic guide</a><a href="/septic-maintenance-checklist/">Maintenance checklist</a><a href="/how-often-to-pump-septic-tank/">How often to pump</a><a href="/emergency-septic-backup/">Emergency backup</a><a href="/hurricane-and-flood-septic-prep/">Hurricane and flood prep</a><a href="/sewage-smell-in-yard-or-house/">Sewage smell</a><a href="/cant-find-septic-tank-lid/">Can\'t find the lid</a><a href="/rainy-season-septic/">Rainy season</a><a href="/southwest-florida-septic-cost-guide/">Cost guide</a><a href="/septic-myths/">Septic myths</a><a href="/grease-trap-pumping-service-areas/">Grease trap service areas</a><a href="/completed-jobs/">Completed jobs</a><a href="/about/">About</a><a href="/faq/">FAQ</a><a href="/contact/">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a>')
+    crumb_aria="Breadcrumb"
+    mbar_book_href="/contact/#book"
   H1A=' data-sth-field="headline"' if path=="/" else ""
   if not hero: body=f'<div class="wrap prose">{body}</div>'
-  crumb=(crumbs_html(trail) if trail else "")
+  crumb=(crumbs_html(trail, crumb_aria) if trail else "")
   canon=canonical or (BASE+path)
   et,ed,eh=htmllib.escape(title,True),htmllib.escape(desc,True),htmllib.escape(h1)
-  top=hero if hero else f'<section class="phead"><div class="wrap">{crumb}<p class="eyebrow">Express Septic Tank Pumping</p><h1>{eh}</h1>{lead}{CTA}</div></section>'
+  top=hero if hero else f'<section class="phead"><div class="wrap">{crumb}<p class="eyebrow">Express Septic Tank Pumping</p><h1>{eh}</h1>{lead}{cta}</div></section>'
   if hero: top=top.replace("<h1>",f"<h1{H1A}>",1)
-  doc=f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  menu_switch=(f'<a href="{ES_PAIRS[path]}" lang="es" hreflang="es">Español</a>' if (path in ES_PAIRS and not is_es) else (f'<a href="{EN_PAIRS[path]}" lang="en" hreflang="en">English</a>' if (path in EN_PAIRS and is_es) else ""))
+  doc=f'''<!doctype html><html lang="{html_lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ESN48M0VEZ"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-ESN48M0VEZ');</script>
-<title>{et}</title><meta name="description" content="{ed}"><link rel="canonical" href="{canon}">{ROBOTS.get(path,"")}<meta name="theme-color" content="#0f1b2d">
+<title>{et}</title><meta name="description" content="{ed}"><link rel="canonical" href="{canon}">{hreflang_html}{ROBOTS.get(path,"")}<meta name="theme-color" content="#0f1b2d">
 <meta property="og:title" content="{et}"><meta property="og:description" content="{ed}"><meta property="og:url" content="{BASE}{path}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}/assets/img/truck-wide-1536.webp">
 {'<link rel="preload" as="image" href="/assets/img/truck-wide-1024.webp" imagesrcset="/assets/img/truck-wide-640.webp 640w, /assets/img/truck-wide-1024.webp 1024w, /assets/img/truck-wide-1536.webp 1536w" imagesizes="100vw">' if hero else ''}
 <link rel="stylesheet" href="/styles.css">{schema(extra)}<script src="/site.js" defer></script></head><body>
-<a class="skip" href="#main">Skip to content</a>
-<header class="top"><div class="wrap bar"><a class="logo" href="/" aria-label="{NAME} home"><span class="mark">EXPRESS</span><span class="sub">Septic Tank Pumping</span></a>
-<nav aria-label="Primary">{NAVL}</nav><a class="hcall" href="tel:{TEL}"><span class="lbl">Call</span> {PHONE}</a>
-<details class="menu"><summary aria-label="Open menu">Menu</summary><nav aria-label="Mobile">{NAVL}<a href="/contact/">Contact</a><a href="tel:{TEL}">Call {PHONE}</a></nav></details></div></header>
-<main id="main">{top}<div class="body">{body}</div>{REV}<section class="band closer"><div class="wrap"><h2>Talk to Express about your tank</h2><p>{AVAIL}</p>{CTA}</div></section></main>
-<footer id="contact" class="foot"><div class="wrap fgrid"><div><p class="mark">EXPRESS</p><p>{NAME} LLC<br>23357 Olde Meadowbrook Circle, Estero, FL 34134<br><a href="tel:{TEL}">{PHONE}</a><br><a data-sth-field="email" href="{"mailto:"+EMAIL if EMAIL else "/contact/"}">{EMAIL or "Send a request"}</a></p><p>Open 24 hours, 7 days a week.</p><p>Owner-operated. Licensed &amp; insured. We come to you.</p><p class="dot">USDOT 6673233</p><p class="license-foot">{LICENSE_FOOT}</p></div>
-<div><p class="fh">Services</p>{NAV}</div><div><p class="fh">Areas</p>{foot}</div><div><p class="fh">Info</p><a href="/">Home</a><a href="/how-it-works/">How it works</a><a href="/septic-system-maintenance/">Septic maintenance</a><a href="/septic-filter-care/">Filter care</a><a href="/septic-filter-cleaning-service-areas/">Filter care service areas</a><a href="/why-we-pump-both-tanks-service-areas/">Why we pump both tanks</a><a href="/drain-field-dos-and-donts-service-areas/">Drain field do's and don'ts</a><a href="/septic-bacteria-drain-field/">Good bacteria</a><a href="/first-time-septic-owner/">First-time septic guide</a><a href="/septic-maintenance-checklist/">Maintenance checklist</a><a href="/how-often-to-pump-septic-tank/">How often to pump</a><a href="/emergency-septic-backup/">Emergency backup</a><a href="/hurricane-and-flood-septic-prep/">Hurricane and flood prep</a><a href="/sewage-smell-in-yard-or-house/">Sewage smell</a><a href="/cant-find-septic-tank-lid/">Can't find the lid</a><a href="/rainy-season-septic/">Rainy season</a><a href="/southwest-florida-septic-cost-guide/">Cost guide</a><a href="/septic-myths/">Septic myths</a><a href="/grease-trap-pumping-service-areas/">Grease trap service areas</a><a href="/completed-jobs/">Completed jobs</a><a href="/about/">About</a><a href="/faq/">FAQ</a><a href="/contact/">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></div></footer>
-<div class="mbar" role="region" aria-label="Quick contact"><a class="btn primary" href="tel:{TEL}">Call · {PHONE}</a><a class="btn ghost" href="/contact/#book">Book</a></div></body></html>'''
+<a class="skip" href="#main">{skip}</a>
+<header class="top"><div class="wrap bar"><a class="logo" href="{logo_href}" aria-label="{logo_aria}"><span class="mark">EXPRESS</span><span class="sub">Septic Tank Pumping</span></a>
+<nav aria-label="{nav_aria}">{navl}</nav>{switch}<a class="hcall" href="tel:{TEL}"><span class="lbl">{call_lbl}</span> {PHONE}</a>
+<details class="menu"><summary aria-label="{menu_lbl}">Menu</summary><nav aria-label="{mob_aria}">{navl}{menu_switch}<a href="{'/es/#reservar' if is_es else '/contact/'}">{'Reservar' if is_es else 'Contact'}</a><a href="tel:{TEL}">{call_lbl} {PHONE}</a></nav></details></div></header>
+<main id="main">{top}<div class="body">{body}</div>{rev}<section class="band closer"><div class="wrap"><h2>{closer_h2}</h2><p>{avail}</p>{cta}</div></section></main>
+<footer id="contact" class="foot"><div class="wrap fgrid"><div><p class="mark">EXPRESS</p><p>{NAME} LLC<br>23357 Olde Meadowbrook Circle, Estero, FL 34134<br><a href="tel:{TEL}">{PHONE}</a><br><a data-sth-field="email" href="{"mailto:"+EMAIL if EMAIL else "/contact/"}">{EMAIL or ("Enviar una solicitud" if is_es else "Send a request")}</a></p><p>{hours_p}</p><p>{tag_p}</p><p class="dot">USDOT 6673233</p><p class="license-foot">{lic_foot}</p></div>
+<div><p class="fh">{fh_svc}</p>{nav}</div><div><p class="fh">{fh_areas}</p>{foot}</div><div><p class="fh">{fh_info}</p>{info_links}</div></div></footer>
+<div class="mbar" role="region" aria-label="{contact_aria}"><a class="btn primary" href="tel:{TEL}">{call_lbl} · {PHONE}</a><a class="btn ghost" href="{mbar_book_href}">{book_mbar}</a></div></body></html>'''
   doc=doc.replace("<div class=\"body\"></div>","")
   if 'id="book"' in body: doc=doc.replace('href="/contact/#book"','href="#book"')
+  if 'id="reservar"' in body: doc=doc.replace('href="/es/#reservar"','href="#reservar"')
   pre="../"*(path.count("/")-1) or "./"
   doc=doc.replace('href="/','href="'+pre).replace('src="/','src="'+pre).replace(', /assets',', '+pre+'assets').replace('srcset="/','srcset="'+pre).replace("href='/","href='"+pre).replace('imagesrcset="'+pre,'imagesrcset="'+pre)
   d="."+path; os.makedirs(d,exist_ok=True); open(d+"index.html","w").write(doc); PAGES.append(path)
@@ -4035,6 +4130,292 @@ page("/drain-field-dos-and-donts-service-areas/",
  [faq_ld(DDHUB_FAQ), crumbs_ld([("Home",BASE+"/"),("Drain field do's and don'ts",BASE+"/drain-field-dos-and-donts-service-areas/")])],
  trail=[("Home","/"),("Drain field do's and don'ts","/drain-field-dos-and-donts-service-areas/")])
 
+
+# --- Spanish pages, group 1 ---
+def es_page(path, title, desc, h1, body, faq, crumb):
+  p=path if path.endswith("/") else path+"/"
+  page(p, title, desc, h1, body+"<h2>"+crumb+" — preguntas frecuentes</h2>"+faq_html(faq),
+    [faq_ld(faq), crumbs_ld([("Inicio",BASE+"/es/"),(crumb,BASE+p)])],
+    trail=[("Inicio","/es/"),(crumb,p)])
+
+ES_HOME_FAQ=[
+ ("¿Hablan español?","Sí. Hablamos español. Alguien puede atender su llamada en español al (239) 451-3261."),
+ ("¿Cuánto cuesta el bombeo residencial?","El vaciado de un tanque residencial típico de una a tres recámaras parte de $399.99, confirmado al llamar. Si la visita es de madrugada o de fin de semana por un retorno, el precio es $599.99."),
+ ("¿Cómo pido una cita de rutina?","Puede llamar al (239) 451-3261, enviar un mensaje de texto con la palabra BOOK a ese mismo número, o llenar una solicitud en ServiceM8. Nosotros le confirmamos la hora; no queda agendada hasta que confirmemos."),
+ ("¿En qué áreas trabajan?","Atendemos el suroeste de Florida: condados de Lee, Collier y Charlotte, y también LaBelle en el condado de Hendry. Nuestra oficina está en 23357 Olde Meadowbrook Circle, Estero, FL 34134."),
+]
+page("/es/",
+ "Bombeo de tanque séptico en el suroeste de Florida | Express Septic",
+ "Hablamos español. Bombeo de tanque séptico en el suroeste de Florida desde $399.99. Emergencias las 24 horas. Llame al (239) 451-3261 o envíe BOOK por mensaje de texto.",
+ "Bombeo de tanque séptico en el suroeste de Florida",
+ "<p><strong>Hablamos español.</strong> Express Septic Tank Pumping es una empresa de dueño operador en Estero que bombea tanques sépticos residenciales en el suroeste de Florida desde $399.99, atiende emergencias las 24 horas los 7 días de la semana, y también bombea trampas e interceptores de grasa de restaurantes. El precio se confirma cuando llama al <a href='tel:"+TEL+"'>"+PHONE+"</a>. Para un servicio programado puede enviar la palabra <strong>BOOK</strong> por mensaje de texto a ese mismo número, o <a href='"+BOOK+"' rel='noopener' target='_blank'>abrir una solicitud en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a>.</p>"
+ "<h2>¿Qué servicios puede pedir en español?</h2>"
+ "<p>Estas páginas explican, en español, los servicios más comunes: <a href='/es/bombeo-residencial-de-tanque-septico/'>bombeo residencial</a>, <a href='/es/emergencia-tanque-septico/'>emergencias y bombeo fuera de horario</a>, <a href='/es/inspeccion-con-bombeo-de-tanque-septico/'>inspección con bombeo</a> al comprar o vender una casa, <a href='/es/extensiones-riser-tanque-septico/'>extensiones (risers)</a> para dejar la tapa al nivel del suelo, <a href='/es/localizar-tapa-tanque-septico/'>localizar y excavar una tapa enterrada</a>, <a href='/es/bombeo-trampa-de-grasa/'>trampas e interceptores de grasa</a> para cocinas de restaurante, <a href='/es/reemplazo-campo-de-drenaje/'>trabajo en el campo de drenaje</a>, y el <a href='/es/cuidado-filtro-septico/'>cuidado del filtro de efluente</a>. Si acaba de mudarse a una casa con tanque, empiece por la <a href='/es/guia-primeros-duenos-tanque-septico/'>guía para dueños nuevos</a>.</p>"
+ "<h2>¿Cuánto cuesta el bombeo y qué más está publicado?</h2>"
+ "<p>El vaciado de un tanque residencial típico de una a tres recámaras parte de $399.99, y se lo confirmamos al teléfono. Lo que mueve esa cifra es el tamaño, el acceso y si hay que buscar o abrir una tapa que no se ve. Buscar y abrir una tapa bajo tierra es $100 y, si la búsqueda se alarga, $50 por cada hora de más. Si ya hay un retorno, el servicio de madrugada o de fin de semana sale $599.99. Cuando se compra o se vende una casa, la revisión del sistema con vaciado cuesta $549.99. Subir la tapa al nivel del patio con una extensión de 6 pulgadas es $299.99 por cada una. En una cocina, el vaciado de una trampa o un interceptor de 1,000 galones es $695; si el equipo es de otro tamaño, se cotiza. El trabajo en las líneas del patio no tiene un total publicado: se lo damos cuando ya vimos el sistema.</p>"
+ "<h2>¿Qué hago si el agua se está devolviendo?</h2>"
+ "<p>Cierre las llaves, no siga usando lavadora ni duchas, y marque ahora el <a href='tel:"+TEL+"'>"+PHONE+"</a>. Mientras el agua se devuelve, no deje una solicitud en el formulario: esa vía es para un trabajo planeado. Atendemos de día y de noche. Qué hacer en la vivienda y cómo se cobra esa visita están explicados en la página de <a href='/es/emergencia-tanque-septico/'>emergencias</a>.</p>"
+ "<h2>¿En la visita vacían todo el tanque?</h2>"
+ "<p>Sí. Abrimos el compartimento de entrada y el de salida, no nos quedamos solo con lo que se ve desde una tapa. Si el tanque tiene filtro de efluente, lo dejamos limpio en esa misma visita, sin una línea extra en el cobro, y le podemos indicar cómo mantenerlo. Eso protege el campo de drenaje mejor que sacar únicamente lo que está cerca de la entrada.</p>"
+ "<h2>¿Sirve igual si la casa es de temporada o acaba de cambiar de dueño?</h2>"
+ "<p>Sí. Si la vivienda estuvo cerrada o usted acaba de llegar, conviene confirmar cuándo se vació el tanque antes de llenarlo con varios días de uso seguido. La <a href='/es/guia-primeros-duenos-tanque-septico/'>guía para dueños nuevos</a> recorre esos primeros pasos. Hay más detalle, en inglés, para <a href='/snowbird-seasonal-septic/'>casas de temporada y snowbirds</a>. El camión va a su predio; no es un taller al que haya que llevar nada.</p>"
+ "<h2>¿Cómo se pide un bombeo de rutina?</h2>"
+ "<p>Tres caminos sirven para un trabajo programado. El primero es llamar. El segundo es enviar un mensaje de texto con la palabra BOOK — así, en inglés, porque esa es la palabra que activa la respuesta automática — al (239) 451-3261. El tercero es una solicitud en ServiceM8; nosotros le llamamos o le escribimos para confirmar la hora, y el trabajo no queda agendado hasta esa confirmación. Si prefiere leer más en inglés, use el enlace English en la parte de arriba de esta página.</p>"
+ "<div class='book' id='reservar'><p class='eyebrow'>Llamar o solicitar</p><h2>Elija la vía que le quede mejor</h2>"
+ "<p><a class='btn primary' href='tel:"+TEL+"'>Llamar "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Solicitar en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a></p>"
+ "<p>Para un bombeo programado también puede escribir <strong>BOOK</strong> al (239) 451-3261.</p></div>"
+ "<h2>¿Dónde trabajan?</h2>"
+ "<p>Atendemos hogares y negocios en los condados de Lee, Collier y Charlotte, y en LaBelle, en el condado de Hendry. La oficina está en 23357 Olde Meadowbrook Circle, Estero, FL 34134. Vamos a su casa o negocio; no es un taller al que haya que llevar el tanque. La lista completa de comunidades está, en inglés, en la <a href='/service-area/'>página de área de servicio</a>.</p>"
+ "<h2>Bombeo de tanque séptico en el suroeste de Florida — preguntas frecuentes</h2>"+faq_html(ES_HOME_FAQ)
+ +"<p><a class='btn primary' href='tel:"+TEL+"'>Llamar "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Pedir un bombeo de rutina en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a></p>",
+ [faq_ld(ES_HOME_FAQ), crumbs_ld([("Inicio",BASE+"/es/")])],
+ trail=[("Inicio","/es/")])
+
+ESRES_FAQ=[
+ ("¿Cuánto cuesta el bombeo residencial?","Empieza en $399.99 para un tanque estándar de 1 a 3 recámaras, confirmado al llamar. El precio final depende del tamaño, del acceso y de si hay que localizar o excavar la tapa."),
+ ("¿Bombean los dos compartimentos?","Sí. Vaciamos el compartimento de entrada y el de salida. Si el tanque tiene filtro de efluente, lo limpiamos sin cargo adicional en esa misma visita y le podemos mostrar cómo dejarlo limpio."),
+ ("¿Qué preparo antes de que lleguen?","Si sabe dónde está la tapa, márquela o díganoslo al llamar. Deje espacio para el camión, no estacione sobre el campo de drenaje, meta a las mascotas y abra los portones."),
+ ("¿Sirve este precio para un tanque comercial grande?","No. El precio publicado de $399.99 es para el tanque residencial estándar de 1 a 3 recámaras. El bombeo comercial se cotiza."),
+]
+es_page("/es/bombeo-residencial-de-tanque-septico/",
+ "Bombeo residencial de tanque séptico | Suroeste de Florida | Express Septic",
+ "Bombeo residencial de tanque séptico desde $399.99 en el suroeste de Florida. Hablamos español. Llame al (239) 451-3261 o envíe BOOK por mensaje de texto.",
+ "Bombeo residencial de tanque séptico en el suroeste de Florida",
+ "<p><strong>El bombeo residencial de Express está pensado para dueños de casa: localizamos la tapa, vaciamos el tanque completo y le decimos lo que vimos para que pueda planear con tiempo.</strong> Hablamos español. El servicio empieza en $399.99 para un tanque estándar de 1 a 3 recámaras. Llame al <a href='tel:"+TEL+"'>"+PHONE+"</a> o, para una visita programada, escriba la palabra <strong>BOOK</strong> al mismo número.</p>"
+ "<h2>¿Por qué hay que bombear el tanque de la casa?</h2>"
+ "<p>Con el uso se acumulan lodos y natas. Un bombeo a tiempo ayuda a proteger el campo de drenaje, reduce el riesgo de que el agua se devuelva dentro de la casa y le da más vida útil al sistema. También es un paso prudente antes de comprar o vender, antes de una reunión familiar grande, o después de una temporada de lluvias intensa. Guarde la fecha de cada visita; le sirve para no perder el ritmo y, si algún día vende, para mostrar que el sistema se ha cuidado.</p>"
+ "<h2>¿Qué ocurre el día de la visita?</h2>"
+ "<p>Primero encontramos el tanque y su tapa o punto de acceso. Si la tapa está enterrada, la localizamos y excavamos: $100, más $50 por cada hora adicional. Luego el camión saca el líquido, el lodo y la nata. Vaciamos el compartimento de entrada y el de salida, no solo el primero. Si hay filtro de efluente, lo limpiamos sin un cargo aparte en esa misma visita. Al final le comentamos lo que vimos, por si algo merece atención más adelante. No inventamos un diagnóstico de campo de drenaje en la acera; si hace falta más trabajo, se cotiza después de inspeccionar el sistema.</p>"
+ "<h2>¿Cómo preparo la casa?</h2>"
+ "<p>Si conoce la tapa, márquela o cuéntenoslo cuando llame. Deje el camino despejado para el camión y no deje vehículos sobre el campo de drenaje. Meta a perros y gatos, y deje abiertos los portones que tengamos que cruzar. Si recuerda la fecha del último bombeo, téngala a mano. Eso agiliza la visita; no es un requisito para pedirnos el servicio.</p>"
+ "<h2>¿Qué hace que el precio suba o baje?</h2>"
+ "<p>Cuentan el tamaño del tanque y qué tan lleno está, la distancia que debe alcanzar la manguera, y si hay que buscar o excavar una tapa enterrada. También influye si la visita es fuera de horario: ese bombeo es $599.99. El punto de partida residencial es $399.99; se lo confirmamos por teléfono para su tanque, no con una calculadora en la página.</p>"
+ "<h2>¿De qué tamaño suele ser el tanque de una casa?</h2>"
+ "<p>En muchas viviendas de aquí el tanque anda entre unos 750 y 1,500 galones. Eso no es una medida de su predio: el tamaño real se confirma en la visita o con un permiso o plano, si lo tiene. Un tanque más grande, o uno al que cuesta llegar, puede cambiar el total. El $399.99 publicado es el punto de partida para el tanque residencial típico de una a tres recámaras, no una tarifa plana para cualquier depósito.</p>"
+ "<h2>¿Este precio cubre un tanque comercial grande?</h2>"
+ "<p>No. El $399.99 no se aplica automáticamente a un tanque comercial de gran volumen. Ese trabajo se cotiza. Si lo que necesita es una trampa o un interceptor de una cocina, vea la página de <a href='/es/bombeo-trampa-de-grasa/'>trampas de grasa</a>; ese servicio tiene su propio precio publicado para una unidad de 1,000 galones ($695) y no usa la tarifa residencial.</p>"
+ "<h2>¿Cómo agendo un bombeo de rutina?</h2>"
+ "<p>Llame al <a href='tel:"+TEL+"'>"+PHONE+"</a>, envíe <strong>BOOK</strong> por mensaje de texto a ese número, o <a href='"+BOOK+"' rel='noopener' target='_blank'>mande una solicitud en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a>. Nosotros confirmamos la hora. El camión de 4,200 galones está dividido para no mezclar trabajo séptico y de grasa. Si el tanque es de un negocio grande, pida una cotización; no le aplique automáticamente los $399.99.</p>"
+ "<div class='book' id='reservar'><p><a class='btn primary' href='tel:"+TEL+"'>Llamar "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Solicitar bombeo residencial en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a></p></div>",
+ ESRES_FAQ, "Bombeo residencial")
+
+ESEM_FAQ=[
+ ("¿Cuánto cuesta el bombeo fuera de horario?","El bombeo fuera de horario es $599.99. Llame al (239) 451-3261. No use el formulario de citas mientras el agua se está devolviendo."),
+ ("¿Qué hago hasta que lleguen?","Deje de usar agua, incluso lavadora y duchas. No siga jalando la palanca del inodoro 'a ver si ya destapó'. Si hay aguas residuales en el piso, aleje a niños y mascotas."),
+ ("¿Están abiertos de noche y el fin de semana?","Sí. Express está abierto las 24 horas, los 7 días de la semana, para este tipo de llamada."),
+ ("¿El servicio de madrugada es el mismo trabajo?","El trabajo sigue siendo vaciar el tanque. Fuera de un horario de rutina el precio es $599.99. Un vaciado residencial planeado parte de $399.99 en un tanque típico de una a tres recámaras."),
+]
+es_page("/es/emergencia-tanque-septico/",
+ "Emergencia y bombeo de tanque séptico fuera de horario | Express Septic",
+ "Si el agua se está devolviendo, llame ahora al (239) 451-3261. Hablamos español. Estamos abiertos las 24 horas. El bombeo fuera de horario es $599.99.",
+ "Emergencia y bombeo fuera de horario del tanque séptico",
+ "<p><strong>Si las aguas residuales están subiendo por un drenaje o el inodoro, deje de usar agua y llame ahora al <a href='tel:"+TEL+"'>"+PHONE+"</a>.</strong> Hablamos español y atendemos de día o de noche. No pida una hora en el formulario de citas mientras el retorno está en curso. Express está abierto las 24 horas, los 7 días de la semana. El bombeo fuera de horario es $599.99.</p>"
+ "<h2>¿Qué se considera una emergencia que hay que reportar de inmediato?</h2>"
+ "<p>Agua sucia subiendo en la ducha, el inodoro o un drenaje del piso; aguas residuales en el suelo; o un olor fuerte y repentino junto con muebles que ya no desaguan. Un gorgoteo solo es una advertencia, pero el agua detenida en la casa es una visita de emergencia, no un bombeo 'para la semana que entra'.</p>"
+ "<h2>¿Qué hago en la casa mientras espero?</h2>"
+ "<p>Apague todo lo que agregue agua: lavadora, lavavajillas, máquina de hielo y duchas. Evite jalar la palanca. Aleje a niños y mascotas de cualquier derrame. Si puede, anote si falla un solo mueble o varios, y si el problema empezó después de una lluvia fuerte. Esa información ayuda cuando llama, pero no debe retrasar la llamada.</p>"
+ "<h2>¿Qué hacemos al llegar?</h2>"
+ "<p>Abrimos el tanque y lo bombeamos, incluidos el compartimento de entrada y el de salida, y limpiamos el filtro de efluente sin cargo si el tanque tiene uno. Muchas veces un tanque lleno es lo que está devolviendo el agua, y el bombeo alivia la casa. Si el campo de drenaje no está aceptando agua, le decimos lo que vemos; cualquier trabajo adicional se cotiza después de inspeccionar el sistema, no se inventa en el momento. Hay más contexto, en inglés, en las páginas sobre un <a href='/drain-field-not-draining/'>campo que no drena</a> y un <a href='/septic-backup-after-heavy-rain/'>retorno después de una lluvia fuerte</a>.</p>"
+ "<h2>¿Un drenaje lento es lo mismo que un retorno?</h2>"
+ "<p>No siempre. Un gorgoteo o un lavamanos que tarda puede ser una advertencia, y a veces se puede agendar un vaciado de rutina. El agua detenida en la ducha, el inodoro o un drenaje del piso, o las aguas residuales en el suelo, sí son una llamada de inmediato. Si duda, llame; es mejor describir lo que está viendo que esperar a que suba más. Hay más contexto, en inglés, sobre <a href='/gurgling-and-slow-drains/'>drenajes lentos y tuberías que gorgotean</a>.</p>"
+ "<h2>¿En qué se diferencia el precio fuera de horario?</h2>"
+ "<p>El bombeo fuera de horario es $599.99. El bombeo residencial planeado empieza en $399.99 (tanque estándar de 1 a 3 recámaras). Si tiene un drenaje lento pero no hay retorno, igual puede llamar, o puede pedir una hora de rutina en ServiceM8 cuando ya esté claro que no hay un rebose activo. La palabra que funciona por mensaje de texto para una cita programada es <strong>BOOK</strong>, al (239) 451-3261; no la use en lugar de una llamada si el agua ya se está devolviendo.</p>"
+ "<div class='book' id='reservar'><p><a class='btn primary' href='tel:"+TEL+"'>Llamar ahora "+PHONE+"</a></p><p>Si ya no hay un retorno activo y quiere una visita programada, <a href='"+BOOK+"' rel='noopener' target='_blank'>abra una solicitud en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a>.</p></div>",
+ ESEM_FAQ, "Emergencias")
+
+ESINSP_FAQ=[
+ ("¿Cuánto cuesta la inspección con bombeo?","La inspección con bombeo es $549.99. Llame al (239) 451-3261 para coordinarla o para preguntar por su propiedad."),
+ ("¿Sirve al comprar o vender una casa?","Sí. Es común al comprar o vender, porque da una idea más clara del tanque y de cómo está trabajando el sistema antes del cierre."),
+ ("¿Incluye el bombeo?","Sí. El precio publicado de $549.99 es para la inspección con bombeo, no una cifra aparte inventada para 'solo mirar' el tanque."),
+ ("¿Deciden si el préstamo se aprueba?","No. Express no sustituye la inspección de la vivienda ni decide si un préstamo califica. El prestamista y el tasador deciden lo que el expediente necesita."),
+]
+es_page("/es/inspeccion-con-bombeo-de-tanque-septico/",
+ "Inspección de tanque séptico con bombeo | Express Septic",
+ "Inspección de tanque séptico con bombeo por $549.99 al comprar o vender una casa en el suroeste de Florida. Hablamos español. Llame al (239) 451-3261.",
+ "Inspección de tanque séptico con bombeo",
+ "<p><strong>Una inspección con bombeo revisa el estado del tanque y cómo está trabajando el sistema, y es habitual al comprar o vender una casa en el suroeste de Florida.</strong> Hablamos español. El precio publicado es $549.99. Llame al <a href='tel:"+TEL+"'>"+PHONE+"</a> para hablar de lo que necesita en su propiedad.</p>"
+ "<h2>¿Cuándo conviene una inspección con bombeo?</h2>"
+ "<p>Si está comprando una casa con tanque séptico, la inspección le ayuda a entender lo que está adquiriendo antes del cierre. Si está vendiendo, revisar el sistema con tiempo puede evitar sorpresas a mitad de la transacción. También tiene sentido si ya está notando problemas — drenajes lentos, olores o un patio más húmedo de lo normal — y quiere una visita que no se quede solo en un vistazo superficial.</p>"
+ "<h2>¿Qué incluye el precio de $549.99?</h2>"
+ "<p>El $549.99 corresponde a la inspección con bombeo. Al bombear se puede ver el interior del tanque con más claridad que si solo se abriera la tapa. Si el tanque tiene filtro de efluente, lo limpiamos sin cargo adicional en esa visita, igual que en un bombeo de rutina. No publicamos un inventario inventado de pruebas de laboratorio, permisos o garantías; le decimos lo que vemos en el sistema y, si hace falta más trabajo, se cotiza aparte después de la inspección.</p>"
+ "<h2>¿Este servicio decide un préstamo FHA o VA?</h2>"
+ "<p>No. Express no reemplaza la inspección general de la casa ni decide si un préstamo se aprueba. Los prestamistas y tasadores son quienes determinan lo que pide el expediente. Hay una página en inglés sobre <a href='/fha-va-lender-septic-requirements/'>requisitos de prestamistas FHA y VA</a> si su transacción va por esa vía.</p>"
+ "<h2>¿Cuánto tiempo antes del cierre conviene pedirla?</h2>"
+ "<p>Con la mayor anticipación que pueda. Express no publica un plazo inventado de 'tantos días hábiles' ni garantiza una fecha de cierre. Si ya hay una fecha en el contrato, dígalo al llamar para que busquemos un hueco. Si faltan registros del tanque, esa visita suele ser más útil que esperar a la semana del cierre. Lleve o envíe lo que tenga — una factura vieja, un permiso o una foto del patio — aunque no sea un expediente completo.</p>"
+ "<h2>¿Qué se ve mejor con el tanque ya vacío?</h2>"
+ "<p>Con el interior a la vista se puede apreciar mejor el estado de las paredes y de los compartimentos, y se puede llegar al filtro de efluente si el tanque tiene uno. Eso no convierte la visita en un inventario de laboratorio ni en un informe de tasador. Le decimos lo que vimos. Si hace falta trabajo en el campo de drenaje u otra reparación, esa parte se cotiza después, no se incluye como un paquete oculto dentro del $549.99.</p>"
+ "<h2>¿Cómo se agenda?</h2>"
+ "<p>La vía más directa es llamar al <a href='tel:"+TEL+"'>"+PHONE+"</a> y explicar que necesita una inspección con bombeo, sobre todo si hay una fecha de cierre. Para un horario de rutina también puede enviar la palabra <strong>BOOK</strong> por mensaje de texto al mismo número, o <a href='"+BOOK+"' rel='noopener' target='_blank'>dejar una solicitud en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a>; nosotros confirmamos la cita. Atendemos Fort Myers, Naples y el resto del suroeste de Florida en el que ya trabajamos.</p>"
+ "<div class='book' id='reservar'><p><a class='btn primary' href='tel:"+TEL+"'>Llamar "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Solicitar inspección en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a></p></div>",
+ ESINSP_FAQ, "Inspección con bombeo")
+
+ESRIS_FAQ=[
+ ("¿Pueden instalar la extensión el mismo día que bombean?","Sí. Pídalo al llamar o al solicitar la visita. Durante el bombeo la tapa ya está descubierta, y suele ser el momento más práctico para instalarla."),
+ ("¿Cuántas extensiones necesito?","Depende de cuántas aberturas de acceso tenga su tanque. Muchos tanques tienen más de una. Le diremos lo que vemos en su sistema."),
+ ("¿Cuánto cuesta cada una?","Las extensiones de 6 pulgadas cuestan $299.99 cada una. Confirme el total al llamar, según las aberturas de su tanque."),
+ ("¿Para qué sirve dejar la tapa al nivel del suelo?","En los siguientes bombeos no hay que excavar. Además se ve dónde está el tanque, lo que ayuda a no estacionar encima, y es más fácil llegar al filtro o a una inspección."),
+]
+es_page("/es/extensiones-riser-tanque-septico/",
+ "Extensiones (risers) para tanque séptico | Express Septic",
+ "Extensiones de 6 pulgadas (risers) a $299.99 cada una para dejar la tapa del tanque al nivel del suelo. Hablamos español. Llame al (239) 451-3261.",
+ "Extensiones (risers) para tanque séptico",
+ "<p><strong>Una extensión, o riser, se instala sobre la abertura de acceso del tanque y sube la tapa hasta el nivel del suelo, para que las siguientes visitas no empiecen con pala.</strong> Hablamos español. En el suroeste de Florida muchas tapas quedan bajo tierra o césped. La extensión de 6 pulgadas cuesta $299.99 cada una. Pregunte al <a href='tel:"+TEL+"'>"+PHONE+"</a> cuando pida un bombeo.</p>"
+ "<h2>¿Por qué conviene una extensión en un patio de aquí?</h2>"
+ "<p>Si la tapa está enterrada, cada bombeo empieza por localizarla y excavar. Con la extensión en su lugar, la siguiente visita empieza por levantar la tapa. También se ve dónde está el tanque, así es más fácil no pasar el carro ni equipo pesado por encima, y queda más simple llegar al filtro de efluente o hacer una inspección. No prometemos un número de horas que 'se ahorra' en cada visita; el beneficio práctico es dejar de cavar de nuevo.</p>"
+ "<h2>¿Se puede instalar durante el bombeo?</h2>"
+ "<p>Con frecuencia sí, porque en un bombeo la tapa ya está descubierta. Pídalo cuando llame o cuando solicite la visita, para que el equipo vaya preparado. Cuántas extensiones hacen falta depende de cuántas aberturas de acceso tenga su tanque; muchos tienen más de una. Le decimos lo que vemos, no le vendemos un paquete genérico.</p>"
+ "<h2>¿Cómo se relaciona con localizar una tapa enterrada?</h2>"
+ "<p>Si todavía no sabemos dónde está la tapa, primero hay que encontrarla. Localizar y excavar una tapa enterrada cuesta $100, más $50 por cada hora adicional. Una vez abierta, puede tener sentido dejar la extensión instalada para no repetir esa excavación. Hay más detalle en la página para <a href='/es/localizar-tapa-tanque-septico/'>localizar la tapa del tanque</a>.</p>"
+ "<h2>¿La extensión de 6 pulgadas sirve si la tapa está más honda?</h2>"
+ "<p>El precio publicado de $299.99 es por cada extensión de 6 pulgadas. En la visita vemos la profundidad del acceso y le decimos cuántas hacen falta según las aberturas de su tanque. No publicamos otros tamaños ni un 'kit' genérico en esta página: el total se confirma según lo que hay en el predio. Si todavía ni siquiera aparece la tapa, el primer paso es <a href='/es/localizar-tapa-tanque-septico/'>localizarla</a>.</p>"
+ "<h2>¿Cómo la pido?</h2>"
+ "<p>Mencione las extensiones al llamar al <a href='tel:"+TEL+"'>"+PHONE+"</a>. Para un bombeo programado también puede escribir <strong>BOOK</strong> al mismo número y comentarlo cuando le confirmemos la hora, o <a href='"+BOOK+"' rel='noopener' target='_blank'>enviar la solicitud en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a>. El $299.99 es por cada extensión de 6 pulgadas; el total se confirma según su tanque.</p>"
+ "<div class='book' id='reservar'><p><a class='btn primary' href='tel:"+TEL+"'>Llamar "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Pedir visita con extensión en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a></p></div>",
+ ESRIS_FAQ, "Extensiones (risers)")
+
+ESLID_FAQ=[
+ ("¿Cuánto cuesta localizar y excavar la tapa?","Localizar y excavar una tapa enterrada cuesta $100, más $50 por cada hora adicional. El bombeo residencial, una vez abierto el tanque, empieza en $399.99 para un tanque estándar de 1 a 3 recámaras."),
+ ("¿Puedo cavar yo para encontrarla?","Es mejor que no empiece a cavar al azar. Puede dañar tuberías, la tapa o el tanque. Márquela si ya sabe dónde está, o déjenos buscarla."),
+ ("¿Qué información ayuda a encontrarla más rápido?","Una fecha de bombeo anterior, un plano o permiso, una marca que alguien dejó en el patio, o una descripción de dónde se abrió la última vez. Si no tiene nada de eso, igual podemos ir."),
+ ("¿Conviene dejar una extensión después?","Muchas veces sí, para no volver a excavar en la siguiente visita. Las extensiones de 6 pulgadas cuestan $299.99 cada una. Pregunte mientras la tapa ya está abierta."),
+]
+es_page("/es/localizar-tapa-tanque-septico/",
+ "¿No encuentra la tapa del tanque séptico? | Express Septic",
+ "Localizamos y excavamos tapas de tanque séptico enterradas: $100, más $50 por cada hora adicional. Hablamos español. Llame al (239) 451-3261.",
+ "¿No encuentra la tapa del tanque séptico?",
+ "<p><strong>En muchos patios del suroeste de Florida la tapa del tanque desaparece bajo césped, tierra o una capa de piedra, y hay que localizarla y excavarla antes de poder bombear.</strong> Hablamos español. Ese trabajo de localizar y excavar cuesta $100, más $50 por cada hora adicional. Llame al <a href='tel:"+TEL+"'>"+PHONE+"</a> y cuéntanos lo que sepa del patio; no hace falta que ya tenga la tapa a la vista.</p>"
+ "<h2>¿Por qué se 'pierden' las tapas en los patios de aquí?</h2>"
+ "<p>El césped crece, se rellena tierra después de una obra, y a veces se instalan piedras o adoquines encima de un acceso que nadie volvió a abrir en años. El tanque sigue en el mismo lugar; lo que cambia es lo que hay encima. No inventamos un porcentaje de casas con tapa enterrada. Sí es lo bastante común como para tener un precio publicado para buscarla.</p>"
+ "<h2>¿Qué debo hacer — y qué no — si no la veo?</h2>"
+ "<p>No empiece a cavar en varios puntos del patio por probar suerte. Puede dañar una tubería, la tapa o el tanque. Si alguien ya le indicó el lugar, márquelo o tómeles una foto de referencia. Si no sabe nada, déjenos la búsqueda a nosotros. Evite pasar el carro por una franja que podría ser el campo de drenaje mientras tanto.</p>"
+ "<h2>¿Cuánto cuesta encontrarla y abrirla?</h2>"
+ "<p>Localizar y excavar una tapa enterrada es $100, más $50 por cada hora adicional. Ese cargo va aparte del vaciado. El vaciado residencial parte de $399.99 en un tanque típico de una a tres recámaras, y se confirma al llamar. Si la visita es una emergencia fuera de horario, el bombeo es $599.99. Le decimos lo que vimos en el acceso; no le prometemos un tiempo exacto de excavación en esta página.</p>"
+ "<h2>¿Qué datos nos ayudan a hallarla más rápido?</h2>"
+ "<p>La fecha o la factura de un bombeo anterior, un plano o un permiso, una marca en el césped, o un recuerdo de 'queda hacia la esquina derecha del patio'. Cualquier pista sirve. Si no tiene ninguna, igual podemos ir. Una vez abierta la tapa, pregunte por una <a href='/es/extensiones-riser-tanque-septico/'>extensión (riser)</a> si quiere dejar el acceso al nivel del suelo.</p>"
+ "<h2>¿Qué pasa después de abrirla?</h2>"
+ "<p>Una vez a la vista, se puede vaciar el tanque, revisar el filtro si lo hay, y hablar de dejar una extensión para no repetir la excavación. Nada de eso es obligatorio en la misma visita; le decimos las opciones con el acceso ya abierto. El cargo de localizar y excavar ($100, más $50 por cada hora de más) no se 'desaparece' si luego pide el vaciado: son trabajos distintos, y el vaciado se confirma aparte.</p>"
+ "<h2>¿Cómo pido que la busquen?</h2>"
+ "<p>Llame al <a href='tel:"+TEL+"'>"+PHONE+"</a> y diga que no ve la tapa. Para una visita que no es emergencia, también puede enviar <strong>BOOK</strong> por mensaje de texto al mismo número, o <a href='"+BOOK+"' rel='noopener' target='_blank'>usar ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a> y mencionarlo cuando le confirmemos la hora.</p>"
+ "<div class='book' id='reservar'><p><a class='btn primary' href='tel:"+TEL+"'>Llamar "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Solicitar localización de tapa en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a></p></div>",
+ ESLID_FAQ, "Localizar la tapa")
+
+ESGR_FAQ=[
+ ("¿Cuánto cuesta bombear una trampa o interceptor de 1,000 galones?","$695 para una unidad de 1,000 galones. Otros tamaños se cotizan. Llame al (239) 451-3261."),
+ ("¿Con qué frecuencia hay que bombear un interceptor en el condado de Lee?","Si la cocina descarga a Lee County Utilities, la Ordenanza 14-24 exige que los interceptores se bombeen por completo al menos cada 90 días calendario. Las trampas interiores se limpian al menos una vez por semana, o antes si la grasa y los sólidos superan el 20% del volumen de la unidad. El 20% no se aplica a los interceptores."),
+ ("¿Express entrega manifiestos o es un transportista de grasa con licencia?","No afirmamos que Express entregue manifiestos, que sea un transportista de grasa con licencia, ni que maneje los reportes de cumplimiento. El Estatuto de la Florida 403.0741 exige un manifiesto firmado de residuo de grasa en cada bombeo; ese requisito es de la ley estatal, no una promesa de papelería nuestra."),
+ ("¿También bombean interceptores de aceite o arena?","No. Este servicio es para trampas e interceptores de grasa de restaurantes y cocinas. No trabajamos interceptores de aceite o de arena."),
+]
+es_page("/es/bombeo-trampa-de-grasa/",
+ "Bombeo de trampas e interceptores de grasa | Express Septic",
+ "Bombeo de trampas e interceptores de grasa para restaurantes: $695 por 1,000 galones. Hablamos español. Llame al (239) 451-3261. Otros tamaños se cotizan.",
+ "Bombeo de trampas e interceptores de grasa en el suroeste de Florida",
+ "<p><strong>Express bombea trampas de grasa interiores e interceptores enterrados para restaurantes y cocinas en el suroeste de Florida, de una sola vez o en una ruta recurrente.</strong> Hablamos español. El precio publicado es $695 para una trampa o interceptor de 1,000 galones; otros tamaños se cotizan. Llame al <a href='tel:"+TEL+"'>"+PHONE+"</a>. Este servicio es para equipos de grasa de cocina, no para interceptores de aceite o de arena.</p>"
+ "<h2>¿Bombean interceptores y no solo trampas pequeñas?</h2>"
+ "<p>Sí. Cubrimos interceptores de grasa en el piso y trampas interiores. El camión de 4,200 galones está dividido para trabajo séptico y de grasa, de modo que esos dos contenidos no se mezclan. Podemos armar una ruta que se repita según el intervalo que le pida su servicio de agua, no según un calendario inventado por nosotros.</p>"
+ "<h2>¿Cada cuánto hay que bombear en el condado de Lee?</h2>"
+ "<p>Cuando la cocina descarga a Lee County Utilities, la <a href='https://www.leegov.com/bocc/Ordinances/14-24.pdf' rel='noopener'>Ordenanza 14-24 del Condado de Lee</a> exige que los interceptores se bombeen por completo al menos cada 90 días calendario. Las trampas interiores, bajo esa misma ordenanza, se limpian al menos una vez por semana, o antes si la grasa y los sólidos superan el 20% del volumen de la unidad. El 20% no es una regla para interceptores. Otras utilidades tienen sus propios programas — por ejemplo, intervalos publicados distintos en Collier o en Charlotte — y hay que confirmar el proveedor en la factura en vez de copiar un calendario de otro condado. La lista de páginas por ciudad está, en inglés, en el <a href='/grease-trap-pumping-service-areas/'>índice de trampas de grasa por ciudad</a>.</p>"
+ "<h2>¿Qué dice la ley de la Florida sobre los manifiestos?</h2>"
+ "<p>El Estatuto de la Florida 403.0741 exige un manifiesto firmado de residuo de grasa en cada bombeo y prohíbe devolver el agua gris al interceptor o a la trampa. Esa es la ley estatal. En estas páginas no decimos que Express sea quien emite o conserva esos manifiestos, ni que sea un transportista de grasa con licencia, ni que se encargue de los reportes de cumplimiento ante la utilidad o el condado.</p>"
+ "<h2>¿Debo copiar el calendario de otro condado?</h2>"
+ "<p>No. El intervalo de la Ordenanza 14-24 aplica cuando la cocina descarga a Lee County Utilities. Otras utilidades publican sus propios programas, y hay que leer la factura o confirmar con el proveedor antes de asumir un plazo. Express puede armar una ruta que se repita según el intervalo que a usted le exijan, no según un calendario nuestro inventado. Si su pregunta es sobre un interceptor de aceite o de arena de un taller o un estacionamiento, ese no es nuestro servicio.</p>"
+ "<h2>¿Cuánto cuesta y cómo se agenda una cocina?</h2>"
+ "<p>$695 por una unidad de 1,000 galones. Si el equipo es de otro tamaño, pida cotización. No le aplique el $399.99 del tanque residencial a un interceptor de restaurante. Para coordinar una visita o una ruta, llame al <a href='tel:"+TEL+"'>"+PHONE+"</a>. Si prefiere dejar una solicitud por escrito, <a href='"+BOOK+"' rel='noopener' target='_blank'>use ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a> y anote que se trata de una cocina. La palabra <strong>BOOK</strong> por mensaje de texto al (239) 451-3261 también abre una solicitud de rutina; en un respaldo activo de la cocina, mejor llamar.</p>"
+ "<div class='book' id='reservar'><p><a class='btn primary' href='tel:"+TEL+"'>Llamar "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Solicitar bombeo de grasa en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a></p></div>",
+ ESGR_FAQ, "Trampas de grasa")
+
+ESDF_FAQ=[
+ ("¿Cuánto cuesta reparar o reemplazar un campo de drenaje?","Se cotiza después de inspeccionar el sistema. No publicamos un total inventado. Llame al (239) 451-3261 para coordinar esa visita."),
+ ("¿Express tiene la licencia de contratista?","El trabajo se realiza bajo FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332, con licencia desde 1981. No decimos que Express sea el titular de esa licencia."),
+ ("¿El bombeo de rutina puede evitar un campo dañado?","Un tanque que se bombea a tiempo deja menos sólidos camino al campo, y los hábitos diarios importan. No es una garantía de que un campo ya fallido se recupere solo con un bombeo."),
+ ("¿Qué precio sí está publicado?","El vaciado residencial parte de $399.99 en un tanque típico de una a tres recámaras. El trabajo del campo, si hace falta, se cotiza cuando ya se inspeccionó el sistema."),
+]
+es_page("/es/reemplazo-campo-de-drenaje/",
+ "Reemplazo de campo de drenaje en el suroeste de Florida | Express Septic",
+ "Reemplazo y reparación de campo de drenaje cotizados después de inspeccionar el sistema. Se realiza bajo FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332. Hablamos español.",
+ "Reemplazo de campo de drenaje en el suroeste de Florida",
+ "<p><strong>Express Septic Tank Pumping hace reemplazo de campo de drenaje para casas y negocios en el suroeste de Florida, y el precio se da después de inspeccionar el sistema, no con una cifra inventada en esta página.</strong> Hablamos español. Llame al <a href='tel:"+TEL+"'>"+PHONE+"</a> para coordinar esa visita. El trabajo se realiza bajo FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332, con licencia desde 1981.</p>"
+ "<h2>¿Cuándo se cotiza el trabajo del campo?</h2>"
+ "<p>Después de ver el sistema. Un patio húmedo, el césped demasiado verde sobre las líneas o un retorno que no se alivia solo con bombear el tanque pueden ser señales de que el campo no está aceptando agua, pero no son un diagnóstico por internet. No publicamos plazos, garantías ni un historial de trabajos inventados. Si el campo necesita reparación o reemplazo, le cotizamos lo que vimos.</p>"
+ "<h2>¿Bajo qué licencia se hace este trabajo?</h2>"
+ "<p>El trabajo en el campo de drenaje se realiza bajo FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332, con licencia desde 1981. Esa es la formulación que usamos. No afirmamos que Express sea el titular de la licencia.</p>"
+ "<h2>¿Se puede cuidar el campo antes de que falle?</h2>"
+ "<p>Sí, en parte. Las bacterias del tanque y del suelo tratan lo que sale de la casa; la grasa, las toallitas y los limpiadores fuertes les estorban, y un tanque que no se bombea a tiempo deja pasar más sólidos hacia las líneas. Hay una explicación en inglés sobre <a href='/septic-bacteria-drain-field/'>por qué importan las bacterias</a> y un índice, también en inglés, de <a href='/drain-field-dos-and-donts-service-areas/'>hábitos del campo de drenaje por ciudad</a>. En español, la <a href='/es/guia-primeros-duenos-tanque-septico/'>guía para dueños nuevos</a> resume qué no debe ir al desagüe ni sobre el campo. Si lo que necesita ahora es solo vaciar el tanque, esa visita residencial parte de $399.99 en un tanque típico de una a tres recámaras.</p>"
+ "<h2>¿Un patio húmedo ya significa que hay que reemplazar el campo?</h2>"
+ "<p>No por sí solo. Un césped más verde de lo normal, un rincón que no seca o un olor en el patio son motivos para pedir una visita, no un diagnóstico a distancia. A veces el tanque está lleno y el vaciado alivia la casa. Otras veces el campo ya no está aceptando agua, y entonces sí se habla de reparación o reemplazo, con una cotización después de ver el sistema. No use esta página para decidir un reemplazo por su cuenta.</p>"
+ "<h2>¿Cómo pido que revisen el campo?</h2>"
+ "<p>Llame al <a href='tel:"+TEL+"'>"+PHONE+"</a> y describa lo que está viendo en la casa o en el patio. Si no es una emergencia, también puede enviar <strong>BOOK</strong> por mensaje de texto al mismo número, o <a href='"+BOOK+"' rel='noopener' target='_blank'>dejar una solicitud en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a>, y lo comentamos al confirmar la visita. Un retorno activo se atiende por teléfono, no por el formulario; ese servicio fuera de horario es $599.99.</p>"
+ "<div class='book' id='reservar'><p><a class='btn primary' href='tel:"+TEL+"'>Llamar "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Solicitar una visita en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a></p></div>",
+ ESDF_FAQ, "Campo de drenaje")
+
+ESFIL_FAQ=[
+ ("¿Cada cuánto debo limpiar el filtro de efluente?","Si su tanque tiene filtro, hay que revisarlo y limpiarlo en cada bombeo y cuando los drenajes se pongan lentos. Express puede aconsejarle un ritmo para su sistema. No publicamos un intervalo de meses inventado."),
+ ("¿Dónde está el filtro?","Está en el lado de salida del tanque, bajo la tapa. Una extensión de 6 pulgadas ($299.99 cada una) deja esa tapa al nivel del suelo para no cavar en las siguientes visitas."),
+ ("¿Qué pasa si el filtro está sucio?","Puede causar retornos o drenajes lentos, y el agua residual puede devolverse a la casa. En los bombeos limpiamos el filtro sin cargo y le podemos mostrar cómo mantenerlo limpio."),
+ ("¿Cobran aparte la limpieza del filtro?","No. La limpieza del filtro no es una línea de cobro aparte cuando bombeamos el tanque."),
+]
+es_page("/es/cuidado-filtro-septico/",
+ "Cuidado del filtro de efluente del tanque séptico | Express Septic",
+ "Si su tanque tiene filtro de efluente, se limpia en cada bombeo y cuando los drenajes se ponen lentos, sin cargo adicional en la visita. Hablamos español. Llame al (239) 451-3261.",
+ "Cuidado del filtro de efluente y protección del campo de drenaje",
+ "<p><strong>Si su tanque séptico tiene un filtro de efluente, mantenerlo limpio ayuda a que el agua salga del tanque como debe, y un filtro tapado puede devolver el agua a la casa.</strong> Hablamos español. Lo revisamos y lo limpiamos en cada bombeo, y también cuando los drenajes se ponen lentos. No publicamos un intervalo de meses. Llame al <a href='tel:"+TEL+"'>"+PHONE+"</a> si quiere que le indiquemos un ritmo para su sistema.</p>"
+ "<h2>¿Cuándo hay que limpiar el filtro, si no hay un número de meses?</h2>"
+ "<p>En cada bombeo y cada vez que los drenajes se ralenticen. Esa es la regla que usamos, en lugar de inventar un calendario trimestral o mensual. Un tanque que no se ha abierto en años puede llevar el filtro igual de tiempo sin limpiar. El vaciado residencial parte de $399.99 en un tanque típico de una a tres recámaras, y en esa visita la limpieza del filtro no se cobra aparte.</p>"
+ "<h2>¿Cómo se llega al filtro?</h2>"
+ "<p>Está en el lado de salida del tanque, bajo la tapa de ese compartimento. Si la tapa está enterrada, primero hay que localizarla y excavarla ($100, más $50 por cada hora adicional). Una <a href='/es/extensiones-riser-tanque-septico/'>extensión de 6 pulgadas</a> ($299.99 cada una) deja esa tapa al nivel del suelo, y en las siguientes visitas se llega al filtro sin volver a cavar. En el bombeo podemos mostrarle cómo se ve y cómo dejarlo limpio, para que no dependa solo de nosotros entre una visita y otra.</p>"
+ "<h2>¿Qué puede pasar si el filtro está sucio?</h2>"
+ "<p>El agua no sale bien del tanque. Eso se nota como drenajes lentos o, en un caso más serio, como agua que se devuelve a la casa. No es lo mismo que un campo de drenaje ya fallido, aunque un filtro abandonado no le hace ningún favor a las líneas. Si el campo ya no está aceptando agua, esa conversación es otra y se cotiza después de inspeccionar el sistema; vea la página de <a href='/es/reemplazo-campo-de-drenaje/'>campo de drenaje</a>.</p>"
+ "<h2>¿Qué tiene que ver el filtro con las bacterias del suelo?</h2>"
+ "<p>El filtro retiene sólidos que, de otro modo, saldrían hacia el campo. En el suelo, las bacterias ayudan a tratar el efluente. La grasa, los sólidos de más y los limpiadores fuertes estorban ese proceso. Hay más detalle, en inglés, en la página sobre <a href='/septic-bacteria-drain-field/'>bacterias del tanque y del campo</a>. Las páginas de filtro por ciudad también están en inglés, en el <a href='/septic-filter-cleaning-service-areas/'>índice de cuidado del filtro</a>.</p>"
+ "<h2>¿Puedo limpiarlo yo entre visita y visita?</h2>"
+ "<p>En el bombeo podemos mostrarle cómo se ve el filtro y cómo dejarlo limpio, para que no dependa solo de nosotros si los drenajes se ponen lentos. No publicamos un instructivo genérico en esta página porque cada tapa y cada unidad se ven distinto, y no queremos que alguien force un acceso enterrado. Si no ha abierto esa tapa antes, es más seguro que la primera limpieza sea en una visita nuestra.</p>"
+ "<h2>¿Cómo pido que lo revisen?</h2>"
+ "<p>Pida un bombeo al <a href='tel:"+TEL+"'>"+PHONE+"</a> y mencione el filtro. Para una visita programada puede escribir <strong>BOOK</strong> al mismo número, o <a href='"+BOOK+"' rel='noopener' target='_blank'>llenar la solicitud en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a>. Nosotros confirmamos la hora y, en la visita, lo limpiamos sin una línea extra en el cobro.</p>"
+ "<div class='book' id='reservar'><p><a class='btn primary' href='tel:"+TEL+"'>Llamar "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Solicitar bombeo con limpieza de filtro en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a></p></div>",
+ ESFIL_FAQ, "Cuidado del filtro")
+
+ESFT_FAQ=[
+ ("¿Qué hago primero si acabo de mudarme a una casa con tanque séptico?","Localice el tanque y las tapas si puede, pida los registros de bombeos e inspecciones anteriores, y agende un bombeo si no sabe cuándo se vació por última vez. Una inspección con bombeo es $549.99. Llame al (239) 451-3261."),
+ ("¿Cada cuánto hay que bombear, según la EPA?","La guía SepticSmart de la EPA de EE. UU. indica que la mayoría de los tanques domésticos se bombean cada 3 a 5 años. El tamaño de la casa, el del tanque y el uso de agua pueden adelantar esa visita."),
+ ("¿Qué no debo tirar al inodoro ni al fregadero?","Toallitas, aunque el envoltorio diga que se pueden tirar; grasa y aceite de cocina; mucho cloro o limpiadores fuertes; medicinas; pintura; y productos de higiene femenina, toallas de papel o pañales. El papel higiénico biodegradable, apto para tanque séptico, es una mejor opción cotidiana."),
+ ("¿Qué hago si el agua se está devolviendo?","Cierre las llaves, no siga usando los muebles y marque el (239) 451-3261. No deje una solicitud en el formulario mientras el retorno está en curso. Esa visita cuesta $599.99."),
+]
+es_page("/es/guia-primeros-duenos-tanque-septico/",
+ "Guía para dueños nuevos de un tanque séptico | Express Septic",
+ "Guía para quien acaba de mudarse a una casa con tanque séptico en el suroeste de Florida: cómo funciona el sistema, qué hacer al llegar, qué no tirar al desagüe y cuándo llamar. Hablamos español.",
+ "Guía para dueños nuevos de un tanque séptico",
+ "<p><strong>Si venía de una casa con alcantarillado, compró una vivienda nueva o esta es su primera propiedad con tanque séptico, esta guía le explica lo esencial sin rodeos.</strong> Hablamos español. En el suroeste de Florida muchas casas en Estero, Bonita Springs, Fort Myers, Cape Coral, Naples y Lehigh Acres tratan las aguas residuales en el mismo predio, no en una planta municipal. Empiece por entender las partes del sistema, lo que conviene revisar en las primeras semanas, y cuándo pedir un bombeo. Para una visita, llame al <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>"
+ "<h2>¿Cómo se trata el agua en una casa con tanque?</h2>"
+ "<p>Lo que sale de inodoros, lavamanos, duchas y lavadora llega a un tanque enterrado. En el primer compartimento, los sólidos más pesados se van al fondo (lodos) y lo más liviano, incluida la grasa, flota (nata). El agua de en medio, el efluente, pasa al segundo compartimento y de ahí al campo de drenaje. Si el tanque tiene filtro de efluente, está en ese lado de salida, bajo la tapa, y sirve para que no se escape tanto sólido hacia las líneas.</p>"
+ "<p>En el suelo del campo, las bacterias —incluida una capa viva que se conoce como biomat— siguen tratando el efluente antes de que se mueva hacia el agua subterránea. Una explicación más larga, en inglés, está en la página sobre <a href='/septic-bacteria-drain-field/'>por qué importan las bacterias del tanque y del campo</a>.</p>"
+ "<h2>¿La EPA dice cada cuánto hay que vaciar el tanque?</h2>"
+ "<p>La <a href='https://www.epa.gov/septic' rel='noopener'>guía SepticSmart de la EPA de EE. UU.</a> indica que la mayoría de los tanques domésticos se bombean cada 3 a 5 años. Ese es un rango general, no un calendario fijo para todas las casas. Una familia más grande, un tanque más chico, un triturador de basura o un uso intenso de agua pueden adelantar la visita. Las casas de temporada o de renta también se pueden llenar más rápido cuando están ocupadas. No calculamos su intervalo solo con una tabla; partimos del tamaño de la casa y del tanque, y una inspección muestra lo que realmente necesita el suyo. Hay más detalle, en inglés, en <a href='/how-often-to-pump-septic-tank/'>con qué frecuencia bombear</a>. El vaciado residencial parte de $399.99 en un tanque típico de una a tres recámaras.</p>"
+ "<h2>¿Qué conviene revisar en las primeras semanas?</h2>"
+ "<ol><li><strong>Ubique el tanque y las tapas.</strong> A menudo quedan bajo el césped o la tierra. Localizar y excavar una tapa enterrada cuesta $100, más $50 por cada hora adicional. Si ya sabe el lugar, márquelo o díganoslo al llamar.</li>"
+ "<li><strong>Pida los papeles que existan.</strong> Fechas de bombeo, permisos e inspecciones anteriores le dicen si el sistema está al día o si ya se pasó de tiempo.</li>"
+ "<li><strong>Agende un bombeo, y una inspección si no conoce el estado del sistema.</strong> La inspección con bombeo es $549.99. Es un primer paso práctico cuando faltan registros, sobre todo después de una compra.</li>"
+ "<li><strong>Pregunte por una extensión (riser).</strong> Una <a href='/es/extensiones-riser-tanque-septico/'>extensión de 6 pulgadas</a> ($299.99 cada una) deja la tapa al nivel del suelo, y las siguientes visitas no empiezan con pala.</li></ol>"
+ "<h2>¿Qué hay que saber del filtro de efluente?</h2>"
+ "<p>Si su tanque tiene uno, se revisa y se limpia en cada bombeo y cuando los drenajes se pongan lentos. No hay un solo intervalo de meses que le sirva a todas las casas. Un filtro sucio puede devolver el agua o dejar los drenajes lentos, y las aguas residuales pueden subir otra vez a la vivienda. En los bombeos lo limpiamos sin cargo y le podemos mostrar cómo dejarlo limpio. La página de <a href='/es/cuidado-filtro-septico/'>cuidado del filtro</a> entra en más detalle.</p>"
+ "<h2>¿Qué no debe ir al inodoro ni al fregadero?</h2>"
+ "<ul><li>Toallitas, incluidas las que el paquete presenta como desechables en el inodoro</li><li>Grasa, manteca y aceite de cocina</li><li>Cloro y limpiadores fuertes en gran cantidad, porque pueden matar las bacterias que el sistema necesita</li><li>Medicinas</li><li>Pintura y solventes</li><li>Productos de higiene femenina, toallas de papel y pañales</li></ul>"
+ "<p>Un papel higiénico biodegradable, pensado para tanque séptico, le resulta más fácil al sistema que un papel muy grueso o una toallita. Para hábitos que cuidan las bacterias, vea, en inglés, <a href='/septic-bacteria-drain-field/'>bacterias y el campo de drenaje</a> y los <a href='/septic-system-maintenance/'>consejos de mantenimiento</a>.</p>"
+ "<h2>¿Qué se puede y qué no se puede hacer sobre el campo?</h2>"
+ "<ul><li>No estacione, no circule ni construya encima del campo de drenaje</li><li>No siembre árboles ni arbustos grandes sobre las líneas; el césped es mejor cubierta</li><li>Desvíe canaletas y el agua de lluvia para que no se encharque el campo</li><li>No vacíe una piscina o un spa sobre el campo; un volumen grande de agua con cloro lo puede saturar</li><li>El triturador de basura agrega sólidos, así que tal vez haya que bombear más seguido</li><li>Un suavizador de agua puede mandar un volumen extra al sistema cuando se recarga; téngalo en cuenta al calcular la frecuencia del bombeo</li></ul>"
+ "<p>Si el patio ya está empapado o el agua se está devolviendo, hay una página en inglés sobre <a href='/drain-field-not-draining/'>qué hacer cuando el campo no drena</a>. Si hace falta reparación o reemplazo, se <a href='/es/reemplazo-campo-de-drenaje/'>cotiza después de inspeccionar el sistema</a>. Los hábitos por ciudad, también en inglés, están en el <a href='/drain-field-dos-and-donts-service-areas/'>índice de do's and don'ts del campo</a>.</p>"
+ "<h2>¿Cómo uso el agua para no empujar sólidos al campo?</h2>"
+ "<p>Reparta la lavandería a lo largo de la semana en vez de hacer muchas cargas el mismo día. Repare inodoros y llaves que gotean. Una descarga grande y de golpe puede empujar sólidos hacia el campo antes de que tengan tiempo de asentarse en el tanque.</p>"
+ "<h2>¿Qué señales me dicen que debo llamar?</h2>"
+ "<ul><li>Olor a aguas residuales dentro o fuera de la casa</li><li>Tuberías que gorgotean</li><li>Drenajes lentos</li><li>Zonas húmedas o un césped demasiado verde sobre el campo</li><li>Inodoros o desagües que se devuelven</li><li>Una alarma, si su sistema tiene una</li></ul>"
+ "<p>Si ya hay un retorno en la casa, no deje la cita por internet. Cierre las llaves, no siga usando los muebles y marque el <a href='tel:"+TEL+"'>"+PHONE+"</a>. Esa visita, fuera de un horario de rutina, cuesta $599.99. Los pasos están en la página de <a href='/es/emergencia-tanque-septico/'>emergencias</a>.</p>"
+ "<h2>¿Qué tiene de particular el suroeste de Florida?</h2>"
+ "<p>En buena parte de la zona el suelo es arenoso y el manto freático queda alto, sobre todo en la temporada de lluvias. Eso deja menos margen entre el campo de drenaje y el agua subterránea, y un tanque lleno o un patio saturado puede mostrar problemas antes. Después de un huracán o una inundación, espere a que baje el agua estancada antes de usar el sistema, y luego hágalo revisar. Quien vuelve a una casa que estuvo cerrada —por ejemplo, un snowbird— conviene que confirme cuándo se bombeó el tanque antes de llenarlo con varios días de uso intenso. Esas situaciones se explican, en inglés, en las páginas de <a href='/hurricane-and-flood-septic-prep/'>preparación ante huracán e inundación</a> y de <a href='/snowbird-seasonal-septic/'>casas de temporada</a>.</p>"
+ "<h2>¿Qué precios le sirven a un dueño que recién llega?</h2>"
+ "<p>Para un dueño que recién llega, estos son los montos que ya están publicados: $399.99 como punto de partida del vaciado residencial en un tanque típico de una a tres recámaras; $549.99 si quiere una revisión al comprar o vender, con el tanque vacío; $599.99 si el agua ya se devolvió fuera de un horario de rutina; $100 por buscar y abrir una tapa que no se ve, más $50 por cada hora de más; y $299.99 por cada extensión de 6 pulgadas que deje el acceso al ras del suelo. Si el campo necesita reparación, el total se da cuando ya se inspeccionó. Ese trabajo queda a cargo de FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332, vigente desde 1981. En el vaciado, Express abre los dos lados del tanque y deja el filtro de efluente limpio, sin un cargo extra. La oficina está en Estero, 23357 Olde Meadowbrook Circle, y la ruta cubre Lee, Collier, Charlotte y LaBelle.</p>"
+ "<h2>¿Cómo pido el primer bombeo o una inspección?</h2>"
+ "<p>Llame al <a href='tel:"+TEL+"'>"+PHONE+"</a> y cuéntenos si acaba de mudarse o si está por comprar. Para una visita que no es emergencia, también puede enviar la palabra <strong>BOOK</strong> —en inglés, porque esa es la que activa la respuesta automática— por mensaje de texto al mismo número, o <a href='"+BOOK+"' rel='noopener' target='_blank'>dejar una solicitud en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a>. Nosotros confirmamos la hora; el trabajo no queda agendado hasta esa confirmación.</p>"
+ "<div class='book' id='reservar'><p><a class='btn primary' href='tel:"+TEL+"'>Llamar "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Solicitar el primer bombeo en ServiceM8<span class='sr'> (se abre en una pestaña nueva)</span></a></p></div>",
+ ESFT_FAQ, "Guía para dueños nuevos")
+
 open("sitemap.xml","w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+"".join(f"<url><loc>{BASE}{p}</loc><lastmod>{TODAY}</lastmod></url>" for p in PAGES)+"</urlset>\n")
 
 # Sitemap index: static pages + ServiceTechHub Project Showcase (served by functions/ once configured)
@@ -4188,5 +4569,18 @@ f"- [Septic pumping versus drain field replacement]({BASE}/pumping-vs-drain-fiel
 f"- [Southwest Florida septic service cost guide]({BASE}/southwest-florida-septic-cost-guide/): published prices only.",
 f"- [Signs your septic tank may be too small]({BASE}/signs-septic-tank-too-small/)",
 f"- [Septic system myths]({BASE}/septic-myths/): additives (EPA Publication 830-F-24-003), never pumping, toilet use during a pump-out, pumping after a hurricane, and septic-safe toilet paper.",
-f"- [About]({BASE}/about/)",""]
+f"- [About]({BASE}/about/)","",
+"## Spanish (Español)",
+"Hablamos español. Someone can take your call in Spanish at (239) 451-3261. For a routine appointment, text the English keyword BOOK to that number (BOOK is the keyword that triggers the auto-reply; do not text RESERVAR). Or request a time on ServiceM8. Work is not booked until we confirm.",
+f"- [Bombeo de tanque séptico en el suroeste de Florida]({BASE}/es/): Spanish main page. Residential pumping from $399.99.",
+f"- [Bombeo residencial]({BASE}/es/bombeo-residencial-de-tanque-septico/): from $399.99 (standard 1–3 bedroom tank).",
+f"- [Emergencia y fuera de horario]({BASE}/es/emergencia-tanque-septico/): call now for a backup; after-hours pumping is $599.99. Open 24/7.",
+f"- [Inspección con bombeo]({BASE}/es/inspeccion-con-bombeo-de-tanque-septico/): $549.99, often when buying or selling.",
+f"- [Extensiones (risers)]({BASE}/es/extensiones-riser-tanque-septico/): 6-inch risers $299.99 each.",
+f"- [Localizar la tapa]({BASE}/es/localizar-tapa-tanque-septico/): buried lid locating and digging $100, plus $50 each additional hour.",
+f"- [Trampas e interceptores de grasa]({BASE}/es/bombeo-trampa-de-grasa/): restaurant grease trap and interceptor pumping, $695 for 1,000 gallons. Express does not service oil or sand interceptors.",
+f"- [Campo de drenaje]({BASE}/es/reemplazo-campo-de-drenaje/): quoted after inspection. Performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332, licensed since 1981.",
+f"- [Cuidado del filtro]({BASE}/es/cuidado-filtro-septico/): effluent filter cleaned at every pump-out and whenever drains slow; no standalone filter-cleaning price.",
+f"- [Guía para dueños nuevos]({BASE}/es/guia-primeros-duenos-tanque-septico/): first-time septic owner guide in Spanish.",
+""]
 open("llms.txt","w").write("\n".join(LL))
