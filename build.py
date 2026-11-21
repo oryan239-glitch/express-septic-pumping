@@ -230,7 +230,7 @@ def page(path,title,desc,h1,body,extra=None,hero=None,lead="",trail=None,canonic
 <details class="menu"><summary aria-label="Open menu">Menu</summary><nav aria-label="Mobile">{NAVL}<a href="/contact/">Contact</a><a href="tel:{TEL}">Call {PHONE}</a></nav></details></div></header>
 <main id="main">{top}<div class="body">{body}</div>{REV}<section class="band closer"><div class="wrap"><h2>Talk to Express about your tank</h2><p>{AVAIL}</p>{CTA}</div></section></main>
 <footer id="contact" class="foot"><div class="wrap fgrid"><div><p class="mark">EXPRESS</p><p>{NAME} LLC<br>23357 Olde Meadowbrook Circle, Estero, FL 34134<br><a href="tel:{TEL}">{PHONE}</a><br><a data-sth-field="email" href="{"mailto:"+EMAIL if EMAIL else "/contact/"}">{EMAIL or "Send a request"}</a></p><p>Open 24 hours, 7 days a week.</p><p>Owner-operated. Licensed &amp; insured. We come to you.</p><p class="dot">USDOT 6673233</p><p class="license-foot">{LICENSE_FOOT}</p></div>
-<div><p class="fh">Services</p>{NAV}</div><div><p class="fh">Areas</p>{foot}</div><div><p class="fh">Info</p><a href="/">Home</a><a href="/how-it-works/">How it works</a><a href="/septic-system-maintenance/">Septic maintenance</a><a href="/septic-filter-care/">Filter care</a><a href="/septic-filter-cleaning-service-areas/">Filter care service areas</a><a href="/why-we-pump-both-tanks-service-areas/">Why we pump both tanks</a><a href="/septic-bacteria-drain-field/">Good bacteria</a><a href="/first-time-septic-owner/">First-time septic guide</a><a href="/septic-maintenance-checklist/">Maintenance checklist</a><a href="/how-often-to-pump-septic-tank/">How often to pump</a><a href="/emergency-septic-backup/">Emergency backup</a><a href="/hurricane-and-flood-septic-prep/">Hurricane and flood prep</a><a href="/sewage-smell-in-yard-or-house/">Sewage smell</a><a href="/cant-find-septic-tank-lid/">Can't find the lid</a><a href="/rainy-season-septic/">Rainy season</a><a href="/southwest-florida-septic-cost-guide/">Cost guide</a><a href="/septic-myths/">Septic myths</a><a href="/grease-trap-pumping-service-areas/">Grease trap service areas</a><a href="/completed-jobs/">Completed jobs</a><a href="/about/">About</a><a href="/faq/">FAQ</a><a href="/contact/">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></div></footer>
+<div><p class="fh">Services</p>{NAV}</div><div><p class="fh">Areas</p>{foot}</div><div><p class="fh">Info</p><a href="/">Home</a><a href="/how-it-works/">How it works</a><a href="/septic-system-maintenance/">Septic maintenance</a><a href="/septic-filter-care/">Filter care</a><a href="/septic-filter-cleaning-service-areas/">Filter care service areas</a><a href="/why-we-pump-both-tanks-service-areas/">Why we pump both tanks</a><a href="/drain-field-dos-and-donts-service-areas/">Drain field do's and don'ts</a><a href="/septic-bacteria-drain-field/">Good bacteria</a><a href="/first-time-septic-owner/">First-time septic guide</a><a href="/septic-maintenance-checklist/">Maintenance checklist</a><a href="/how-often-to-pump-septic-tank/">How often to pump</a><a href="/emergency-septic-backup/">Emergency backup</a><a href="/hurricane-and-flood-septic-prep/">Hurricane and flood prep</a><a href="/sewage-smell-in-yard-or-house/">Sewage smell</a><a href="/cant-find-septic-tank-lid/">Can't find the lid</a><a href="/rainy-season-septic/">Rainy season</a><a href="/southwest-florida-septic-cost-guide/">Cost guide</a><a href="/septic-myths/">Septic myths</a><a href="/grease-trap-pumping-service-areas/">Grease trap service areas</a><a href="/completed-jobs/">Completed jobs</a><a href="/about/">About</a><a href="/faq/">FAQ</a><a href="/contact/">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div></div></footer>
 <div class="mbar" role="region" aria-label="Quick contact"><a class="btn primary" href="tel:{TEL}">Call · {PHONE}</a><a class="btn ghost" href="/contact/#book">Book</a></div></body></html>'''
   doc=doc.replace("<div class=\"body\"></div>","")
   if 'id="book"' in body: doc=doc.replace('href="/contact/#book"','href="#book"')
@@ -434,7 +434,7 @@ def city_plus_page(c,county,a,b):
    (cp["svc_cards"] if "svc_cards" in cp else city_svc_cards(c) if cp.get("svc_enriched") else (f"<h2>Septic services in {c}</h2><ul class='cards'>"+"".join(f'<li><a href="/{s[0]}/">{htmllib.escape(s[1])}</a></li>' for s in SERVICES)+"<li><a href='/commercial-grease-trap-service/'>Commercial Grease Trap Service</a></li></ul>"))
    +f"<h2>Signs your tank needs pumping</h2><p>Slow drains, gurgling pipes, sewage odors outside, or soggy, extra-green grass over the drain field. If it's been 3 to 5 years since your last pump-out, or you don't know, it's time to call.</p>"
    +REQUEST+f"<h2>{c} septic questions</h2>"+"".join(f"<h3>{q}</h3><p>{x}</p>" for q,x in faq)+
-   GREASE_SEE.get(c,"")+FILTER_SEE.get(c,"")+BOTH_SEE.get(c,"")+"<h2>Nearby areas we serve</h2><ul class='cards'>"+"".join(f'<li><a href="/{slug(x)}/">{x}</a></li>' for x in cp["near"])+"<li><a href='/service-area/'>All areas</a></li></ul>"
+   GREASE_SEE.get(c,"")+FILTER_SEE.get(c,"")+BOTH_SEE.get(c,"")+DRAIN_SEE.get(c,"")+"<h2>Nearby areas we serve</h2><ul class='cards'>"+"".join(f'<li><a href="/{slug(x)}/">{x}</a></li>' for x in cp["near"])+"<li><a href='/service-area/'>All areas</a></li></ul>"
    "<p class='srcs'>Sources: "+"; ".join(S(k) for k in cp["srcs"])+".</p>")
   crumbs={"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":BASE+"/"},{"@type":"ListItem","position":2,"name":"Service area","item":BASE+"/service-area/"},{"@type":"ListItem","position":3,"name":c,"item":BASE+path}]}
   svc={"@context":"https://schema.org","@type":"Service","name":f"Septic tank pumping in {c}, FL","serviceType":"Septic tank pumping","url":BASE+path,"provider":PROV,"areaServed":{"@type":"City","name":f"{c}, FL","containedInPlace":{"@type":"AdministrativeArea","name":f"{county}, FL"}},"offers":{"@type":"Offer","priceSpecification":{"@type":"PriceSpecification","minPrice":399.99,"priceCurrency":"USD"}}}
@@ -532,7 +532,7 @@ FILTER_FAQ=[
 def faq_html(items, heading_tag="h3"):
   return "".join(f"<{heading_tag}>{q}</{heading_tag}><p>{a}</p>" for q,a in items)
 EXTRA["drain-field-replacement"]=(
- "<p>Keeping good bacteria healthy in the tank and the drain-field soil helps protect a drain field before it fails. See <a href='/septic-bacteria-drain-field/'>why good bacteria protect your septic tank and drain field</a>.</p>"
+ "<p>Keeping good bacteria healthy in the tank and the drain-field soil helps protect a drain field before it fails. See <a href='/septic-bacteria-drain-field/'>why good bacteria protect your septic tank and drain field</a>. Everyday do's and don'ts, written for individual cities, start on the <a href='/drain-field-dos-and-donts-service-areas/'>drain field do's and don'ts service-areas hub</a>.</p>"
 )
 EXTRA["lift-station-pumping"]=(
  "<h2>What is lift station pumping?</h2>"
@@ -674,6 +674,20 @@ BOTH_SEE={
  "Port Charlotte":"<h2>Inlet and outlet pumping in Port Charlotte</h2><p>Many Port Charlotte homes are still on septic. Both-chamber pump-outs are explained on <a href='/why-we-pump-both-tanks-port-charlotte-fl/'>why we pump both compartments in Port Charlotte</a>.</p>",
 }
 
+DRAIN_SEE={
+ "Bonita Springs":"<h2>Keeping a Bonita drain field out of trouble</h2><p>Everyday habits that protect a field still in service, including in older neighborhoods and east of I-75, are on <a href='/drain-field-dos-and-donts-bonita-springs-fl/'>drain field do's and don'ts in Bonita Springs</a>.</p>",
+ "Estero":"<h2>Village habits that protect a drain field</h2><p>While a street waits on sewer, what you pour, plant, and park still matters. See <a href='/drain-field-dos-and-donts-estero-fl/'>drain field do's and don'ts in Estero</a>.</p>",
+ "Naples":"<h2>Naples-area drain field habits</h2><p>If the house still uses a tank rather than city sewer, start with <a href='/drain-field-dos-and-donts-naples-fl/'>drain field do's and don'ts in Naples</a> for what belongs, and does not belong, in the system.</p>",
+ "North Naples":"<h2>North Naples drain field care in wet season</h2><p>High water tables leave less margin. Household do's and don'ts are on <a href='/drain-field-dos-and-donts-north-naples-fl/'>drain field do's and don'ts in North Naples</a>.</p>",
+ "Marco Island":"<h2>Island drain field habits on Marco</h2><p>Tight, sandy lots that still have a field can use <a href='/drain-field-dos-and-donts-marco-island-fl/'>drain field do's and don'ts on Marco Island</a>.</p>",
+ "Fort Myers":"<h2>Protecting a Fort Myers drain field</h2><p>Houses that still have a tank, including older and South Fort Myers lots, can start at <a href='/drain-field-dos-and-donts-fort-myers-fl/'>drain field do's and don'ts in Fort Myers</a>.</p>",
+ "Fort Myers Beach":"<h2>Low, sandy-lot drain field habits</h2><p>If the island house still uses a field, see <a href='/drain-field-dos-and-donts-fort-myers-beach-fl/'>drain field do's and don'ts on Fort Myers Beach</a>.</p>",
+ "Cape Coral":"<h2>Cape Coral drain field habits during UEP</h2><p>Lots still on a tank, including many in North Cape, can use <a href='/drain-field-dos-and-donts-cape-coral-fl/'>drain field do's and don'ts in Cape Coral</a>.</p>",
+ "Lehigh Acres":"<h2>Well-and-field habits on the Lehigh grid</h2><p>Daily do's and don'ts for a lot that treats its own wastewater are on <a href='/drain-field-dos-and-donts-lehigh-acres-fl/'>drain field do's and don'ts in Lehigh Acres</a>.</p>",
+ "North Fort Myers":"<h2>Drain field habits north of the river</h2><p>Neighborhood and acreage lots in unincorporated North Fort Myers can start at <a href='/drain-field-dos-and-donts-north-fort-myers-fl/'>drain field do's and don'ts in North Fort Myers</a>.</p>",
+}
+
+
 for c,(county,a,b) in CITY.items():
   if c in CITY_PLUS: city_plus_page(c,county,a,b); continue
   near=[x for x in CITIES_ALL if x!=c]
@@ -684,7 +698,7 @@ for c,(county,a,b) in CITY.items():
    f"<h2>Septic Services in {c}</h2><ul class='cards'>"+"".join(f'<li><a href="/{s[0]}/">{s[1]} in {c}</a></li>' for s in SERVICES)+"</ul>"
    f"<h2>Signs Your {c} Septic Tank Needs Pumping</h2><p>Slow drains, gurgling, odors outside, or soggy ground over the drain field. If it's been 3–5 years since your last pump-out, it's time to call.</p>"
    f"<p><a href='/'>Back to Express Septic Tank Pumping home</a> · Call <a href='tel:{TEL}'>{PHONE}</a> for a quote in {c}.</p>"
-   +GREASE_SEE.get(c,"")+FILTER_SEE.get(c,"")+BOTH_SEE.get(c,"")+
+   +GREASE_SEE.get(c,"")+FILTER_SEE.get(c,"")+BOTH_SEE.get(c,"")+DRAIN_SEE.get(c,"")+
    "<h2>Nearby Areas We Serve</h2><ul class='cards'>"+"".join(f'<li><a href="/{slug(x)}/">{x}</a></li>' for x in near)+"</ul>")
   if c=="Lehigh Acres":
     page(f"/{slug(c)}/","Septic Tank Cleaning Lehigh Acres | Septic Service Lehigh Acres FL","Septic tank cleaning and septic service in Lehigh Acres, FL from Express Septic Tank Pumping. Residential, commercial & inspections. (239) 451-3261.","Septic Tank Cleaning &amp; Septic Service in Lehigh Acres, FL",body.replace("Need septic tank pumping in","Need septic tank cleaning or septic service in"));continue
@@ -732,7 +746,7 @@ page("/septic-system-maintenance/","Septic System Maintenance Tips | Southwest F
  "<h2>Drain Field Care</h2><ul><li>Don't park or drive vehicles on the drain field</li><li>Don't plant trees or large shrubs nearby; roots can damage pipes. Grass is best</li><li>Don't build structures or pave over it</li></ul>"
  "<h2>Warning Signs of Problems</h2><p>Slow drains, gurgling pipes, sewage odors, soggy or extra-green grass over the drain field, and backups in toilets or drains. Call right away if you notice these.</p>"
  "<h2>Why Regular Inspections Help</h2><p>An inspection can catch problems early, before they turn into costly repairs, and gives you a record of your system's condition. Learn about <a href='/septic-inspections/'>septic inspections</a>.</p>"
- "<p>See <a href='/how-it-works/'>how our service works</a> and <a href='/how-often-to-pump-septic-tank/'>how often to pump your septic tank</a>.</p><h2>Our Services</h2>"+svc_list)
+ "<p>See <a href='/how-it-works/'>how our service works</a> and <a href='/how-often-to-pump-septic-tank/'>how often to pump your septic tank</a>. City-specific drain field habit pages are on the <a href='/drain-field-dos-and-donts-service-areas/'>drain field do's and don'ts service-areas hub</a>.</p><h2>Our Services</h2>"+svc_list)
 
 FILTER_PHOTOS=""
 _j=next((x for x in JOBS if x["id"]=="lehigh-acres-2026-11-17"), None)
@@ -758,6 +772,7 @@ page("/septic-bacteria-drain-field/","Why Good Bacteria Protect Your Septic Tank
  "<p>Odors, slow drains, soggy spots in the yard, and unusually lush grass over the drain field can mean the system is out of balance. Those signs can also have other causes. If you notice them, call <a href='tel:"+TEL+"'>"+PHONE+"</a>.</p>"
  "<h2>What daily habits help?</h2>"
  "<ul><li>Keep grease, wipes, paper towels, and medications out of the drains and toilet</li><li>Use household cleaners in normal amounts rather than large amounts of bleach or drain opener</li><li>Spread laundry loads through the week instead of doing them all in one day</li><li>Go easy on the garbage disposal</li><li>Have the tank pumped on a regular schedule, and have the effluent filter cleaned when the tank is pumped</li></ul>"
+ "<p>How those same habits look on a specific lot is laid out on the <a href='/drain-field-dos-and-donts-service-areas/'>drain field do's and don'ts city pages</a>.</p>"
  "<h2>Why does regular pumping matter for bacteria?</h2>"
  "<p>Bacteria in the tank cannot fully break down all of the solids. Regular <a href='/septic-tank-pumping/'>septic tank pumping</a> removes the sludge and scum that build up so those solids are less likely to leave the tank and reach the drain field, where they can clog soil and harm the biomat.</p>"
  "<h2>How does effluent filter cleaning help?</h2>"
@@ -855,6 +870,7 @@ guide("/first-time-septic-owner/","First Time With a Septic System? The Complete
  "<h2>What are the drain field do's and don'ts?</h2>"
  "<ul><li>Do not park, drive, or build on the drain field</li><li>Do not plant trees or large shrubs over it; grass is the better cover</li><li>Divert roof gutters and runoff away from the field</li><li>Do not drain a swimming pool or spa onto the field; a large volume of chlorinated water can overload it</li><li>A garbage disposal adds solids, so you may need pumping more often</li><li>A water softener can send extra water into the system when it recharges; factor that into how often you pump</li></ul>"
  "<p>If the field is already soggy or backing up, see <a href='/drain-field-not-draining/'>what to do when a drain field is not draining</a>. Replacement, if it is needed, is <a href='/drain-field-replacement/'>quoted after we inspect the system</a>.</p>"
+ "<p>City-by-city habit pages for lots that still have a field, starting with Bonita Springs, Estero, Naples, and other first-group communities, are collected on the <a href='/drain-field-dos-and-donts-service-areas/'>drain field do's and don'ts service-areas hub</a>.</p>"
  "<h2>How should I use water in a septic home?</h2>"
  "<p>Spread laundry through the week instead of running many loads in one day. Fix leaky toilets and faucets. A sudden flood of water can push solids toward the drain field before they have time to settle in the tank.</p>"
  "<h2>What warning signs mean I should call?</h2>"
@@ -1015,7 +1031,8 @@ guide("/drain-field-not-draining/","Drain Field Not Draining in Southwest Florid
  "<h2>Can pumping the tank help a field that looks failed?</h2>"
  "<p>Sometimes. If the tank is full, sludge is escaping, or the effluent filter is clogged, emptying the tank and cleaning the filter can take pressure off the field. Express pumps both compartments and cleans the filter at no charge on pump-outs. If the field itself has failed, a pump-out will not make the soil work like new. <a href='/drain-field-replacement/'>Drain field replacement is quoted after we inspect the system</a>.</p>"
  "<h2>Why is this more common in the rainy season here?</h2>"
- "<p>Sandy soils and a high water table leave less unsaturated soil under many Southwest Florida yards when summer storms sit over the area. A field that was marginal in dry weather can start to show at the surface in those weeks. That is a reason to pump when you are due, not a reason to assume every wet yard needs a new field. For how soil bacteria and the biomat treat effluent, see <a href='/septic-bacteria-drain-field/'>good bacteria and the drain field</a>. If you are trying to read a lush or soggy footprint before it becomes a pooling failure, see <a href='/wet-spots-green-grass-over-drain-field/'>wet spots and green grass over the drain field</a>. For the June through September pattern, see <a href='/rainy-season-septic/'>rainy season septic care</a>.</p>",
+ "<p>Sandy soils and a high water table leave less unsaturated soil under many Southwest Florida yards when summer storms sit over the area. A field that was marginal in dry weather can start to show at the surface in those weeks. That is a reason to pump when you are due, not a reason to assume every wet yard needs a new field. For how soil bacteria and the biomat treat effluent, see <a href='/septic-bacteria-drain-field/'>good bacteria and the drain field</a>. If you are trying to read a lush or soggy footprint before it becomes a pooling failure, see <a href='/wet-spots-green-grass-over-drain-field/'>wet spots and green grass over the drain field</a>. For the June through September pattern, see <a href='/rainy-season-septic/'>rainy season septic care</a>.</p>"
+ "<p>To prevent a field from getting to this point, city habit pages are on the <a href='/drain-field-dos-and-donts-service-areas/'>drain field do's and don'ts service-areas hub</a>.</p>",
  DF_FAQ, "Drain field not draining")
 
 EM_FAQ=[
@@ -1167,6 +1184,7 @@ guide("/wet-spots-green-grass-over-drain-field/","Wet Spots or Green Grass Over 
  "<p>Do not park, drive, or set a shed on it. Do not add fill to 'dry it out,' plant a tree to 'drink it up,' or run a trench through it. Those steps can compact soil, break laterals, or spread wastewater. Keep children and pets off a spot that smells or stays soggy. Divert roof gutters away from the field if they currently dump onto it, but do that as a habit, not as a homemade repair. More drain-field habits are in the <a href='/first-time-septic-owner/'>first-time septic guide</a> and on <a href='/septic-system-maintenance/'>maintenance tips</a>.</p>"
  "<h2>When should I call, and what happens next?</h2>"
  "<p>Call when the spot is persistent, smells, or lines up with slow drains, or when you simply want the tank opened because you have no recent service record. If there is no indoor overflow, you can <a href='"+BOOK+"' rel='noopener' target='_blank'>request a routine visit on ServiceM8</a> or call. If sewage is already coming inside, call and do not book online; after-hours pumping is $599.99. In the rainy months, a yard can look worse than it does in April; the <a href='/rainy-season-septic/'>rainy season septic guide</a> covers that pattern without treating every wet lawn as a failed field.</p>"
+ "<p>Habits that keep a field from being compacted, planted over, or overloaded are spelled out by city on the <a href='/drain-field-dos-and-donts-service-areas/'>drain field do's and don'ts service-areas hub</a>.</p>"
  "<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Book routine service on ServiceM8<span class='sr'> (opens in a new tab)</span></a></p>",
  WS_FAQ, "Wet spots and green grass")
 
@@ -1724,6 +1742,7 @@ guide("/pumping-vs-drain-field-replacement/","Septic Pumping vs Drain Field Repl
  "<p>Start with the tank in almost every case: a planned pump-out at the residential starting price above, or an inspection with pump-out if you need a closer look, or an after-hours call at $599.99 if sewage is overflowing now. Do not use the online form during an overflow; call. If lids are buried, locating and digging is $100, plus $50 for each additional hour. After the tank is open, we can talk about whether the field needs more than a pump-out. That order avoids paying for a theory about the field when the tank was simply due.</p>"
  "<h2>What will not settle the question?</h2>"
  "<p>Additives, a new layer of fill on a wet spot, or waiting until the dry season and hoping will not tell you whether the field still works. Additives also do not replace pumping; see <a href='/septic-myths/'>septic myth-busters</a> and <a href='/septic-bacteria-drain-field/'>good bacteria and the drain field</a>. If you are comparing options before a sale, the lender still decides any loan condition; see <a href='/fha-va-lender-septic-requirements/'>FHA, VA, and lender septic requirements</a>. You can <a href='"+BOOK+"' rel='noopener' target='_blank'>request a routine visit on ServiceM8</a> when it is not an emergency. We serve homes in Lee, Collier, and Charlotte County, plus LaBelle.</p>"
+ "<p>Before a field is even in question, the daily do's and don'ts are collected by city on the <a href='/drain-field-dos-and-donts-service-areas/'>drain field do's and don'ts service-areas hub</a>.</p>"
  "<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Book routine service on ServiceM8<span class='sr'> (opens in a new tab)</span></a></p>",
  PR_FAQ, "Pumping vs drain field replacement")
 
@@ -3403,7 +3422,336 @@ PAGES.remove("/404/")
 h=open("404/index.html").read().replace('<link rel="canonical" href="'+BASE+'/404/">','').replace('<meta property="og:url" content="'+BASE+'/404/">','').replace('href="../','href="/').replace('src="../','src="/').replace(', ../',', /').replace('srcset="../','srcset="/').replace("href='../","href='/")
 open("404.html","w").write(h); shutil.rmtree("404")
 shutil.copy("src/styles.css","styles.css"); shutil.copy("src/site.js","site.js")
+# --- Drain field do's and don'ts city pages, group 1 ---
+# WET-WIPES PHOTO: one switch for every /drain-field-dos-and-donts-*-fl/ page.
+# When ORyan supplies the photo, set DRAIN_WIPES_SRC to a site path
+# (for example "/assets/img/wet-wipes-in-tank.jpg") and, if needed,
+# DRAIN_WIPES_CAP to a factual caption and DRAIN_WIPES_ALT to a short alt.
+# Rebuild once. Do not use stock or AI images. Until SRC is set, the
+# helper emits only an HTML comment plus a hidden <template> slot —
+# no visible box and no broken <img>.
+DRAIN_WIPES_SRC=""
+DRAIN_WIPES_ALT="Wet wipes removed from a septic tank"
+DRAIN_WIPES_CAP=""
+def drain_wipes_figure():
+  comment=("<!-- WET-WIPES PHOTO SLOT: shared by every drain-field do's-and-don'ts "
+           "city page through drain_wipes_figure() in build.py. Set DRAIN_WIPES_SRC "
+           "to publish ORyan's photo on all of them at once. Do not use stock or AI images. -->")
+  if DRAIN_WIPES_SRC:
+    cap=("<figcaption>"+htmllib.escape(DRAIN_WIPES_CAP)+"</figcaption>") if DRAIN_WIPES_CAP else ""
+    return (comment+"<figure class='shot drain-wipes-photo'><img src='"+DRAIN_WIPES_SRC+"' alt='"+htmllib.escape(DRAIN_WIPES_ALT)+"' width='1200' height='800' loading='lazy'>"+cap+"</figure>")
+  return (comment+"<template id='drain-wipes-photo-slot' data-slot='oryan-wet-wipes'>"
+          "<figure class='shot drain-wipes-photo'>"
+          "<img alt='"+htmllib.escape(DRAIN_WIPES_ALT)+"' width='1200' height='800' loading='lazy'>"
+          "<figcaption></figcaption></figure></template>")
+def drain_city(path, title, desc, h1, body, faq, crumb):
+  p=path if path.endswith("/") else path+"/"
+  page(p, title, desc, h1, body+"<h2>"+crumb+" questions</h2>"+faq_html(faq),
+    [faq_ld(faq), crumbs_ld([("Home",BASE+"/"),("Drain field do's and don'ts",BASE+"/drain-field-dos-and-donts-service-areas/"),(crumb,BASE+p)])],
+    trail=[("Home","/"),("Drain field do's and don'ts","/drain-field-dos-and-donts-service-areas/"),(crumb,p)])
+
+BSDD_FAQ=[
+ ("Does a Bonita house still on a tank need these drain field habits if sewer is coming?","Yes, until the house is actually connected and the tank is abandoned. A conversion announcement does not make wipes, grease, or parking on the field safe in the meantime. Call (239) 451-3261."),
+ ("What toilet paper should I use on a Bonita septic system?","Use biodegradable, septic-safe toilet paper. Do not flush wet wipes, even ones labeled flushable. Those belong in the trash."),
+ ("Do bleach and heavy cleaners hurt the drain field?","Large amounts of bleach and harsh cleaners can kill the bacteria that treat waste in the tank and in the drain-field soil. See our page on why good bacteria protect the septic tank and drain field. Normal household cleaning is not the same as pouring disinfectant down the drains."),
+ ("What does pumping start at, and what about drain field repair?","Residential pumping starts at $399.99 for a standard 1 to 3 bedroom tank, confirmed when you call. Drain field repair or replacement is quoted after we inspect the system and is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
+]
+drain_city("/drain-field-dos-and-donts-bonita-springs-fl/","Drain Field Do's and Don'ts in Bonita Springs, FL | Express Septic",
+ "Drain field do's and don'ts for Bonita Springs homes still on septic, including no wipes or grease, septic-safe toilet paper, and what to keep off the field. Pumping from $399.99. Call (239) 451-3261.",
+ "Drain field do's and don'ts in Bonita Springs, FL",
+ "<p><strong>On a Bonita Springs lot that still uses a drain field, especially east of I-75 or in an older neighborhood not yet connected to Bonita Springs Utilities sewer, what you pour, flush, plant, and park on the yard is what that field has to accept through a wet summer.</strong> A conversion project in the area does not retire those habits early. This page is for houses that still treat wastewater on the lot. Call <a href='tel:"+TEL+"'>"+PHONE+"</a> or <a href='"+BOOK+"' rel='noopener' target='_blank'>request a Bonita Springs pump-out on ServiceM8</a>.</p>"
+ "<h2>Why does a Bonita kitchen sink matter to the field out back?</h2>"
+ "<p>Cooking oil, fats, and grease cooled in a can belong in the trash, not down the drain. In the tank they float as scum; if they leave the tank they coat soil and slow the field. We do not invent a count of Bonita fields damaged by kitchen grease. We do treat grease as a household don't, year-round and in seasonal houses that sit quiet and then cook heavily in winter.</p>"
+ "<h2>Are wipes labeled flushable any safer while a street waits on BSU sewer?</h2>"
+ "<p>No. Wet wipes, even packages marked flushable, do not belong in a Bonita toilet. They do not break down the way toilet paper does. They can mat in the tank, load an outlet, and send solids toward the field. Use biodegradable, septic-safe toilet paper, and put wipes in the trash. A coming sewer connection does not make those wipes acceptable in the months or years the tank is still in service.</p>"
+ +drain_wipes_figure()+
+ "<h2>How do bleach and harsh cleaners affect the soil side of a Bonita system?</h2>"
+ "<p>The field depends on bacteria in the tank and in the soil to treat effluent. Large amounts of bleach, drain opener, or heavy disinfectant can knock that process back. Ordinary cleaning of a bathroom is not the issue; pouring leftover cleaner down the drain is. More on that process is on <a href='/septic-bacteria-drain-field/'>how soil and tank bacteria protect a drain field</a>.</p>"
+ "<h2>What should never sit on the ground above a Bonita drain field?</h2>"
+ "<p>Do not park or drive on it, even for a weekend project or a guest's extra car. Do not put a shed, a pool, a spa, or a patio on that footprint. Keep trees and deep-rooted shrubs off the field; turf is the cover that belongs there. Roof gutters and irrigation should be aimed away from the laterals so the soil is not kept soaked on purpose. Bonita's rainy season already raises the water table; extra water from a downspout or a sprinkler zone on top of the field is a poor addition.</p>"
+ "<h2>How should laundry and a disposal be used in older or seasonal Bonita houses?</h2>"
+ "<p>Spread laundry through the week instead of stacking many loads on one day, which can push water and solids toward the field before they settle. A garbage disposal adds more solids; it is not banned here, but heavy daily use is a reason to stay current on pumping rather than stretch the interval. Seasonal arrivals should not treat the first week back as a time to run every appliance at once if the tank has not been opened in a long while.</p>"
+ "<h2>A short note for Bonita restaurants, and the prices that belong on this page</h2>"
+ "<p>Food-service kitchens are a different system than a house tank. Where Bonita Springs Utilities' FOG program applies, interceptors are pumped on that utility's schedule, including a 90-day interceptor interval and a 25% wetted-height rule that BSU publishes. "+LEE_ORD+" applies to kitchens discharging to Lee County Utilities, not automatically to every Bonita address; indoor traps under 14-24 are cleaned at least weekly or whenever grease and solids exceed 20% of unit volume, which is not a rule for interceptors. Confirm the bill, then use the <a href='/grease-trap-pumping-service-areas/'>grease trap pumping service-areas hub</a> or <a href='/grease-trap-pumping-bonita-springs-fl/'>grease trap pumping in Bonita Springs</a>.</p>"
+ "<p>For a standard 1 to 3 bedroom tank, residential pumping starts at $399.99; we confirm the amount when you call. Keep the tank on a regular schedule; a full tank is one way solids reach the field. Field repair, when it is needed, is quoted after inspection and is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332. General pumping is on <a href='/septic-tank-pumping-bonita-springs-fl/'>septic tank pumping in Bonita Springs</a>. Browse the other city habit pages from the <a href='/drain-field-dos-and-donts-service-areas/'>drain-field habits hub</a>.</p>"
+ "<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Schedule a Bonita Springs visit on ServiceM8<span class='sr'> (opens in a new tab)</span></a></p>",
+ BSDD_FAQ, "Bonita Springs drain field do's and don'ts")
+
+ESDD_FAQ=[
+ ("If Estero is converting my street to sewer, do drain field habits still apply?","Yes, until the house is connected and the tank is taken out of service. Village sewer work does not make grease, wipes, or parking on the field safe in the meantime. Call (239) 451-3261."),
+ ("What should I flush, and what should I not?","Use biodegradable, septic-safe toilet paper. Keep wet wipes, even flushable labels, out of the toilet. They belong in the trash."),
+ ("Is there a special rule for kitchens around Coconut Point?","Restaurant interceptors follow the utility on the bill. Lee County Utilities customers follow Ordinance 14-24: interceptors fully pumped at least every 90 calendar days; indoor traps cleaned at least weekly or whenever grease and solids exceed 20% of unit volume. Bonita Springs Utilities customers follow BSU's published 90-day interceptor interval and 25% wetted-height rule. Confirm which utility serves the kitchen. The grease hub has the city pages."),
+ ("What does residential pumping start at in Estero?","For a standard 1 to 3 bedroom tank, pumping starts at $399.99, confirmed when you call. Drain field work, if it is needed, is quoted after we inspect the system."),
+]
+drain_city("/drain-field-dos-and-donts-estero-fl/","Drain Field Do's and Don'ts in Estero, FL | Express Septic",
+ "Drain field do's and don'ts for Estero homes still on a tank during Village sewer conversions, including wipes, grease, plantings, and laundry habits. Pumping from $399.99. Call (239) 451-3261.",
+ "Drain field do's and don'ts in Estero, FL",
+ "<p><strong>In the Village of Estero, a house that still has a drain field needs the same daily care whether the street is already on a sewer-conversion list or not; paperwork for a future connection does not make oil, wipes, or a parked truck on the laterals any safer this month.</strong> We are based here, at 23357 Olde Meadowbrook Circle, and this page is for Village lots that still treat wastewater on the property, including around Coconut Point, Corkscrew Road, and U.S. 41. Call <a href='tel:"+TEL+"'>"+PHONE+"</a> or <a href='"+BOOK+"' rel='noopener' target='_blank'>request an Estero visit on ServiceM8</a>.</p>"
+ "<h2>Does a sewer-conversion street get a free pass on field habits?</h2>"
+ "<p>No. Until the house is actually connected, the tank and the field are still the treatment system. HOA rules and Village project updates do not replace that. Keep oil and grease out of kitchen drains. Cool fats in a container and throw them away. They do not 'melt through' a septic tank; they accumulate and can move toward the field.</p>"
+ "<h2>What belongs in an Estero toilet, and what does not?</h2>"
+ "<p>Biodegradable, septic-safe toilet paper is the everyday choice. Wet wipes are not, even when the wrapper says flushable. In a compact Village bathroom, those wipes are a common way to load a tank that already sits on a smaller lot. Put them in the trash. The same goes for paper towels and feminine products.</p>"
+ +drain_wipes_figure()+
+ "<h2>Why are bleach and heavy cleaners a problem for the soil, not just the tank?</h2>"
+ "<p>Bacteria in the tank and in the drain-field soil treat what leaves the house. Large doses of bleach or harsh cleaners can set that back. We are not telling Estero households to stop ordinary cleaning. We are saying leftover disinfectant does not belong in a single pour down the drain. The process is explained on <a href='/septic-bacteria-drain-field/'>the bacteria guide for Southwest Florida systems</a>.</p>"
+ "<h2>How do plantings, driveways, and gutters work on a compact Village lot?</h2>"
+ "<p>Many Estero yards are tighter than an acre grid. That makes it easier to creep a parking pad, a shed, or a row of hedges onto the field without meaning to. Do not drive or park on the laterals. Do not build a pool, a spa, or a structure on that footprint. Keep deep roots off the field; turf is the right cover. Turn downspouts and irrigation away from it so a summer storm is not sitting on soil that already has to accept effluent.</p>"
+ "<h2>Laundry, disposals, and staying current on pumping</h2>"
+ "<p>Spread washing through the week. A disposal can be used, but it adds solids, so it is a reason to keep pumping current, not a reason to stretch the calendar. Residential pumping for a standard 1 to 3 bedroom tank starts at $399.99, confirmed when you call. If the field itself needs repair, we quote that after an inspection.</p>"
+ "<h2>For Estero restaurants, which 90-day rule applies?</h2>"
+ "<p>That depends on the utility. Kitchens billed by Lee County Utilities follow "+LEE_ORD+". Interceptors under that ordinance must be completely pumped at least once every 90 calendar days. Indoor traps are a separate unit: cleaned at least weekly, or earlier if grease and solids go past 20% of the trap volume. That 20% figure is not a rule for interceptors. Kitchens billed by Bonita Springs Utilities follow BSU's published 90-day interceptor interval and 25% wetted-height standard. Confirm the account, then open the <a href='/grease-trap-pumping-service-areas/'>grease trap pumping service-areas hub</a> or <a href='/grease-trap-pumping-estero-fl/'>grease trap pumping in Estero</a>. Routine house-tank pumping is on <a href='/septic-tank-pumping-estero-fl/'>septic tank pumping in Estero</a>. The city habit list is on the <a href='/drain-field-dos-and-donts-service-areas/'>service-areas index for these pages</a>.</p>"
+ "<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Schedule Estero pumping on ServiceM8<span class='sr'> (opens in a new tab)</span></a></p>",
+ ESDD_FAQ, "Estero drain field do's and don'ts")
+
+NPDD_FAQ=[
+ ("How do I know if a Naples house even has a drain field to protect?","Look at the utility bill. A city sewer charge means there is no household drain field on this page. If wastewater stays on the lot, the habits here apply. Call (239) 451-3261 if you want help reading the bill."),
+ ("Can I flush wipes if they say they are septic safe?","No. Keep wet wipes out of the toilet, including those labeled flushable or septic safe. Use biodegradable, septic-safe toilet paper, and throw wipes away."),
+ ("Do seasonal Naples houses get a different rule for grease and laundry?","The habits do not change. A house that sits quiet and then fills in winter still should not pour oil down the sink or run every laundry load in one day. Pumping should be kept current before that first busy week."),
+ ("What are the published prices?","Residential pumping starts at $399.99 for a standard 1 to 3 bedroom tank, confirmed by phone. Drain field repair or replacement is quoted after we inspect the system."),
+]
+drain_city("/drain-field-dos-and-donts-naples-fl/","Drain Field Do's and Don'ts in Naples, FL | Express Septic",
+ "Drain field do's and don'ts for Naples-area homes that still use a septic tank, including seasonal houses, landscaping over the field, and what never to flush or pour. Pumping from $399.99. Call (239) 451-3261.",
+ "Drain field do's and don'ts in Naples, FL",
+ "<p><strong>A Naples address does not automatically mean the house still has a drain field; many properties are on city sewer, and this page is only for homes whose wastewater is still treated on the lot, including seasonal houses that sit quiet and then fill.</strong> Confirm the bill first. If there is a field, the landscaping, the kitchen, and the laundry room all sit upstream of it. Call <a href='tel:"+TEL+"'>"+PHONE+"</a> or <a href='"+BOOK+"' rel='noopener' target='_blank'>request a Naples-area pump-out on ServiceM8</a>.</p>"
+ "<h2>Start with the bill, then look at what the field is asked to treat</h2>"
+ "<p>If you pay a City of Naples sewer charge, there is no household drain field here to protect. If the house is outside that system and still on a tank, keep cooking oil and grease out of the sink. Pouring leftovers down a disposal does not make grease disappear; it still has to be handled in the tank, and overflow scum is a problem for the field.</p>"
+ "<h2>What should a Naples toilet never receive?</h2>"
+ "<p>Wet wipes are a don't, including the ones marketed as flushable. They do not belong in a tank that feeds a field in this sandy, often landscaped coastal setting. Use biodegradable, septic-safe toilet paper. Thick 'quilted' paper that breaks down slowly is a weaker choice than a septic-safe roll, and it is not an excuse to flush wipes.</p>"
+ +drain_wipes_figure()+
+ "<h2>Do winter guests change the chemistry, or just the load?</h2>"
+ "<p>They change how fast the tank fills, not the rules. Bleach and harsh cleaners in large amounts still hurt the bacteria that work in the tank and in the drain-field soil. A winter cleaning binge is a poor time to empty leftover disinfectant down the drains. See <a href='/septic-bacteria-drain-field/'>our explainer on septic bacteria and the field</a>. Spread laundry across the week when the house fills back up, rather than running a day's worth of loads on arrival.</p>"
+ "<h2>Landscaping, pavers, and what the field can be asked to carry</h2>"
+ "<p>A Naples yard can hide a field under plantings, decorative rock, or a parking pad that grew over time. Do not park or drive on it. Do not add a pool, a spa, or a structure on that footprint. Keep trees and deep roots off the laterals; grass is the cover that belongs there. Direct roof drains and irrigation away from the field so irrigation zones are not soaking the same soil that has to accept effluent, especially in the rainy season.</p>"
+ "<h2>A brief note for Naples-area kitchens, and the starting pump-out price</h2>"
+ "<p>Restaurant grease is not a homeowner drain-field issue, but kitchens still have to follow the utility on the bill. Collier County's published FOG program, for kitchens on the county wastewater system, uses a 30-day indoor-trap interval and a 90-day interceptor interval. The City of Naples runs its own program; we do not invent a city pumping frequency here, so confirm that schedule with the city. Commercial pages start at the <a href='/grease-trap-pumping-service-areas/'>grease trap pumping service-areas hub</a> and at <a href='/grease-trap-pumping-naples-fl/'>grease trap pumping in Naples</a>. "+LEE_ORD+" is a Lee County Utilities rule and should not be copied onto a Naples sewer account by habit.</p>"
+ "<p>Residential pumping starts at $399.99 for a standard 1 to 3 bedroom tank, confirmed by phone. Stay current on that visit so solids are not asked to travel into the field. Drain field work, if it is needed, is quoted after we inspect the system. For a routine pump-out, start at <a href='/septic-tank-pumping-naples-fl/'>septic tank pumping in Naples</a>. If the house is actually in North Naples, use that habit page instead; both are listed on the <a href='/drain-field-dos-and-donts-service-areas/'>drain-field habits index</a>.</p>"
+ "<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Request a Naples-area visit on ServiceM8<span class='sr'> (opens in a new tab)</span></a></p>",
+ NPDD_FAQ, "Naples drain field do's and don'ts")
+
+NNPDD_FAQ=[
+ ("Why does a high water table change drain field habits in North Naples?","It does not change the list of don'ts, but it leaves less unused soil under the field in the rainy season, so grease, a skipped pump-out, or extra water on the laterals has less margin. Call (239) 451-3261."),
+ ("Are wet wipes acceptable if I only use them now and then?","No. Keep wipes out of the toilet, including flushable labels. Use biodegradable, septic-safe toilet paper, and throw wipes away."),
+ ("Can I run a sprinkler zone over the drain field to keep the grass green?","Aim irrigation away from the field. The laterals already put water into that soil. Extra spray, especially in the wet season, is a poor idea."),
+ ("What does pumping start at?","Residential pumping starts at $399.99 for a standard 1 to 3 bedroom tank; we confirm the amount for your tank when you call. If the field needs repair, we quote it after an inspection. That repair work is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
+]
+drain_city("/drain-field-dos-and-donts-north-naples-fl/","Drain Field Do's and Don'ts in North Naples, FL | Express Septic",
+ "Drain field do's and don'ts for North Naples homes on septic, including rainy-season water tables, irrigation, wipes, and grease. Pumping from $399.99. Call (239) 451-3261.",
+ "Drain field do's and don'ts in North Naples, FL",
+ "<p><strong>In North Naples, a drain field already working close to the rainy-season water table has little leftover room, so leftover kitchen grease, a stack of laundry, or a sprinkler zone on the laterals is a worse fit here than it would be on dry ground.</strong> This page is for houses along corridors such as Immokalee Road, Vanderbilt Beach Road, and Tamiami Trail North that still use a tank. Call <a href='tel:"+TEL+"'>"+PHONE+"</a> or <a href='"+BOOK+"' rel='noopener' target='_blank'>request a North Naples pump-out on ServiceM8</a>.</p>"
+ "<h2>Why wet-season groundwater makes ordinary mistakes more expensive</h2>"
+ "<p>When the water table comes up, there is less unsaturated soil under many North Naples fields. That is a setting, not a new method. Keep fats and oils out of the sink. They belong in the trash, not in a disposal rinse. We do not invent a failure count for this corridor. We do treat grease as a don't because the field already has little freeboard in summer.</p>"
+ "<h2>What should not go in a North Naples toilet?</h2>"
+ "<p>Wet wipes, including flushable packaging, should stay in the trash. Use biodegradable, septic-safe toilet paper. A larger-lot house can hide how much has been flushed; the tank still has to handle it, and the field still receives whatever gets past the outlet.</p>"
+ +drain_wipes_figure()+
+ "<h2>Bleach, bacteria, and a yard that is already damp</h2>"
+ "<p>Heavy pours of disinfectant can knock back the organisms that work in the tank and in the drain-field soil. That matters more, not less, when the yard is already wet. Ordinary cleaning is fine; dumping leftover product is not. See <a href='/septic-bacteria-drain-field/'>the page on bacteria in the tank and the soil</a>.</p>"
+ "<h2>Irrigation, parking, and trees on a larger North Naples lot</h2>"
+ "<p>A wider yard can make the field harder to see, and easier to drive across or to cover with a parking pad. Do not park or drive on it. Do not place a pool, a spa, or a building on that footprint. Keep trees and deep-rooted shrubs off the laterals; grass is the cover. Point gutters and irrigation away from the field so you are not soaking the same soil that has to accept effluent.</p>"
+ "<h2>Laundry and disposals when the household is full</h2>"
+ "<p>Spread laundry through the week, especially when winter occupancy returns. A garbage disposal adds solids; use it lightly and keep pumping current rather than stretching the interval. Residential pumping starts at $399.99 for a standard 1 to 3 bedroom tank; we confirm the amount for your tank when you call.</p>"
+ "<h2>For food-service kitchens on this corridor, and where to read more</h2>"
+ "<p>Kitchens on Collier County's wastewater system follow the county's published 30-day indoor-trap and 90-day interceptor intervals. That is a sewer FOG program, not a household drain-field rule, and it should not be copied onto a City of Naples account or a Lee County kitchen by habit. Confirm the utility, then use the <a href='/grease-trap-pumping-service-areas/'>grease trap pumping service-areas hub</a> or <a href='/grease-trap-pumping-north-naples-fl/'>grease trap pumping in North Naples</a>. If a drain field must be repaired, we quote after inspection; that work is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332. House-tank pumping for this corridor is on <a href='/septic-tank-pumping-north-naples-fl/'>septic tank pumping in North Naples</a>. The habit list lives on the <a href='/drain-field-dos-and-donts-service-areas/'>city index of these pages</a>.</p>"
+ "<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Open a North Naples booking on ServiceM8<span class='sr'> (opens in a new tab)</span></a></p>",
+ NNPDD_FAQ, "North Naples drain field do's and don'ts")
+
+MIDD_FAQ=[
+ ("Does every Marco house have a drain field?","No. Some properties are on city sewer and would not have a household field. Confirm the bill before you treat this page as your checklist. Call (239) 451-3261."),
+ ("Why is parking on a tight island yard a drain field problem?","A vehicle compacts the soil over the laterals and can crush or stress the field. On a small, sandy lot there is often little extra space, so a parked car or a stored trailer may already be on the system. Keep vehicles off that footprint."),
+ ("Can I flush wipes if the package says they break down in salt air or sand?","No. Marketing language does not make wipes safe in a septic tank. Use biodegradable, septic-safe toilet paper, and throw wipes away."),
+ ("What does pumping start at on Marco?","House-tank pumping, for a standard 1 to 3 bedroom system, is listed from $399.99, confirmed when you call. Drain field work is quoted after we inspect the system."),
+]
+drain_city("/drain-field-dos-and-donts-marco-island-fl/","Drain Field Do's and Don'ts on Marco Island, FL | Express Septic",
+ "Drain field do's and don'ts for Marco Island homes that still use a septic tank, including tight sandy lots, parking, wipes, and grease. Pumping from $399.99. Call (239) 451-3261.",
+ "Drain field do's and don'ts on Marco Island, FL",
+ "<p><strong>On a tight, sandy Marco Island lot that still has a drain field, there is little extra room for compacted soil, leftover grease, or wipes that never belong in the tank, and not every island address still has a field at all.</strong> Confirm the utility bill first. This page is for houses that still treat wastewater on the lot, not for city-sewer addresses. Call <a href='tel:"+TEL+"'>"+PHONE+"</a> or <a href='"+BOOK+"' rel='noopener' target='_blank'>request a Marco Island visit on ServiceM8</a>.</p>"
+ "<h2>Why a small island field is a poor place to send leftovers from the kitchen</h2>"
+ "<p>Oil and grease poured down a sink do not vanish in sandy soil. They collect in the tank and, if they leave it, they coat the field. On a compact island lot the field is already working in a tight footprint. Keep fats in a container and throw them away. We do not invent a number of Marco fields damaged this way. We do treat kitchen grease as a don't.</p>"
+ "<h2>What should never be flushed on Marco?</h2>"
+ "<p>Wet wipes, including flushable labels, go in the trash. Use biodegradable, septic-safe toilet paper. A vacation house or a short-term rental is a common place for guests to treat the toilet like a bin; a short house note helps more than hoping the wrapper was accurate.</p>"
+ +drain_wipes_figure()+
+ "<h2>Harsh cleaners and the bacteria the field needs</h2>"
+ "<p>Large amounts of bleach or drain opener can set back the bacteria in the tank and in the drain-field soil. Ordinary cleaning of a beach house before guests arrive is not a license to empty leftover chemicals down the drains. See <a href='/septic-bacteria-drain-field/'>background on the bacteria a field depends on</a>.</p>"
+ "<h2>Parking, pavers, pools, and roots on a tight lot</h2>"
+ "<p>Do not park or drive on the field, and do not assume a paver pad is a harmless cover. Soil compaction is a real don't on a small island yard. A pool, a spa, or another structure should not be built on the laterals. Keep deep roots off that footprint; turf is the better cover. Aim roof drains and sprinklers elsewhere so stormwater is not sitting on the same sand that has to accept effluent.</p>"
+ "<h2>Laundry and disposals when the house fills up</h2>"
+ "<p>Spread laundry out, especially when a quiet house fills with guests. A disposal adds solids; use it sparingly and keep pumping current. House-tank pumping, for a standard 1 to 3 bedroom system, is listed from $399.99, confirmed when you call.</p>"
+ "<h2>Island restaurants, and why we do not copy a mainland FOG calendar</h2>"
+ "<p>Kitchens on Marco follow City Water &amp; Sewer rules. We do not copy Collier County's 30-day trap and 90-day interceptor intervals onto the island, and we do not invent a city frequency here. Confirm the current schedule with the city, then use the <a href='/grease-trap-pumping-service-areas/'>grease trap pumping service-areas hub</a> or <a href='/grease-trap-pumping-marco-island-fl/'>grease trap pumping in Marco Island</a>. Florida Statute 403.0741 still applies statewide to grease-waste manifests; this page does not claim that Express provides manifests. If a field needs repair, we quote after inspection. Island household pumping is on <a href='/septic-tank-pumping-marco-island-fl/'>septic tank pumping on Marco Island</a>. Other habit pages start at the <a href='/drain-field-dos-and-donts-service-areas/'>habits hub</a>.</p>"
+ "<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Schedule Marco Island pumping on ServiceM8<span class='sr'> (opens in a new tab)</span></a></p>",
+ MIDD_FAQ, "Marco Island drain field do's and don'ts")
+
+FMDD_FAQ=[
+ ("How do I know if my Fort Myers house still has a drain field?","Check the utility bill. A City of Fort Myers sewer charge means this habit page does not apply. If wastewater stays on the lot, the do's and don'ts here still matter. Call (239) 451-3261."),
+ ("Is this the right page for a house in North Fort Myers?","No. North Fort Myers is unincorporated, north of the river, and has its own habit page. Use the page that matches the address."),
+ ("What should I use in the bathroom, and what should I throw away?","Use biodegradable, septic-safe toilet paper. Keep wet wipes, even flushable labels, out of the toilet."),
+ ("What does pumping start at, and who performs drain field work?","Residential pumping starts at $399.99 for a standard 1 to 3 bedroom tank, confirmed when you call. Drain field repair or replacement is quoted after we inspect the system and is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
+]
+drain_city("/drain-field-dos-and-donts-fort-myers-fl/","Drain Field Do's and Don'ts in Fort Myers, FL | Express Septic",
+ "Drain field do's and don'ts for Fort Myers homes that still use a septic tank, including older and South Fort Myers lots. Pumping from $399.99. Call (239) 451-3261.",
+ "Drain field do's and don'ts in Fort Myers, FL",
+ "<p><strong>In Fort Myers, the first drain field question is whether the house still has one: many streets are on city sewer, and this page is only for properties whose wastewater is still treated on the lot, including older houses and South Fort Myers yards.</strong> Check the bill before you look for laterals. If a tank and a field are still in service, daily habits in the kitchen, the bathroom, and the driveway all reach that soil. Call <a href='tel:"+TEL+"'>"+PHONE+"</a> or <a href='"+BOOK+"' rel='noopener' target='_blank'>request a Fort Myers pump-out on ServiceM8</a>.</p>"
+ "<h2>Confirm the tank, then keep grease out of the lines</h2>"
+ "<p>A house on City of Fort Myers sewer has no household field to protect. A house that still uses a tank should keep cooking oil and fats out of the sink. They do not 'wash through' an older plumbing run; they settle in the line and can travel toward the laterals. We do not invent a local failure statistic. We do treat kitchen grease as off-limits on every Fort Myers lot that still has laterals.</p>"
+ "<h2>What should an older Fort Myers bathroom never flush?</h2>"
+ "<p>Wipes, including those sold as flushable, go in the wastebasket, not the toilet. Biodegradable, septic-safe paper is the roll we recommend in an older Fort Myers bath. In an older house it can be tempting to treat the toilet as the easy bin; that habit is hard on the tank and on the field it feeds.</p>"
+ +drain_wipes_figure()+
+ "<h2>Cleaners, bacteria, and a field in an older yard</h2>"
+ "<p>Normal household cleaning in an older Fort Myers bath is not the target. Pouring leftover bleach or a harsh cleaner down a drain is, because those products can interrupt the organisms that treat waste in the tank and in the soil. See <a href='/septic-bacteria-drain-field/'>good bacteria, the tank, and the field</a>.</p>"
+ "<h2>Driveways, trees, and add-on structures in older and South Fort Myers lots</h2>"
+ "<p>An older yard may have gained a parking pad, a shed, or a shade tree after the field was installed. Do not park or drive on the laterals. Do not add a pool, a spa, or a building on that footprint. Keep deep roots off the field; turf is the right cover on an older Fort Myers lot. Aim downspouts and sprinklers away from that strip so a July storm is not sitting on soil that already has laterals under it.</p>"
+ "<h2>Laundry, disposals, and staying on a pumping schedule</h2>"
+ "<p>Space washing through the week. A disposal adds solids, so it is a reason to stay current on pumping. The starting residential price, for a standard 1 to 3 bedroom tank, is $399.99, confirmed when you call. If the laterals need repair, we quote after we see the system. That work is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332.</p>"
+ "<h2>Restaurant rules in the city, versus this household page</h2>"
+ "<p>Kitchens on City of Fort Myers sewer follow the city's pretreatment program; confirm the current pumping schedule with the city rather than inventing a number here. "+LEE_ORD+" applies to food-service establishments discharging to Lee County Utilities. Interceptors on that system must be fully emptied at least every 90 calendar days. Indoor traps under the same ordinance are cleaned at least weekly, or sooner if grease and solids exceed 20% of the unit volume. Do not attach the 20% rule to interceptors, and do not use this page as a stand-in for a North Fort Myers kitchen. The <a href='/grease-trap-pumping-service-areas/'>grease trap pumping service-areas hub</a> and <a href='/grease-trap-pumping-fort-myers-fl/'>grease trap pumping in Fort Myers</a> cover the commercial side. Residential pumping for a Fort Myers tank is on <a href='/septic-tank-pumping-fort-myers-fl/'>septic tank pumping in Fort Myers</a>. See the <a href='/drain-field-dos-and-donts-service-areas/'>city index of habit pages</a>.</p>"
+ "<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Schedule Fort Myers pumping on ServiceM8<span class='sr'> (opens in a new tab)</span></a></p>",
+ FMDD_FAQ, "Fort Myers drain field do's and don'ts")
+
+FMBDD_FAQ=[
+ ("Does every house on Estero Boulevard have a drain field?","No. Some properties are on sewer and would not have a household field. Confirm the bill before you follow this checklist. Call (239) 451-3261."),
+ ("Why is a low, sandy beach lot sensitive to extra water and parking?","The field already sits in low, sandy ground. A vehicle on that footprint compacts the soil, and extra water from gutters, irrigation, or a stack of laundry leaves even less room. Keep vehicles off the laterals and spread water use out."),
+ ("Are flushable wipes acceptable in a rental bathroom?","No. Wipes, even flushable labels, belong in the trash. Use biodegradable, septic-safe toilet paper, and put a short note where guests will see it."),
+ ("What does pumping start at on the island?","Residential pumping starts at $399.99 for a standard 1 to 3 bedroom tank, confirmed when you call. After-hours pumping during an active backup is $599.99; call rather than using the form."),
+]
+drain_city("/drain-field-dos-and-donts-fort-myers-beach-fl/","Drain Field Do's and Don'ts on Fort Myers Beach, FL | Express Septic",
+ "Drain field do's and don'ts for Fort Myers Beach homes that still use a septic tank, including low sandy lots, rentals, wipes, and parking. Pumping from $399.99. Call (239) 451-3261.",
+ "Drain field do's and don'ts on Fort Myers Beach, FL",
+ "<p><strong>On a low, sandy Fort Myers Beach lot that still has a drain field, leftover grease, a parked car on the laterals, or a week of rental-turnover laundry can ask more of the soil than the yard has elevation to spare, and not every house on Estero Boulevard still has a field.</strong> Confirm the bill. This page is for island houses that still treat wastewater on the lot. Call <a href='tel:"+TEL+"'>"+PHONE+"</a> or <a href='"+BOOK+"' rel='noopener' target='_blank'>request a Fort Myers Beach visit on ServiceM8</a>.</p>"
+ "<h2>Why kitchen grease is a poor match for a low beach field</h2>"
+ "<p>Oil and fats poured down a sink collect in the tank and can move toward a field that already sits close to the water table. Keep them out of the drain. We do not invent a count of beach fields damaged this way. We do treat grease as a don't, in year-round houses and in rentals that turn over every week.</p>"
+ "<h2>What should guests never put in a beach-house toilet?</h2>"
+ "<p>Wet wipes, including flushable packaging, go in the trash. Use biodegradable, septic-safe toilet paper. A short note in a rental bathroom does more than hoping visitors read a wrapper. Paper towels and feminine products belong in the trash as well.</p>"
+ +drain_wipes_figure()+
+ "<h2>Cleaners after turnover, and the bacteria the field needs</h2>"
+ "<p>Turnover cleaning is not a reason to empty leftover bleach or drain opener into the system. Large amounts of those products can set back the bacteria in the tank and in the drain-field soil. See <a href='/septic-bacteria-drain-field/'>why those organisms matter to a drain field</a>.</p>"
+ "<h2>Parking, sand, pools, and runoff on a low lot</h2>"
+ "<p>Do not park or drive on the field, even if sand has shifted and the footprint is no longer obvious. Do not add a pool, a spa, or a structure on the laterals. Keep deep roots off that ground; turf is the right cover. Aim roof water and sprinklers elsewhere so a storm is not soaking soil that already has little freeboard.</p>"
+ "<h2>Laundry at changeover, and staying current on pumping</h2>"
+ "<p>Spread laundry out rather than running every load on turnover day. A disposal adds solids; use it lightly. Residential pumping starts at $399.99 for a standard 1 to 3 bedroom tank, confirmed when you call. After-hours pumping during an active backup is $599.99; call rather than using the form.</p>"
+ "<h2>Beach-town kitchens, and why we do not invent an island FOG number</h2>"
+ "<p>Which utility serves an Estero Boulevard kitchen has to be confirmed; we do not invent an island pumping frequency, and we do not copy a mainland calendar onto the beach by habit. Interceptors that fall under "+LEE_ORD+" must be fully emptied at least every 90 calendar days when that ordinance applies. Indoor traps under the same rule are cleaned at least weekly, or sooner if grease and solids exceed 20% of the unit volume. Confirm the account, then use the <a href='/grease-trap-pumping-service-areas/'>grease trap pumping service-areas hub</a> or <a href='/grease-trap-pumping-fort-myers-beach-fl/'>grease trap pumping on Fort Myers Beach</a>. This is not the Sanibel or Marco habit page. Beach-house pumping is on <a href='/septic-tank-pumping-fort-myers-beach-fl/'>septic tank pumping on Fort Myers Beach</a>. Other cities are collected on the <a href='/drain-field-dos-and-donts-service-areas/'>habits hub</a>.</p>"
+ "<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Request Fort Myers Beach pumping on ServiceM8<span class='sr'> (opens in a new tab)</span></a></p>",
+ FMBDD_FAQ, "Fort Myers Beach drain field do's and don'ts")
+
+CCDD_FAQ=[
+ ("If my Cape street is on the Utilities Extension Project, do these habits still apply?","Yes, until the house is connected to city sewer and the tank is abandoned. A UEP phase on the map does not make wipes, grease, or parking on the field safe in the meantime. Call (239) 451-3261."),
+ ("Do canal-front lots have a different flushing rule?","The don'ts are the same. Wipes, even flushable labels, belong in the trash. Use biodegradable, septic-safe toilet paper. A canal lot just has less room to send leftover solids or compacted soil toward the water."),
+ ("Can I park a boat trailer on the drain field if the grass looks dry?","No. Vehicles compact the soil over the laterals whether the grass looks dry or not. Keep trailers and cars off that footprint."),
+ ("What does pumping start at in Cape Coral?","For a standard 1 to 3 bedroom residential tank, pumping starts at $399.99, confirmed when you call. Drain field work is quoted after we inspect the system."),
+]
+drain_city("/drain-field-dos-and-donts-cape-coral-fl/","Drain Field Do's and Don'ts in Cape Coral, FL | Express Septic",
+ "Drain field do's and don'ts for Cape Coral homes still on septic, including North Cape lots waiting on UEP sewer, canal yards, wipes, and grease. Pumping from $399.99. Call (239) 451-3261.",
+ "Drain field do's and don'ts in Cape Coral, FL",
+ "<p><strong>In Cape Coral, many lots south of Pine Island Road are already on city sewer, but a house that is still on a tank — including many in North Cape while the Utilities Extension Project proceeds — still has a drain field that can be harmed by grease, wipes, or a trailer parked on the laterals.</strong> A UEP phase on a map does not retire those habits early. Confirm the bill, then treat this page as a household checklist, not a sewer-connection guide. Questions about connecting go to the City. Call <a href='tel:"+TEL+"'>"+PHONE+"</a> or <a href='"+BOOK+"' rel='noopener' target='_blank'>request a Cape Coral pump-out on ServiceM8</a>.</p>"
+ "<h2>Until the street is on city sewer, the kitchen still feeds the field</h2>"
+ "<p>Keep oil and fats out of the sink. They collect in the tank and can move toward the field, including on canal-front lots where the system already works close to the water. Cape Coral began as a community of septic tanks and shallow wells; even where wells have been replaced, a remaining field still has to accept what leaves the house. We do not invent a count of canal fields damaged by grease. We do treat it as a don't.</p>"
+ "<h2>What should not go in a Cape toilet?</h2>"
+ "<p>Wet wipes, including flushable labels, belong in the trash. Use biodegradable, septic-safe toilet paper. A house waiting on a UEP connection is not a reason to relax that rule for a year or two.</p>"
+ +drain_wipes_figure()+
+ "<h2>Cleaners and the bacteria that treat effluent in canal-side soil</h2>"
+ "<p>A leftover jug of bleach or a harsh cleaner does not belong in a single pour down a Cape drain. Ordinary cleaning is fine. See <a href='/septic-bacteria-drain-field/'>the septic-bacteria guide</a>.</p>"
+ "<h2>Trailers, pools, roots, and runoff on a canal lot</h2>"
+ "<p>Do not park or drive on the field, and do not use that strip as boat-trailer storage. Keep pools, spas, and buildings off the laterals. Deep roots do not belong on that footprint; turf is the cover. Aim downspouts and sprinklers elsewhere so canal-side groundwater and rain are not joined by extra spray on the same soil.</p>"
+ "<h2>Laundry, disposals, and pumping while you wait on sewer</h2>"
+ "<p>Spread laundry through the week. A disposal adds solids; keep pumping current rather than stretching the calendar because a sewer project is 'coming.' For a standard 1 to 3 bedroom residential tank, pumping starts at $399.99, confirmed when you call. If the field needs repair before a connection happens, we quote after inspection.</p>"
+ "<h2>Cape kitchens, and when Ordinance 14-24 actually applies</h2>"
+ "<p>Restaurants on Cape Coral Utilities follow the city's FOG program; confirm the current schedule with the city rather than inventing a number here. "+LEE_ORD+" applies to kitchens discharging to Lee County Utilities, not automatically to a city-sewer Cape account. On LCU, interceptors have a 90-calendar-day full pump-out minimum, and indoor traps are cleaned at least weekly or whenever grease and solids exceed 20% of the unit volume. The 20% rule is not for interceptors. Kitchen schedules are listed from the <a href='/grease-trap-pumping-service-areas/'>grease trap pumping service-areas hub</a> and <a href='/grease-trap-pumping-cape-coral-fl/'>grease trap pumping in Cape Coral</a>. Residential pumping on remaining Cape tanks is on <a href='/septic-tank-pumping-cape-coral-fl/'>septic tank pumping in Cape Coral</a>. More city habit pages sit on the <a href='/drain-field-dos-and-donts-service-areas/'>service-areas index</a>.</p>"
+ "<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Open a Cape Coral booking on ServiceM8<span class='sr'> (opens in a new tab)</span></a></p>",
+ CCDD_FAQ, "Cape Coral drain field do's and don'ts")
+
+LADD_FAQ=[
+ ("Do most Lehigh Acres houses still have a drain field?","A tank and a field are the usual case on this grid, often with a well on the same lot. If you pay a sewer charge, this page does not apply. Call (239) 451-3261 if you want help reading a bill."),
+ ("Why do you mention the well when talking about drain field habits?","On many Lehigh lots the well and the field share the same ground. Grease, wipes, or a neglected pump-out can send a problem into soil that also supplies the house. That is a reason to be careful, not a laboratory claim about a particular well."),
+ ("What toilet paper should I buy?","Use biodegradable, septic-safe toilet paper. Keep wet wipes, even flushable labels, in the trash."),
+ ("What does pumping start at on the Lehigh grid?","The published starting price for a standard 1 to 3 bedroom house tank is $399.99, confirmed when you call. Drain field repair, if it is needed, is quoted after we inspect the system and is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
+]
+drain_city("/drain-field-dos-and-donts-lehigh-acres-fl/","Drain Field Do's and Don'ts in Lehigh Acres, FL | Express Septic",
+ "Drain field do's and don'ts for Lehigh Acres homes on well and septic, including grease, wipes, laundry, and what to keep off the field. Pumping from $399.99. Call (239) 451-3261.",
+ "Drain field do's and don'ts in Lehigh Acres, FL",
+ "<p><strong>On the Lehigh Acres grid, a drain field often shares the same lot as a household well, so what you pour down a sink on Lee Boulevard or a residential side street is not only a tank issue; it is a soil issue on a property that also drinks from that ground.</strong> A tank and a field are the usual case here. This page is for those houses, including older tanks that may not match a newer diagram. Call <a href='tel:"+TEL+"'>"+PHONE+"</a> or <a href='"+BOOK+"' rel='noopener' target='_blank'>request a Lehigh Acres pump-out on ServiceM8</a>.</p>"
+ "<h2>Why kitchen grease is a problem on a well-and-field lot</h2>"
+ "<p>Oil and fats belong in the trash, not in the drain. They gather as scum and can travel down the line toward the laterals. We do not invent a count of Lehigh fields damaged this way, and we do not claim a laboratory result about any particular well. We do treat grease as a don't because the field and the well share the lot.</p>"
+ "<h2>What should not go in a Lehigh toilet?</h2>"
+ "<p>Wipes, even packages marked flushable, should be bagged and thrown away. A biodegradable, septic-safe roll is the paper that belongs in a Lehigh toilet. Older bathrooms and busy multi-generational houses are common places for wipes to pile up; the tank still has to handle whatever is flushed.</p>"
+ +drain_wipes_figure()+
+ "<h2>Harsh cleaners and the bacteria in tank and soil</h2>"
+ "<p>A leftover jug of bleach or a harsh cleaner should not be dumped down a Lehigh drain; those products can set back the microbes that treat waste before effluent reaches the soil. Everyday cleaning of a Lehigh bathroom is not the target. See <a href='/septic-bacteria-drain-field/'>how bacteria treat effluent before it reaches the soil</a>.</p>"
+ "<h2>Parking, trees, and runoff on a grid lot</h2>"
+ "<p>Even when a grid lot looks wide, vehicles do not belong on the laterals, and neither does a pool, a spa, or a shed. Deep roots should stay clear of that rectangle; a lawn is enough cover. Roof drains and sprinklers should discharge somewhere else, so a midsummer downpour is not stacked on the same soil the laterals already use.</p>"
+ "<h2>Laundry, disposals, and a regular pump-out on this grid</h2>"
+ "<p>Spread laundry through the week, especially in a larger household. A disposal adds solids; keep pumping current. The published starting price for a standard 1 to 3 bedroom house tank is $399.99, confirmed when you call. Repair on a Lehigh field, when it is needed, is priced after a look at the system and is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332.</p>"
+ "<h2>Lehigh restaurants, and the 14-24 90-day interceptor rule</h2>"
+ "<p>Food-service kitchens billed by Lee County Utilities follow "+LEE_ORD+". On those accounts, interceptors have a 90-calendar-day full pump-out minimum, and indoor traps are cleaned at least weekly or whenever grease and solids exceed 20% of the unit volume. The 20% figure is for indoor traps, not interceptors. Restaurant pages are on the <a href='/grease-trap-pumping-service-areas/'>grease trap pumping service-areas hub</a> and <a href='/grease-trap-pumping-lehigh-acres-fl/'>grease trap pumping in Lehigh Acres</a>. Grid-lot household pumping is on <a href='/septic-tank-pumping-lehigh-acres-fl/'>septic tank pumping in Lehigh Acres</a>. The rest of the list is on the <a href='/drain-field-dos-and-donts-service-areas/'>habits hub</a>.</p>"
+ "<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Schedule Lehigh grid pumping on ServiceM8<span class='sr'> (opens in a new tab)</span></a></p>",
+ LADD_FAQ, "Lehigh Acres drain field do's and don'ts")
+
+NFMDD_FAQ=[
+ ("Is this the same as the Fort Myers drain field habit page?","No. North Fort Myers is unincorporated, north of the Caloosahatchee, and is not the City of Fort Myers. Use this page for an address here. Call (239) 451-3261."),
+ ("Do neighborhood lots and acreage lots follow different flushing rules?","No. Wipes, even flushable labels, belong in the trash on both kinds of lot. Use biodegradable, septic-safe toilet paper. Access and how wet the yard gets can differ; the don'ts do not."),
+ ("Should I water the drain field in the dry season to 'keep it healthy'?","No. Divert irrigation away from the laterals. The field already receives effluent. Extra spray, especially when the yard is already wet in summer, is a poor idea."),
+ ("What does pumping start at north of the river?","Residential pumping starts at $399.99 for a standard 1 to 3 bedroom tank, confirmed when you call. Drain field work is quoted after we inspect the system."),
+]
+drain_city("/drain-field-dos-and-donts-north-fort-myers-fl/","Drain Field Do's and Don'ts in North Fort Myers, FL | Express Septic",
+ "Drain field do's and don'ts for North Fort Myers homes on septic, including neighborhood and acreage lots north of the river. Pumping from $399.99. Call (239) 451-3261.",
+ "Drain field do's and don'ts in North Fort Myers, FL",
+ "<p><strong>North Fort Myers is not the City of Fort Myers, and a drain field on a neighborhood lot or on acreage north of the Caloosahatchee still has to accept whatever the house sends it, including in yards that already stay wet after a summer storm.</strong> Business 41 and Hancock Bridge Parkway are how many people get here; they are not a reason to skip the habits on this page. After a heavy rain, a low yard north of the river can stay soft for days; that is a reason to keep extra water and extra weight off the laterals, not a reason to invent a special North Fort Myers method. Call <a href='tel:"+TEL+"'>"+PHONE+"</a> or <a href='"+BOOK+"' rel='noopener' target='_blank'>request a North Fort Myers pump-out on ServiceM8</a>.</p>"
+ "<h2>Keep grease out of a yard that may already be wet</h2>"
+ "<p>Cooking oil and fats belong in the trash. In a yard that stays soft after rain, a field has less unused soil under it, so leftover grease moving out of the tank is a poor addition. We do not invent a local failure count. We treat kitchen grease as a bad fit on both compact neighborhood lots and larger rural parcels.</p>"
+ "<h2>What should not be flushed north of the river?</h2>"
+ "<p>Wet wipes, including flushable labels, go in the trash on every kind of North Fort Myers lot. Use biodegradable, septic-safe toilet paper. The lot size does not change that rule.</p>"
+ +drain_wipes_figure()+
+ "<h2>Cleaners and bacteria when the soil is already damp</h2>"
+ "<p>Heavy doses of bleach or a harsh cleaner are a worse fit, not a better one, when a North Fort Myers yard is already wet, because those products can interrupt the organisms in the tank and in the soil. See <a href='/septic-bacteria-drain-field/'>why helpful bacteria belong in the tank and the field</a>.</p>"
+ "<h2>Parking, trees, and runoff on neighborhood lots versus acreage</h2>"
+ "<p>A compact lot can hide the field along a side yard. An acreage parcel can hide it far from the house, which makes it easier to drive across without noticing. In both cases, do not park or drive on the laterals, and do not place a pool, a spa, or a structure there. Keep trees and deep roots off the field; grass is the cover. Divert gutters and irrigation away from it.</p>"
+ "<h2>Laundry, disposals, and a regular pump-out</h2>"
+ "<p>Space washing through the week, especially after a wet spell north of the river. A disposal adds solids; stay current on pumping. Residential pumping starts at $399.99 for a standard 1 to 3 bedroom tank, confirmed when you call. If the field needs repair, we quote after inspection.</p>"
+ "<h2>Kitchens north of the river, and the 14-24 90-day rule where it applies</h2>"
+ "<p>Food-service kitchens billed by Lee County Utilities follow "+LEE_ORD+". Interceptors on that system have a 90-calendar-day full pump-out minimum, and indoor traps are cleaned at least weekly or whenever grease and solids go past 20% of the unit volume. The 20% rule is not for interceptors. Do not use a City of Fort Myers pretreatment page by habit for a North Fort Myers address. Confirm the account, then use the <a href='/grease-trap-pumping-service-areas/'>grease trap pumping service-areas hub</a> or <a href='/grease-trap-pumping-north-fort-myers-fl/'>grease trap pumping in North Fort Myers</a>. Pumping for tanks north of the river is on <a href='/septic-tank-pumping-north-fort-myers-fl/'>septic tank pumping in North Fort Myers</a>. The full city list is on the <a href='/drain-field-dos-and-donts-service-areas/'>habits hub</a>.</p>"
+ "<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Open a North Fort Myers booking on ServiceM8<span class='sr'> (opens in a new tab)</span></a></p>",
+ NFMDD_FAQ, "North Fort Myers drain field do's and don'ts")
+
+DDHUB_FAQ=[
+ ("Do these pages apply if my house is already on sewer?","No. A house that pays a sewer charge does not have a household drain field to protect. Open a city page only if wastewater is still treated on the lot."),
+ ("What are the main household don'ts?","Keep cooking fats out of the sink. Keep wipes out of the toilet, even when a label says flushable, and use biodegradable, septic-safe toilet paper. Easy on heavy disinfectant, which can interrupt tank and soil bacteria. Keep vehicles, buildings, trees, pools, and extra runoff off the laterals. Space laundry out, treat a disposal as a solids source, and stay current on pumping."),
+ ("What about restaurants and the 90-day interceptor rule?","Lee County Ordinance 14-24 requires interceptors discharging to Lee County Utilities to be fully pumped at least every 90 calendar days. Indoor traps under that ordinance are cleaned at least weekly or whenever grease and solids exceed 20% of unit volume. The 20% rule is not for interceptors. Bonita Springs Utilities publishes a 90-day interceptor interval and a 25% wetted-height standard. Other cities have their own programs; confirm the utility. See the grease trap pumping service-areas hub."),
+ ("What does residential pumping start at, and how is drain field work priced?","Residential pumping starts at $399.99 for a standard 1 to 3 bedroom tank, confirmed when you call. Drain field repair or replacement is quoted after we inspect the system and is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332."),
+]
+page("/drain-field-dos-and-donts-service-areas/",
+ "Drain Field Do's and Don'ts | Service Areas in Southwest Florida | Express Septic",
+ "City pages on drain field do's and don'ts for Southwest Florida homes still on septic: no grease or wipes, septic-safe toilet paper, what to keep off the field, and regular pumping from $399.99. Call (239) 451-3261.",
+ "Drain field do's and don'ts in Southwest Florida",
+ "<p><strong>A drain field lasts longer when the house does not send it grease, wipes, harsh cleaners, extra water, or the weight of a vehicle, and when the tank is pumped on a regular schedule.</strong> These city pages apply only where the house still has a field. A sewered house has nothing here to protect. Residential pumping starts at $399.99 for a standard 1 to 3 bedroom tank. Call <a href='tel:"+TEL+"'>"+PHONE+"</a> or <a href='"+BOOK+"' rel='noopener' target='_blank'>open a routine booking on ServiceM8</a>.</p>"
+ "<h2>Lee County area cities</h2>"
+ "<ul class='cards'>"
+ "<li><a href='/drain-field-dos-and-donts-bonita-springs-fl/'><strong>Bonita Springs</strong></a> — Fields still in service, including older neighborhoods and lots east of I-75, while some streets wait on BSU sewer.</li>"
+ "<li><a href='/drain-field-dos-and-donts-estero-fl/'><strong>Estero</strong></a> — Village lots that still have a field during sewer-conversion phases; our shop is here on Olde Meadowbrook Circle.</li>"
+ "<li><a href='/drain-field-dos-and-donts-fort-myers-fl/'><strong>Fort Myers</strong></a> — Confirm the house is still on a tank, then follow household habits, including on older and South Fort Myers lots.</li>"
+ "<li><a href='/drain-field-dos-and-donts-fort-myers-beach-fl/'><strong>Fort Myers Beach</strong></a> — Low, sandy lots that still have a field; not every Estero Boulevard house does.</li>"
+ "<li><a href='/drain-field-dos-and-donts-cape-coral-fl/'><strong>Cape Coral</strong></a> — Remaining tanks, including many in North Cape during UEP work; canal yards need the same don'ts.</li>"
+ "<li><a href='/drain-field-dos-and-donts-lehigh-acres-fl/'><strong>Lehigh Acres</strong></a> — A tank and a field are the usual case on this grid, often with a well on the same lot.</li>"
+ "<li><a href='/drain-field-dos-and-donts-north-fort-myers-fl/'><strong>North Fort Myers</strong></a> — Unincorporated lots north of the river; this is not the City of Fort Myers page.</li>"
+ "</ul>"
+ "<h2>Collier County area cities</h2>"
+ "<ul class='cards'>"
+ "<li><a href='/drain-field-dos-and-donts-naples-fl/'><strong>Naples</strong></a> — Confirm the house still has a field, then watch seasonal load, landscaping, and what goes down the drains.</li>"
+ "<li><a href='/drain-field-dos-and-donts-north-naples-fl/'><strong>North Naples</strong></a> — Rainy-season water tables leave less margin under many fields along Immokalee Road and nearby corridors.</li>"
+ "<li><a href='/drain-field-dos-and-donts-marco-island-fl/'><strong>Marco Island</strong></a> — Tight, sandy lots that still have a field; confirm the house is not on city sewer first.</li>"
+ "</ul>"
+ "<h2>Shared habits, stated once</h2>"
+ "<p>Cooking fats belong in the trash, not the sink. A biodegradable, septic-safe roll of toilet paper is the everyday choice; wipes go in the trash even when a wrapper says flushable. Heavy pours of disinfectant can interrupt the organisms that treat waste in the tank and the soil; that process is explained on <a href='/septic-bacteria-drain-field/'>the good-bacteria page</a>. Vehicles, buildings, trees, pools, and extra roof or sprinkler water should stay off the laterals. Space laundry through the week, treat a garbage disposal as a solids source rather than a shortcut, and keep pumping current. The first-time owner guide has a shorter list if someone in the house is new to tanks.</p>"
+ "<h2>Restaurant interceptors, in brief</h2>"
+ "<p>"+LEE_ORD+" requires interceptors discharging to Lee County Utilities to be fully pumped at least every 90 calendar days. Indoor traps under that ordinance are cleaned at least weekly or whenever grease and solids exceed 20% of unit volume. The 20% rule is never a rule for interceptors. Bonita Springs Utilities publishes a 90-day interceptor interval and a 25% wetted-height standard. Other utilities, including city programs in Fort Myers, Cape Coral, Naples, and Marco Island, have their own schedules; the city pages tell you to confirm rather than inventing a number. The full commercial list is on the <a href='/grease-trap-pumping-service-areas/'>grease trap pumping service-areas hub</a>.</p>"
+ "<h2>Which city page to open</h2>"
+ "<p>Open the page for the community named on the mail, after you have checked the bill for a sewer charge. If that charge is there, these habit pages are not for that house. Bonita Springs, Estero, Fort Myers, and Cape Coral each mix sewered streets with remaining tanks; the city page is written only for a remaining field. In Naples and on Marco Island, start by confirming a tank is still present. Lehigh Acres is where a field is the normal case. North Naples is written around wet-season groundwater. North Fort Myers sits across the river from the city and should not be read as a Fort Myers street. Fort Myers Beach is written for low, sandy lots that still have laterals. When two names could apply, use the closer geographic match.</p>"
+ "<h2>Price and drain field work</h2>"
+ "<p>A standard 1 to 3 bedroom residential pump-out is priced from $399.99, confirmed on the call. If a field has to be repaired or replaced, we give a quote after the inspection; that work is performed under FL Certified Plumbing Contractor Raymond F. Dibble, License #CFC020332. After-hours work while a backup is already underway is $599.99 — call rather than using the form.</p>"
+ "<h2>Drain field do's and don'ts questions</h2>"+faq_html(DDHUB_FAQ)
+ +"<p><a class='btn primary' href='tel:"+TEL+"'>Call "+PHONE+"</a> <a class='btn ghost' href='"+BOOK+"' rel='noopener' target='_blank'>Book from the drain field habits hub on ServiceM8<span class='sr'> (opens in a new tab)</span></a></p>",
+ [faq_ld(DDHUB_FAQ), crumbs_ld([("Home",BASE+"/"),("Drain field do's and don'ts",BASE+"/drain-field-dos-and-donts-service-areas/")])],
+ trail=[("Home","/"),("Drain field do's and don'ts","/drain-field-dos-and-donts-service-areas/")])
+
 open("sitemap.xml","w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+"".join(f"<url><loc>{BASE}{p}</loc><lastmod>{TODAY}</lastmod></url>" for p in PAGES)+"</urlset>\n")
+
 # Sitemap index: static pages + ServiceTechHub Project Showcase (served by functions/ once configured)
 open("sitemap-index.xml","w").write(f'<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><sitemap><loc>{BASE}/sitemap.xml</loc></sitemap></sitemapindex>\n')
 open("robots.txt","w").write("User-agent: *\nAllow: /\n\n""User-agent: GPTBot\nAllow: /\n\n""User-agent: PerplexityBot\nAllow: /\n\n""User-agent: ClaudeBot\nAllow: /\n\n""User-agent: Google-Extended\nAllow: /\n\n""User-agent: OAI-SearchBot\nAllow: /\n\n"f"Sitemap: {BASE}/sitemap-index.xml\nSitemap: {BASE}/sitemap.xml\n")
@@ -3500,6 +3848,17 @@ f"- [Septic service for property managers and HOAs]({BASE}/septic-for-property-m
 f"- [Septic care for landlords and Airbnb hosts]({BASE}/septic-for-landlords-and-short-term-rentals/)",
 f"- [Southwest Florida septic maintenance checklist]({BASE}/septic-maintenance-checklist/)",
 f"- [Drain field not draining]({BASE}/drain-field-not-draining/)",
+f"- [Drain field do's and don'ts, by city]({BASE}/drain-field-dos-and-donts-service-areas/): habit pages for lots that still have a field in Bonita Springs, Estero, Naples, and other first-group communities.",
+f"- [Drain field do's and don'ts in Bonita Springs]({BASE}/drain-field-dos-and-donts-bonita-springs-fl/): field habits for houses still on a tank, including older neighborhoods and lots east of I-75.",
+f"- [Drain field do's and don'ts in Estero]({BASE}/drain-field-dos-and-donts-estero-fl/): Village lots that still have a field during sewer-conversion phases.",
+f"- [Drain field do's and don'ts in Naples]({BASE}/drain-field-dos-and-donts-naples-fl/): habits for Naples-area houses that still use a tank, including seasonal occupancy and landscaping.",
+f"- [Drain field do's and don'ts in North Naples]({BASE}/drain-field-dos-and-donts-north-naples-fl/): rainy-season water tables and household habits for fields still in service.",
+f"- [Drain field do's and don'ts on Marco Island]({BASE}/drain-field-dos-and-donts-marco-island-fl/): tight, sandy lots that still have a field, after you confirm the house is not on city sewer.",
+f"- [Drain field do's and don'ts in Fort Myers]({BASE}/drain-field-dos-and-donts-fort-myers-fl/): habits for houses that still have a tank, including older and South Fort Myers lots.",
+f"- [Drain field do's and don'ts on Fort Myers Beach]({BASE}/drain-field-dos-and-donts-fort-myers-beach-fl/): low, sandy lots that still have a field; not every Estero Boulevard house does.",
+f"- [Drain field do's and don'ts in Cape Coral]({BASE}/drain-field-dos-and-donts-cape-coral-fl/): remaining tanks, including many in North Cape during UEP work.",
+f"- [Drain field do's and don'ts in Lehigh Acres]({BASE}/drain-field-dos-and-donts-lehigh-acres-fl/): well-and-field lots on the Lehigh grid.",
+f"- [Drain field do's and don'ts in North Fort Myers]({BASE}/drain-field-dos-and-donts-north-fort-myers-fl/): unincorporated lots north of the river; not the City of Fort Myers page.",
 f"- [Emergency and after-hours septic backup]({BASE}/emergency-septic-backup/): after-hours pumping is $599.99. Call (239) 451-3261. Do not use the online booking form during a backup.",
 f"- [Commercial septic pumping for churches, schools, and RV parks]({BASE}/commercial-septic-churches-schools-rv-parks/): quoted for your tank and use. The residential starting price of $399.99 does not automatically apply to large commercial tanks.",
 f"- [Hurricane and flood septic prep]({BASE}/hurricane-and-flood-septic-prep/)",
