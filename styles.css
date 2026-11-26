@@ -57,7 +57,7 @@ p{margin:0 0 1em}
 .qlink::after{content:" →"}
 .callbtn{display:inline-flex;flex-direction:column;align-items:flex-start;gap:2px;background:var(--accent);color:#fff;text-decoration:none;border-radius:var(--r);padding:14px 26px 15px;min-height:64px;justify-content:center;box-shadow:0 1px 0 rgba(0,0,0,.06)}
 .callbtn:hover{background:var(--accent-d)}
-.callbtn .k{font:600 .82rem/1.1 var(--head);letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+.callbtn .k{font:600 .82rem/1.1 var(--head);letter-spacing:.08em;text-transform:uppercase}
 .callbtn .n{font:700 1.65rem/1.1 var(--head);letter-spacing:.01em}
 /* ---------- home hero ---------- */
 .hero{display:grid;grid-template-columns:45fr 55fr;min-height:min(640px,calc(100vh - 68px));background:var(--canvas)}
@@ -244,7 +244,7 @@ p{margin:0 0 1em}
 .form-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px}
 .form-card h3{font-size:1.5rem}
 .request-frame{border:1px solid var(--line)!important;border-radius:var(--r)}
-.form-note{font-size:.95rem;color:var(--muted)}
+.form-note{font-size:.95rem;color:var(--muted)!important}
 /* ---------- footer ---------- */
 .foot{background:#17191c;color:#d4d7db;padding:64px 0 40px;font-size:.98rem}
 .foot a{color:#fff;text-decoration-color:#5d636b}
