@@ -47,8 +47,10 @@ document.querySelectorAll('.route').forEach((svg) => {
   const where = (a) => { const z = a.closest('.mbar,.top,.hero,.phead,.book,.closer,.foot,.quick,.svc,.owner,.hfaq,.prose,.work,.price-panel,.priceband,.cred,.quotes,.standapart,.edu'); return z ? (z.className.split(' ')[0] || z.tagName.toLowerCase()) : 'body'; };
   document.addEventListener('click', (e) => {
     const a = e.target.closest && e.target.closest('a[href]'); if (!a || typeof window.gtag !== 'function') return;
-    const h = a.getAttribute('href') || '', p = { link_location: where(a), page_path: location.pathname, transport_type: 'beacon' };
+    // No PII: only where the link sits, the page path and the site domain. Clicks are intent, not confirmed leads.
+    const h = a.getAttribute('href') || '', p = { link_location: where(a), page_path: location.pathname, site_domain: location.hostname, transport_type: 'beacon' };
     if (h.startsWith('tel:')) gtag('event', 'phone_call_click', p);
+    else if (h.startsWith('sms:')) gtag('event', 'sms_click', p);
     else if (h.includes('book.servicem8.com')) gtag('event', 'book_request_click', p);
     else if (h.startsWith('mailto:')) gtag('event', 'email_click', p);
     else if (/#book$/.test(h)) gtag('event', 'book_section_click', p);

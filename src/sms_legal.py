@@ -27,14 +27,16 @@ class Brand:
   def url(self, p=""): u = self.base + p; return f'<a href="{u}">{u}</a>'
 
 def operated_line(b):
-  return f'<p class="express-operator">Operated by {LLC} · Text or call <a href="tel:{b.tel}" style="display:inline">{_e(b.phone)}</a></p>'
+  return (f'<p class="express-operator">Operated by {LLC} · Call <a href="tel:{b.tel}" style="display:inline">{_e(b.phone)}</a>'
+          f' · <a href="sms:{b.tel}?&amp;body=BOOK" style="display:inline">Text BOOK</a></p>')
 
 def sms_optin_html(b):
   """Text BOOK CTA, same structure as the approved Xpress 'Book by text' block."""
   sender = LLC if b.is_llc else f"{_e(b.name)}, operated by {LLC},"
   return ('<div class="sms-optin-block">'
     + operated_line(b) +
-    f'<p class="sms-optin"><strong>Text BOOK to {_e(b.phone)}</strong> {b.book_reply}. '
+    f'<p class="sms-optin"><strong><a href="sms:{b.tel}?&amp;body=BOOK" style="display:inline">Text BOOK to {_e(b.phone)}</a></strong> {b.book_reply}. '
+    'If BOOK doesn&rsquo;t fill in automatically, type BOOK in the message. '
     f'By texting BOOK, you agree to receive text messages from {sender} about your booking request. '
     'Msg &amp; data rates may apply. Msg frequency varies. Reply HELP for help, STOP to opt out. '
     'Consent is not a condition of purchase. See our <a href="/privacy-policy/" style="display:inline">Privacy Policy</a> and <a href="/terms/" style="display:inline">SMS Terms</a>.</p>'
