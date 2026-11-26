@@ -18,6 +18,12 @@ BASE="https://expresssepticpumping.com"
 NAME="Express Septic Tank Pumping"; PHONE="(239) 451-3261"; TEL="+12394513261"
 BOOK="https://book.servicem8.com/request_booking?uuid=019fca12-b6bf-721c-8a2b-41d89e1a1b5b"
 EMAIL="expressseptictankpumping@gmail.com"
+import sys as _sys; _sys.path.insert(0, "src"); import sms_legal as SL
+BR = SL.Brand("Express Septic Tank Pumping", "(239) 451-3261", "+12394513261", "expressseptictankpumping@gmail.com",
+  "23357 Olde Meadowbrook Circle", "Estero", "FL", "34134", "https://expresssepticpumping.com",
+  service="septic tank pumping, grease trap pumping, and related local services",
+  form_tech="Service and quote requests on this site are submitted through ServiceM8, our scheduling and job management provider.",
+  book_reply="to get our online booking link", is_llc=True)
 REVIEW="https://g.page/r/CYxfVw5rrgwLEBM/review"  # write-a-review (Leave a review)
 REVIEWS_READ="https://www.google.com/maps?cid=796203008963075980"  # Google Maps listing, place ChIJ2U4mCDcKRGcRjF9XDmuuDAs
 CITIES_ALL=["Estero","Bonita Springs","Naples","North Naples","Fort Myers","Cape Coral","Lehigh Acres","San Carlos Park"]
@@ -286,8 +292,8 @@ def page(path,title,desc,h1,body,extra=None,hero=None,lead="",trail=None,canonic
       '<a href="/es/reemplazo-campo-de-drenaje/">Campo de drenaje</a>'
       '<a href="/es/cuidado-filtro-septico/">Cuidado del filtro</a>'
       '<a href="/es/guia-primeros-duenos-tanque-septico/">Guía para dueños nuevos</a>'
-      '<a href="/privacy/">Privacidad (en inglés)</a>'
-      '<a href="/terms/">Términos (en inglés)</a>'
+      '<a href="/privacy-policy/">Privacidad (en inglés)</a>'
+      '<a href="/terms/">Términos SMS (en inglés)</a>'
       '<a href="/contact/">Contacto (en inglés)</a>')
     crumb_aria="Ruta de navegación"
     mbar_book_href="/es/#reservar"
@@ -301,7 +307,7 @@ def page(path,title,desc,h1,body,extra=None,hero=None,lead="",trail=None,canonic
     hours_p="Open 24 hours, 7 days a week."
     tag_p="Owner-operated. Licensed &amp; insured. We come to you."
     fh_svc,fh_areas,fh_info="Services","Areas","Info"
-    info_links=('<a href="/">Home</a><a href="/how-it-works/">How it works</a><a href="/septic-system-maintenance/">Septic maintenance</a><a href="/septic-filter-care/">Filter care</a><a href="/septic-filter-cleaning-service-areas/">Filter care service areas</a><a href="/why-we-pump-both-tanks-service-areas/">Why we pump both tanks</a><a href="/drain-field-dos-and-donts-service-areas/">Drain field do\'s and don\'ts</a><a href="/septic-bacteria-drain-field/">Good bacteria</a><a href="/first-time-septic-owner/">First-time septic guide</a><a href="/septic-maintenance-checklist/">Maintenance checklist</a><a href="/how-often-to-pump-septic-tank/">How often to pump</a><a href="/emergency-septic-backup/">Emergency backup</a><a href="/hurricane-and-flood-septic-prep/">Hurricane and flood prep</a><a href="/sewage-smell-in-yard-or-house/">Sewage smell</a><a href="/cant-find-septic-tank-lid/">Can\'t find the lid</a><a href="/rainy-season-septic/">Rainy season</a><a href="/southwest-florida-septic-cost-guide/">Cost guide</a><a href="/septic-myths/">Septic myths</a><a href="/grease-trap-pumping-service-areas/">Grease trap service areas</a><a href="/completed-jobs/">Completed jobs</a><a href="/about/">About</a><a href="/faq/">FAQ</a><a href="/contact/">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a>')
+    info_links=('<a href="/">Home</a><a href="/how-it-works/">How it works</a><a href="/septic-system-maintenance/">Septic maintenance</a><a href="/septic-filter-care/">Filter care</a><a href="/septic-filter-cleaning-service-areas/">Filter care service areas</a><a href="/why-we-pump-both-tanks-service-areas/">Why we pump both tanks</a><a href="/drain-field-dos-and-donts-service-areas/">Drain field do\'s and don\'ts</a><a href="/septic-bacteria-drain-field/">Good bacteria</a><a href="/first-time-septic-owner/">First-time septic guide</a><a href="/septic-maintenance-checklist/">Maintenance checklist</a><a href="/how-often-to-pump-septic-tank/">How often to pump</a><a href="/emergency-septic-backup/">Emergency backup</a><a href="/hurricane-and-flood-septic-prep/">Hurricane and flood prep</a><a href="/sewage-smell-in-yard-or-house/">Sewage smell</a><a href="/cant-find-septic-tank-lid/">Can\'t find the lid</a><a href="/rainy-season-septic/">Rainy season</a><a href="/southwest-florida-septic-cost-guide/">Cost guide</a><a href="/septic-myths/">Septic myths</a><a href="/grease-trap-pumping-service-areas/">Grease trap service areas</a><a href="/completed-jobs/">Completed jobs</a><a href="/about/">About</a><a href="/faq/">FAQ</a><a href="/contact/">Contact</a><a href="/accessibility/">Accessibility</a><a href="/privacy-policy/">Privacy Policy</a><a href="/terms/">SMS Terms</a>')
     crumb_aria="Breadcrumb"
     mbar_book_href="/contact/#book"
   H1A=' data-sth-field="headline"' if path=="/" else ""
@@ -323,7 +329,7 @@ def page(path,title,desc,h1,body,extra=None,hero=None,lead="",trail=None,canonic
 <nav aria-label="{nav_aria}">{navl}</nav>{switch}<a class="hcall" href="tel:{TEL}"><span class="lbl">{call_lbl}</span> {PHONE}</a>
 <details class="menu"><summary aria-label="{menu_lbl}">Menu</summary><nav aria-label="{mob_aria}">{navl}{menu_switch}<a href="{'/es/#reservar' if is_es else '/contact/'}">{'Reservar' if is_es else 'Contact'}</a><a href="tel:{TEL}">{call_lbl} {PHONE}</a></nav></details></div></header>
 <main id="main">{top}<div class="body">{body}</div>{rev}<section class="band closer"><div class="wrap"><h2>{closer_h2}</h2><p>{avail}</p>{cta}</div></section></main>
-<footer id="contact" class="foot"><div class="wrap fgrid"><div><p class="mark">EXPRESS</p><p>{NAME} LLC<br>23357 Olde Meadowbrook Circle, Estero, FL 34134<br><a href="tel:{TEL}">{PHONE}</a><br><a data-sth-field="email" href="{"mailto:"+EMAIL if EMAIL else "/contact/"}">{EMAIL or ("Enviar una solicitud" if is_es else "Send a request")}</a></p><p>{hours_p}</p><p>{tag_p}</p><p class="dot">USDOT 6673233</p><p class="license-foot">{lic_foot}</p></div>
+<footer id="contact" class="foot"><div class="wrap fgrid"><div><p class="mark">EXPRESS</p><p>{NAME} LLC<br>23357 Olde Meadowbrook Circle, Estero, FL 34134<br><a href="tel:{TEL}">{PHONE}</a><br><a data-sth-field="email" href="{"mailto:"+EMAIL if EMAIL else "/contact/"}">{EMAIL or ("Enviar una solicitud" if is_es else "Send a request")}</a></p><p>{hours_p}</p><p>{tag_p}</p><p class="dot">USDOT 6673233</p><p class="license-foot">{lic_foot}</p>{"" if is_es else SL.sms_optin_html(BR)}</div>
 <div><p class="fh">{fh_svc}</p>{nav}</div><div><p class="fh">{fh_areas}</p>{foot}</div><div><p class="fh">{fh_info}</p>{info_links}</div></div></footer>
 <div class="mbar" role="region" aria-label="{contact_aria}"><a class="btn primary" href="tel:{TEL}">{call_lbl} · {PHONE}</a><a class="btn ghost" href="{mbar_book_href}">{book_mbar}</a></div></body></html>'''
   doc=doc.replace("<div class=\"body\"></div>","")
@@ -341,6 +347,14 @@ REQUEST=f'''<div class="book" id="book"><p class="eyebrow">Book or call</p><h2>W
 <li class="path"><p class="pk">Routine pumping for my home</p><p>Send a request on ServiceM8, the booking system we use. We'll contact you to confirm a time; it isn't booked until we confirm. From $399.99.</p><a class="btn dark" href="{BOOK}" rel="noopener" target="_blank">Book routine service on ServiceM8<span class="sr"> (opens in a new tab)</span> ↗</a></li>
 <li class="path"><p class="pk">Grease trap for a restaurant or kitchen</p><p>One-time pump-outs or a recurring schedule. Call to set it up.</p><a class="btn ghost" href="tel:{TEL}">Call {PHONE}</a> <a class="txtlink" href="/commercial-grease-trap-service/">Grease trap service</a></li>
 </ol></div>'''
+REQUEST=REQUEST+("<style>"+SL.FORM_CSS+".request-frame{width:100%;min-height:760px;border:0;margin-top:12px;background:#fff}.request-card .btn-block{display:block;text-align:center;margin-top:12px}</style>"
+ '<div class="quote-wrap" id="quote">'+SL.sms_optin_html(BR)+
+ '<div class="form-card request-card"><h3>Request service or a quote</h3><p class="form-intro">Send us your request and we\'ll confirm your appointment.</p>'
+ +SL.consent_box(BR)+
+ f'<iframe class="request-frame" src="{BOOK}" title="Request service or a quote" loading="lazy"></iframe>'
+ f'<a class="btn dark btn-block request-open" href="{BOOK}" target="_blank" rel="noopener">Open the request form</a>'
+ f'<p class="form-note">Form not showing? Use the button above. Septic backing up right now? Please call <a href="tel:{TEL}">{PHONE}</a> instead. See our <a href="/privacy-policy/">privacy policy</a> and <a href="/terms/">SMS terms</a>.</p>'
+ '</div></div>')
 ZIPBOX='''<div class="zip" data-zip><h3>Check your ZIP</h3><form data-zipform novalidate><label for="zipin">5-digit ZIP code</label><div class="zrow"><input id="zipin" inputmode="numeric" maxlength="5" autocomplete="postal-code" pattern="[0-9]{5}"><button class="btn primary" type="submit">Check</button></div></form><p class="zres" aria-live="polite"></p></div>'''
 ROUTE='<svg class="route" viewBox="0 0 600 160" aria-hidden="true" focusable="false"><path d="M10 140 C 90 140, 110 40, 200 60 S 330 140, 400 90 S 520 20, 590 30"/><circle cx="10" cy="140" r="5"/><circle cx="590" cy="30" r="5"/></svg>'
 HERO=f'''<section class="hero"><div class="wrap hcopy"><p class="eyebrow">Owner-operated in Estero</p><h1>Septic tank pumping in Southwest Florida</h1>
@@ -3507,10 +3521,12 @@ page("/contact/","Contact & Request Septic Service | Express Septic Tank Pumping
 faqhtml="".join(f"<h2>{q}</h2><p>{a}</p>" for q,a in FAQ)
 page("/faq/","Septic Tank FAQ | How Often to Pump, Cost & Signs | Express Septic","Answers to common septic tank questions: how often to pump, signs your tank is full, cost and what areas Express Septic Tank Pumping serves.","Septic Tank Pumping FAQ",faqhtml,
  faq_ld(FAQ))
-page("/privacy/","Privacy Policy | Express Septic Tank Pumping","Privacy policy for Express Septic Tank Pumping website visitors and customers.","Privacy Policy",
- f"<p>Express Septic Tank Pumping respects your privacy. Information you give us by phone, through our online booking provider (ServiceM8) or by text is used only to schedule and provide service, send quotes and invoices, and communicate with you about your job.</p><p>We do not sell your personal information. Mobile phone numbers and SMS consent are not shared with third parties for marketing purposes.</p><p>This site does not use advertising trackers. Online booking is handled by ServiceM8 under its own privacy policy.</p><p>Questions? Call {PHONE}.</p>")
-page("/terms/","Terms of Service | Express Septic Tank Pumping","Terms of service for the Express Septic Tank Pumping website and services.","Terms of Service",
- f"<p>By using this website you agree to these terms. Content is general information about septic systems and is not a substitute for an on-site evaluation.</p><p>Quotes are provided after discussing your property and needs. Scheduling is subject to availability.</p><p>If you opt in to text messages, message and data rates may apply. Reply STOP to opt out or HELP for help.</p><p>Contact: {NAME}, 23357 Olde Meadowbrook Circle, Estero, FL 34134, {PHONE}.</p>")
+page("/privacy-policy/","Privacy Policy | Express Septic Tank Pumping","Privacy Policy for Express Septic Tank Pumping LLC, including SMS consent and text messaging terms.","Privacy Policy",
+ "<style>"+SL.FORM_CSS+"</style>"+SL.privacy_body(BR), lead="<p>How Express Septic Tank Pumping LLC collects, uses, and protects your information, including SMS consent.</p>")
+page("/privacy/","Privacy | Express Septic Tank Pumping","Our Privacy Policy is at /privacy-policy/.","Privacy Policy moved",
+ SL.privacy_stub_body(), canonical="https://expresssepticpumping.com/privacy-policy/")
+page("/terms/","SMS Terms & Conditions | Express Septic Tank Pumping","Text messaging program terms for Express Septic Tank Pumping LLC customers.","SMS Terms & Conditions",
+ "<style>"+SL.FORM_CSS+"</style>"+SL.terms_body(BR), lead="<p>Text messaging program terms for Express Septic Tank Pumping LLC customers.</p>")
 page("/accessibility/","Accessibility Statement | Express Septic Tank Pumping","Accessibility information for the Express Septic Tank Pumping website, and how to reach us if you need help using it.","Accessibility",
  "<p>Express Septic Tank Pumping wants this website to be usable by all customers, including people who use assistive technology or browse on a phone.</p>"
  "<p>Pages include a skip-to-content link, visible keyboard focus, text that can be resized, and buttons large enough to tap. We keep writing in plain language and put the phone number on every page so you can call if something on the site gets in the way.</p>"
